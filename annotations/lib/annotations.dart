@@ -1,3 +1,9 @@
-int calculate() {
-  return 6 * 7;
+library annotations;
+
+export 'annotations.dart';
+
+class TemplateAnnotation {
+  const TemplateAnnotation();
 }
+
+const Template = TemplateAnnotation();
