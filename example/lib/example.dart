@@ -16,7 +16,7 @@ class Button extends Widget {
   final EdgeInsets padding;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build() {
     return Padding(
       padding: padding,
       child: Container(
@@ -30,10 +30,15 @@ class Button extends Widget {
           style: TextStyle(
             fontSize: 18,
             color: textColor,
-            wordSpacing: 0.5,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
     );
+  }
+
+  @override
+  StringBuffer render() {
+    throw UnimplementedError();
   }
 }

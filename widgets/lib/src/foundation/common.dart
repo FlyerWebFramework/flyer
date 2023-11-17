@@ -14,3 +14,15 @@ class Decoration {
 class BoxDecoration extends Decoration {
   BoxDecoration({required super.color, required super.border});
 }
+
+enum Alignment {
+  topLeft,
+  topCenter,
+  topRight,
+  centerLeft,
+  center,
+  centerRight,
+  bottomLeft,
+  bottomCenter,
+  bottomRight,
+}

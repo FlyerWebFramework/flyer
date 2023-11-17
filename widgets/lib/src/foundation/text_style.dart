@@ -1,13 +1,31 @@
 import 'package:widgets/widgets.dart';
 
+enum FontWeight { normal, bold, italic }
+enum TextDecoration { none, underline, overline, lineThrough }
+
 class TextStyle {
   TextStyle({
-    required this.fontSize,
-    required this.color,
-    required this.wordSpacing,
+    this.color,
+    this.fontSize,
+    this.lineHeight,
+    this.fontWeight,
+    this.decoration,
   });
 
-  final int? fontSize;
   final Color? color;
-  final double wordSpacing;
+  final int? fontSize;
+  final double? lineHeight;
+  final FontWeight? fontWeight;
+  final TextDecoration? decoration;
+
+
+  List<String> get classes {
+    List<String> buffer = [];
+    if(color != null) buffer.add("bg-${color!.name}-500");
+    if(fontSize != null) buffer.add("text-[${fontSize}pt]");
+    if(fontWeight != null) buffer.add("font-${fontWeight!.name}");
+    if(decoration != null) buffer.add(decoration!.name);
+    if(lineHeight != null) buffer.add("leading-[${lineHeight}rem]");
+    return buffer;
+  }
 }
