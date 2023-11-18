@@ -36,9 +36,4 @@ class Button extends Widget {
       ),
     );
   }
-
-  @override
-  StringBuffer render() {
-    throw UnimplementedError();
-  }
 }
