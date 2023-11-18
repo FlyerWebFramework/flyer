@@ -26,3 +26,20 @@ enum Alignment {
   bottomCenter,
   bottomRight,
 }
+
+class Scripts {
+  late final Map<Symbol, Script> _scripts;
+
+  Script get(Symbol key) => _scripts.containsKey(key) ? _scripts[key]! : throw 'Cannot find key: $key';
+
+  Scripts(Map<Symbol, Function> functions) {
+    _scripts = functions.map((key, value) => MapEntry(key, Script(name: key, function: value)));
+  }
+}
+
+class Script {
+  final Symbol name;
+  final Function function;
+
+  Script({required this.name, required this.function});
+}

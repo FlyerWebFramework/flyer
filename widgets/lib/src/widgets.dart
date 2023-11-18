@@ -42,6 +42,29 @@ class SizedBox extends Widget {
   }
 }
 
+class GestureDetector extends Widget {
+  const GestureDetector({this.onTap, required this.child});
+
+  final Script? onTap;
+  final Widget child;
+
+  @override
+  Widget build() {
+    throw "Not implemented";
+  }
+
+  @override
+  StringBuffer render() {
+    StringBuffer buffer = StringBuffer();
+    buffer.write("<span ");
+    if (onTap != null) buffer.write("on:click={${onTap!.name}");
+    buffer.write(">\n");
+    buffer.write(child.render());
+    buffer.write("\n</span>");
+    return buffer;
+  }
+}
+
 class Container extends SizedBox {
   const Container({
     super.width,
