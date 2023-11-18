@@ -1,4 +1,4 @@
-import 'border.dart';
+import 'package:widgets/widgets.dart';
 
 enum Color { red, yellow, blue, green, black, white }
 
@@ -11,9 +11,16 @@ class RenderContext {
 
   final int indentation;
 
-  RenderContext copy() {
+  RenderContext get copy {
     return RenderContext(indentation: indentation + 1);
   }
+}
+
+class Event {
+  Event({required this.type, this.script});
+
+  EventType type;
+  final Script? script;
 }
 
 class Decoration {

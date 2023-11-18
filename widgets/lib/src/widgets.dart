@@ -4,9 +4,26 @@ import 'package:widgets/widgets.dart';
 abstract class Widget {
   const Widget();
 
-  StringBuffer render(RenderContext context);
+  StringBuffer render(RenderContext context) {
+    return StringBuffer(build().render(context.copy));
+  }
 
-  Widget build();
+  Widget build() {
+    return this;
+  }
+
+  run() {
+    print(render(RenderContext()).toString());
+  }
+}
+
+abstract class Component extends Widget {
+  const Component();
+
+  @override
+  Widget build() {
+    throw UnimplementedError();
+  }
 }
 
 class Padding extends Widget {
@@ -14,11 +31,6 @@ class Padding extends Widget {
 
   final EdgeInsets padding;
   final Widget child;
-
-  @override
-  Widget build() {
-    throw "Not implemented";
-  }
 
   @override
   StringBuffer render(RenderContext context) {
@@ -33,21 +45,9 @@ class SizedBox extends Widget {
   final double? height;
 
   @override
-  Widget build() {
-    throw "Not implemented";
-  }
-
-  @override
   StringBuffer render(RenderContext context) {
     throw UnimplementedError();
   }
-}
-
-class Event {
-  Event({required this.type, this.script});
-
-  EventType type;
-  final Script? script;
 }
 
 class GestureDetector extends Widget {
@@ -55,11 +55,6 @@ class GestureDetector extends Widget {
 
   final Script? onTap;
   final Widget child;
-
-  @override
-  Widget build() {
-    throw "Not implemented";
-  }
 
   List<Event> get events {
     return [
@@ -69,11 +64,12 @@ class GestureDetector extends Widget {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Tag(
-      'div',
+    return Element.render(
+      context,
+      tag: 'div',
       events: events,
-      child: child.render(context.copy()),
-    ).render(context);
+      child: child.render(context.copy),
+    );
   }
 }
 
@@ -105,12 +101,12 @@ class Container extends SizedBox {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Tag('div', classes: classes, child: child.render(context.copy())).render(context);
-  }
-
-  @override
-  Widget build() {
-    throw "Not implemented";
+    return Element.render(
+      context,
+      tag: 'div',
+      classes: classes,
+      child: child.render(context.copy),
+    );
   }
 }
 
@@ -122,34 +118,29 @@ class Text extends Widget {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Tag(
-      'span',
+    return Element.render(
+      context,
+      tag: 'span',
       classes: style!.classes,
       child: StringBuffer(Constants.indent * (context.indentation + 1) + text),
-    ).render(context);
-  }
-
-  @override
-  Widget build() {
-    throw "Not Implemented";
+    );
   }
 }
 
-class Tag {
-  Tag(this.name, {this.events, this.classes, this.child});
-
-  String name;
-  List<Event>? events;
-  List<String>? classes;
-  StringBuffer? child;
-
-  StringBuffer render(RenderContext context) {
+class Element {
+  static StringBuffer render(
+    RenderContext context, {
+    required String tag,
+    List<Event>? events,
+    List<String>? classes,
+    StringBuffer? child,
+  }) {
     final String indentation = Constants.indent * context.indentation;
     final StringBuffer buffer = StringBuffer();
-    buffer.write("$indentation<$name");
+    buffer.write("$indentation<$tag");
     if (events != null || classes != null) buffer.write(" ");
     if (events != null) {
-      for (Event event in events!) {
+      for (Event event in events) {
         if (event.script == null) continue;
         final symbol = event.script!.name.toString();
         buffer.write("on:${event.type.name}={${symbol.substring(8, symbol.length - 2)}}");
@@ -157,13 +148,13 @@ class Tag {
     }
     if (classes != null) {
       buffer.write("class='");
-      buffer.writeAll(classes!, " ");
+      buffer.writeAll(classes, " ");
       buffer.write("'");
     }
     buffer.write(">\n");
-    if (child != null) buffer.write(child!);
+    if (child != null) buffer.write(child);
     if (child != null) buffer.writeln();
-    buffer.write("$indentation</$name>");
+    buffer.write("$indentation</$tag>");
     return buffer;
   }
 }
