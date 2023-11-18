@@ -43,6 +43,13 @@ class SizedBox extends Widget {
   }
 }
 
+class Event {
+  Event({required this.type, this.script});
+
+  EventType type;
+  final Script? script;
+}
+
 class GestureDetector extends Widget {
   const GestureDetector({this.onTap, required this.child});
 
@@ -54,9 +61,19 @@ class GestureDetector extends Widget {
     throw "Not implemented";
   }
 
+  List<Event> get events {
+    return [
+      if (onTap != null) Event(type: EventType.click, script: onTap),
+    ];
+  }
+
   @override
   StringBuffer render(RenderContext context) {
-    return Tag('div', child: child.render(context.copy())).render(context);
+    return Tag(
+      'div',
+      events: events,
+      child: child.render(context.copy()),
+    ).render(context);
   }
 }
 
@@ -119,9 +136,10 @@ class Text extends Widget {
 }
 
 class Tag {
-  Tag(this.name, {this.classes, this.child});
+  Tag(this.name, {this.events, this.classes, this.child});
 
   String name;
+  List<Event>? events;
   List<String>? classes;
   StringBuffer? child;
 
@@ -129,7 +147,14 @@ class Tag {
     final String indentation = Constants.indent * context.indentation;
     final StringBuffer buffer = StringBuffer();
     buffer.write("$indentation<$name");
-    if (classes != null) buffer.write(" ");
+    if (events != null || classes != null) buffer.write(" ");
+    if (events != null) {
+      for (Event event in events!) {
+        if (event.script == null) continue;
+        final symbol = event.script!.name.toString();
+        buffer.write("on:${event.type.name}={${symbol.substring(8, symbol.length - 2)}}");
+      }
+    }
     if (classes != null) {
       buffer.write("class='");
       buffer.writeAll(classes!, " ");

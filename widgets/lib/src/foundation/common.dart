@@ -2,6 +2,8 @@ import 'border.dart';
 
 enum Color { red, yellow, blue, green, black, white }
 
+enum EventType { click }
+
 class BuildContext {}
 
 class RenderContext {
