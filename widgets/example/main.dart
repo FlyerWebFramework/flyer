@@ -1,15 +1,30 @@
 import 'package:widgets/widgets.dart';
 
 void main(List<String> arguments) {
-  print(TestWidget().render().toString());
+  WebPage(body: TestComponent(count: 5)).run();
 }
 
-class TestWidget extends Widget {
-  $state(dynamic value) {}
+class TestComponent extends Component {
+  TestComponent({this.count = 0});
 
-  var count = 0;
+  @observable
+  int count;
 
-  var test = Script(name: #myFunc, function: () => print('Hello World!!'));
+  @observable
+  String firstName = '';
+
+  @observable
+  String lastName = '';
+
+  @computed
+  String get fullName => '{firstName}, {lastName}';
+
+  var testScript = Script(
+    name: #myFunc,
+    function: () {
+      print('Hello World!!');
+    },
+  );
 
   final scripts = Scripts({
     #hello: () => print('Hello World!!'),
@@ -24,7 +39,8 @@ class TestWidget extends Widget {
   @override
   Widget build() {
     return GestureDetector(
-      onTap: Script(name: #myFunc, function: () => print('Hello World!!')),
+      onTap: testScript,
+      //onTap: Script(name: #myFunc, function: () => print('Hello World!!')),
       //onTap: scripts.get(#hello),
       child: Container(
         width: 240,
@@ -43,10 +59,5 @@ class TestWidget extends Widget {
         ),
       ),
     );
-  }
-
-  @override
-  StringBuffer render() {
-    return StringBuffer(build().render());
   }
 }
