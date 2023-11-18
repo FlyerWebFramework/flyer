@@ -4,6 +4,16 @@ enum Color { red, yellow, blue, green, black, white }
 
 class BuildContext {}
 
+class RenderContext {
+  const RenderContext({this.indentation = -1});
+
+  final int indentation;
+
+  RenderContext copy() {
+    return RenderContext(indentation: indentation + 1);
+  }
+}
+
 class Decoration {
   const Decoration({required this.color, required this.border});
 

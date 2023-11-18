@@ -1,9 +1,10 @@
+import 'package:widgets/src/constants.dart';
 import 'package:widgets/widgets.dart';
 
 abstract class Widget {
   const Widget();
 
-  StringBuffer render();
+  StringBuffer render(RenderContext context);
 
   Widget build();
 }
@@ -20,7 +21,7 @@ class Padding extends Widget {
   }
 
   @override
-  StringBuffer render() {
+  StringBuffer render(RenderContext context) {
     throw UnimplementedError();
   }
 }
@@ -37,7 +38,7 @@ class SizedBox extends Widget {
   }
 
   @override
-  StringBuffer render() {
+  StringBuffer render(RenderContext context) {
     throw UnimplementedError();
   }
 }
@@ -54,14 +55,8 @@ class GestureDetector extends Widget {
   }
 
   @override
-  StringBuffer render() {
-    StringBuffer buffer = StringBuffer();
-    buffer.write("<span ");
-    if (onTap != null) buffer.write("on:click={${onTap!.name}");
-    buffer.write(">\n");
-    buffer.write(child.render());
-    buffer.write("\n</span>");
-    return buffer;
+  StringBuffer render(RenderContext context) {
+    return Tag('div', child: child.render(context.copy())).render(context);
   }
 }
 
@@ -92,14 +87,8 @@ class Container extends SizedBox {
   }
 
   @override
-  StringBuffer render() {
-    StringBuffer buffer = StringBuffer();
-    buffer.write("<div ");
-    if (classes.isNotEmpty) buffer.write("class='${classes.join(" ")}'");
-    buffer.write(">\n");
-    buffer.write(child.render());
-    buffer.write("\n</div>");
-    return buffer;
+  StringBuffer render(RenderContext context) {
+    return Tag('div', classes: classes, child: child.render(context.copy())).render(context);
   }
 
   @override
@@ -115,18 +104,41 @@ class Text extends Widget {
   final TextStyle? style;
 
   @override
-  StringBuffer render() {
-    StringBuffer buffer = StringBuffer();
-    buffer.write("\t<span ");
-    if (style != null) buffer.write("class='${style!.classes.join(" ")}'");
-    buffer.write(">\n\t\t");
-    buffer.write(text);
-    buffer.write("\n\t</span>");
-    return buffer;
+  StringBuffer render(RenderContext context) {
+    return Tag(
+      'span',
+      classes: style!.classes,
+      child: StringBuffer(Constants.indent * (context.indentation + 1) + text),
+    ).render(context);
   }
 
   @override
   Widget build() {
     throw "Not Implemented";
+  }
+}
+
+class Tag {
+  Tag(this.name, {this.classes, this.child});
+
+  String name;
+  List<String>? classes;
+  StringBuffer? child;
+
+  StringBuffer render(RenderContext context) {
+    final String indentation = Constants.indent * context.indentation;
+    final StringBuffer buffer = StringBuffer();
+    buffer.write("$indentation<$name");
+    if (classes != null) buffer.write(" ");
+    if (classes != null) {
+      buffer.write("class='");
+      buffer.writeAll(classes!, " ");
+      buffer.write("'");
+    }
+    buffer.write(">\n");
+    if (child != null) buffer.write(child!);
+    if (child != null) buffer.writeln();
+    buffer.write("$indentation</$name>");
+    return buffer;
   }
 }
