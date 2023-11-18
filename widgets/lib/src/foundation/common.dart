@@ -14,6 +14,10 @@ class RenderContext {
   RenderContext get copy {
     return RenderContext(indentation: indentation + 1);
   }
+
+  RenderContext indent([int num = 1]) {
+    return RenderContext(indentation: indentation + num);
+  }
 }
 
 class Event {

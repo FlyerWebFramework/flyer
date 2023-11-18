@@ -26,6 +26,38 @@ abstract class Component extends Widget {
   }
 }
 
+class WebPage extends Widget {
+  const WebPage({required this.body});
+
+  final Widget body;
+
+  @override
+  Widget build() {
+    return body;
+  }
+
+  @override
+  StringBuffer render(RenderContext context) {
+    return StringBuffer(Element.render(
+      context.copy,
+      tag: 'html',
+      child: StringBuffer()
+        ..writeln(Element.render(
+          context.indent(2),
+          tag: 'head',
+        ))
+        ..writeln()
+        ..write(
+          Element.render(
+            context.indent(2),
+            tag: 'body',
+            child: build().render(context.indent(2)),
+          ),
+        ),
+    ));
+  }
+}
+
 class Padding extends Widget {
   const Padding({required this.padding, required this.child});
 
