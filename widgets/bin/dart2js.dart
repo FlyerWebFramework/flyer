@@ -1,6 +1,7 @@
 import 'dart:io';
 
 Future<void> main(List<String> arguments) async {
+  //var result = await Process.run('dart', ['compile', 'js', '-O2', ...arguments]);
   var result = await Process.run('dart', ['compile', 'js', ...arguments]);
   stdout.write(result.stdout);
   stderr.write(result.stderr);
@@ -14,9 +15,9 @@ Future<void> main(List<String> arguments) async {
 
 Future<List<String>> getFunctions(String file) async {
   var result = await Process.run('grep', ['-e', '@JS', '-A1', file]);
-  var functions = result.stdout
-      .toString()
-      .split('--\n')
+  if (result.stdout.toString().isEmpty) return [];
+
+  var functions = result.stdout.toString().split('--\n')
       .map((e) => e.replaceAll('\n', '').split(')')[1].split('('))
       .map(
         (e) => MapEntry(

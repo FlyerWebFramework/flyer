@@ -64,5 +64,5 @@ class Script {
   final Symbol name;
   final Function function;
 
-  Script({required this.name, required this.function});
+  const Script({required this.name, required this.function});
 }

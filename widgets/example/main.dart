@@ -1,31 +1,47 @@
 import 'package:widgets/widgets.dart';
 
 void main(List<String> arguments) {
-  WebPage(body: TestComponent(count: 5)).run();
+  WebPage(body: TestComponent()).run();
 }
 
+@component
 class TestComponent extends Component {
-  TestComponent({this.count = 0});
+  TestComponent({
+    this.count = 0,
+    this.visibility = true,
+  });
+
+  int count = 0;
+
+  bool? visibility;
 
   @observable
-  int count;
+  int x = 0;
 
   @observable
-  String firstName = '';
+  int y = 0;
 
   @observable
-  String lastName = '';
+  final String firstName = '';
+
+  @observable
+  final String lastName = '';
 
   @computed
   String get fullName => '{firstName}, {lastName}';
 
-  var testScript = Script(
+  @computed
+  int get result => x + y;
+
+  @script
+  final testScript = Script(
     name: #myFunc,
     function: () {
       print('Hello World!!');
     },
   );
 
+  @script
   final scripts = Scripts({
     #hello: () => print('Hello World!!'),
     #sayHello: (String name) => print('Hello $name!!'),

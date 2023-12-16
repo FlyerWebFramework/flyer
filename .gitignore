@@ -1,2 +1,4 @@
 .idea
 example
+widgets/output/
+widgets/.DS_Store
