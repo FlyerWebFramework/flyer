@@ -1,3 +1,4 @@
+import 'package:widgets/src/annotations.dart';
 import 'package:widgets/widgets.dart';
 
 void main(List<String> arguments) {
@@ -11,8 +12,10 @@ class TestComponent extends Component {
     this.visibility = true,
   });
 
+  @property
   int count = 0;
 
+  @property
   bool? visibility;
 
   @observable

@@ -4,7 +4,6 @@
 library;
 
 export 'src/widgets.dart';
-export 'src/annotations.dart';
 export 'src/foundation/border.dart';
 export 'src/foundation/edge_insets.dart';
 export 'src/foundation/text_style.dart';
