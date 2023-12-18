@@ -1,3 +1,3 @@
 library;
 
-export 'src/simple_annotation.dart';
+export 'src/annotations.dart';

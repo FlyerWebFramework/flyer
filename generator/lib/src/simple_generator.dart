@@ -4,29 +4,28 @@ import 'package:build/build.dart';
 import 'package:generator/src/model_visitor.dart';
 import 'package:source_gen/source_gen.dart';
 
-class SimpleGenerator extends GeneratorForAnnotation<SimpleAnnotation> {
+class SimpleGenerator extends GeneratorForAnnotation<ComponentAnnotation> {
   @override
-  String generateForAnnotatedElement(
-      Element element, ConstantReader annotation, BuildStep buildStep) {
+  String generateForAnnotatedElement(Element element, ConstantReader annotation, BuildStep buildStep) {
     final visitor = ModelVisitor();
     element.visitChildren(visitor);
-    bool addHello = annotation.read('addHello').boolValue;
+    //bool addHello = annotation.read('addHello').boolValue;
 
     String className = visitor.className;
     Map<String, dynamic> fields = visitor.fields;
 
     print(fields);
 
-    final toJsonCode = _generateToJsonCode(className, fields);
-    final fromJsonCode = _generateFromJsonCode(className, fields);
-    final printHelloCode = addHello ? addHelloComment() : '';
+    //final toJsonCode = _generateToJsonCode(className, fields);
+    //final fromJsonCode = _generateFromJsonCode(className, fields);
+    //final printHelloCode = addHello ? addHelloComment() : '';
 
-    return '$toJsonCode\n\n$fromJsonCode\n\n$printHelloCode';
+    return "final test123 = '';";
+    //return '$toJsonCode\n\n$fromJsonCode\n\n$printHelloCode';
   }
 
   String _generateToJsonCode(String className, Map<String, dynamic> fields) {
-    final fieldMapEntries =
-        fields.keys.map((key) => " '$key': $key").join(',\n');
+    final fieldMapEntries = fields.keys.map((key) => " '$key': $key").join(',\n');
 
     return '''
       extension ${className}ToJson on $className {
@@ -38,8 +37,7 @@ class SimpleGenerator extends GeneratorForAnnotation<SimpleAnnotation> {
   }
 
   String _generateFromJsonCode(String className, Map<String, dynamic> fields) {
-    final fieldAssignments =
-        fields.keys.map((key) => "$key: this['$key']").join(',\n');
+    final fieldAssignments = fields.keys.map((key) => "$key: this['$key']").join(',\n');
 
     return '''
       extension ${className}FromJson on Map<String, dynamic> {
