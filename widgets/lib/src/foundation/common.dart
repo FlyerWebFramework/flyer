@@ -1,6 +1,46 @@
 import 'package:widgets/widgets.dart';
 
-enum Color { red, yellow, blue, green, black, white }
+class Colors {
+  static const red = Color("red");
+
+  static const yellow = Color("yellow");
+
+  static const blue = Color("blue");
+
+  static const green = Color("green");
+
+  static const black = Color("black");
+
+  static const white = Color("white");
+}
+
+class Color {
+  const Color(this.value, {this.shade = 500, this.opacity = 1});
+
+  final int? shade;
+  final double? opacity;
+  final String value;
+
+  get shade50 => Color(value, shade: 50);
+
+  get shade100 => Color(value, shade: 100);
+
+  get shade200 => Color(value, shade: 200);
+
+  get shade300 => Color(value, shade: 300);
+
+  get shade400 => Color(value, shade: 400);
+
+  get shade500 => Color(value, shade: 500);
+
+  get shade600 => Color(value, shade: 600);
+
+  get shade700 => Color(value, shade: 700);
+
+  get shade800 => Color(value, shade: 800);
+
+  get shade900 => Color(value, shade: 900);
+}
 
 enum EventType { click }
 

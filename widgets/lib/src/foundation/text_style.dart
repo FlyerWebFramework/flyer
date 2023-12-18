@@ -21,7 +21,7 @@ class TextStyle {
 
   List<String> get classes {
     List<String> buffer = [];
-    if(color != null) buffer.add("bg-${color!.name}-500");
+    if(color != null) buffer.add("text-${color!.value}-${color!.shade}");
     if(fontSize != null) buffer.add("text-[${fontSize}pt]");
     if(fontWeight != null) buffer.add("font-${fontWeight!.name}");
     if(decoration != null) buffer.add(decoration!.name);

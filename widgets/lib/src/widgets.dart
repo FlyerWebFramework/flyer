@@ -126,7 +126,7 @@ class Container extends SizedBox {
     return [
       if (width != null) "w-[${width}px]",
       if (height != null) "h-[${height}px]",
-      if (color != null) "bg-${color!.name}-500",
+      if (color != null) "bg-${color!.value}-${color!.shade}",
       if (alignment == Alignment.center) "grid place-content-center",
     ];
   }
