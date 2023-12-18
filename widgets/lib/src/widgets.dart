@@ -82,17 +82,12 @@ class SizedBox extends Widget {
   }
 }
 
-class GestureDetector extends Widget {
-  const GestureDetector({this.onTap, required this.child});
-
-  final Script? onTap;
-  final Widget child;
-
-  List<Event> get events {
-    return [
-      if (onTap != null) Event(type: EventType.click, script: onTap),
-    ];
+class GestureDetector extends Widget with Gestures {
+  GestureDetector({Script? onTap, required this.child}){
+    this.onTap = onTap;
   }
+
+  final Widget child;
 
   @override
   StringBuffer render(RenderContext context) {
@@ -100,6 +95,42 @@ class GestureDetector extends Widget {
       context,
       tag: 'div',
       events: events,
+      child: child.render(context.copy),
+    );
+  }
+}
+
+class Button extends SizedBox with Gestures {
+  Button({
+    Script? onTap,
+    super.width,
+    super.height,
+    this.color,
+    this.decoration,
+    required this.child,
+  }) {
+    this.onTap = onTap;
+  }
+
+  final Color? color;
+  final Decoration? decoration;
+  final Widget child;
+
+  List<String> get classes {
+    return [
+      if (width != null) "w-[${width}px]",
+      if (height != null) "h-[${height}px]",
+      if (color != null) "bg-${color!.value}-${color!.shade}",
+    ];
+  }
+
+  @override
+  StringBuffer render(RenderContext context) {
+    return Element.render(
+      context,
+      tag: 'button',
+      events: events,
+      classes: classes,
       child: child.render(context.copy),
     );
   }
@@ -170,8 +201,8 @@ class Element {
     final String indentation = Constants.indent * context.indentation;
     final StringBuffer buffer = StringBuffer();
     buffer.write("$indentation<$tag");
-    if (events != null || classes != null) buffer.write(" ");
     if (events != null) {
+      buffer.write(" ");
       for (Event event in events) {
         if (event.script == null) continue;
         final symbol = event.script!.name.toString();
@@ -179,6 +210,7 @@ class Element {
       }
     }
     if (classes != null) {
+      buffer.write(" ");
       buffer.write("class='");
       buffer.writeAll(classes, " ");
       buffer.write("'");

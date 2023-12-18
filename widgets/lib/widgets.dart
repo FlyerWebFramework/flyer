@@ -3,6 +3,7 @@
 /// More dartdocs go here.
 library;
 
+export 'src/mixins.dart';
 export 'src/widgets.dart';
 export 'src/foundation/border.dart';
 export 'src/foundation/edge_insets.dart';
