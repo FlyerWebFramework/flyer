@@ -1,4 +1,4 @@
-library;
+library widgets;
 
 export 'widgets/mixins.dart';
 export 'widgets/widgets.dart';
