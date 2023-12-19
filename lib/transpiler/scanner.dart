@@ -26,9 +26,10 @@ class Scanner {
       case PointLineType.observable:
         final split = trimmedLine.split('=');
         if (split.length != 2) throw "Error during parsing: $trimmedLine";
-        final variableName = split[0].trim().split(' ').last;
-        final variableValue = split[1].substring(0, split[1].length - 1).trim();
-        final transformed = "let $variableName = \$state($variableValue);";
+
+        final name = split[0].trim().split(' ').last;
+        final value = split[1].substring(0, split[1].length - 1).trim();
+        final transformed = "let $name = \$state($value);";
 
         return TransformedCode(
           type: _type!,
@@ -36,10 +37,17 @@ class Scanner {
           javaScript: transformed,
         );
       case PointLineType.computed:
+        final split = trimmedLine.split('=>');
+        if (split.length != 2) throw "Error during parsing: $trimmedLine";
+
+        final name = split[0].trim().split(' ').last;
+        final value = split[1].substring(0, split[1].length - 1).trim();
+        final transformed = "let $name = \$derived($value);";
+
         return TransformedCode(
           type: _type!,
           dart: trimmedLine,
-          javaScript: "Not implemented yet..",
+          javaScript: transformed,
         );
       case null:
         throw "Cannot transform when PointLineType is null";
