@@ -1,4 +1,4 @@
-import 'package:widgets/widgets.dart';
+import 'package:flyer/widgets.dart';
 
 mixin Gestures on Widget {
   Script? onTap;

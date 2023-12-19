@@ -1,4 +1,4 @@
-import 'package:widgets/widgets.dart';
+import 'package:flyer/widgets.dart';
 
 class Colors {
   static const red = Color("red");

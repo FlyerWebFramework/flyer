@@ -1,5 +1,5 @@
-import 'package:widgets/src/constants.dart';
-import 'package:widgets/widgets.dart';
+import 'package:flyer/widgets.dart';
+import 'package:flyer/widgets/constants.dart';
 
 abstract class Widget {
   const Widget();

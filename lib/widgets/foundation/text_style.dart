@@ -1,4 +1,4 @@
-import 'package:widgets/widgets.dart';
+import 'package:flyer/widgets.dart';
 
 enum FontWeight { normal, bold, italic }
 enum TextDecoration { none, underline, overline, lineThrough }

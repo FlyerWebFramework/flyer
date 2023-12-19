@@ -1,4 +1,10 @@
-.idea
-example
-widgets/output/
-widgets/.DS_Store
+.DS_Store
+.idea/
+.vscode/
+.dart_tool/
+
+sandbox/
+output/
+build/
+
+
