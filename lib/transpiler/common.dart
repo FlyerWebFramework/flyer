@@ -1,9 +1,9 @@
-enum PointLineType {
+enum AnnotationType {
   observable,
   computed,
   ;
 
-  const PointLineType();
+  const AnnotationType();
 
   @override
   toString() => "@$name";
@@ -17,7 +17,7 @@ class TransformedCode {
     required this.javaScript,
   });
 
-  PointLineType type;
+  AnnotationType type;
   String dart;
   String javaScript;
 

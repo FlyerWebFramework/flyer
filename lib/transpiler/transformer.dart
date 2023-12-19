@@ -11,13 +11,13 @@ class Transformer {
 
   bool _isPointEndLine(String line) => line.substring(line.length - 1, line.length) == ';';
 
-  bool _checkPointType(String line, PointLineType type) {
+  bool _checkPointType(String line, AnnotationType type) {
     return line.contains(type.toString());
   }
 
   void _findPoint(String trimmedLine) {
     if (_isPointStartLine(trimmedLine)) {
-      for (var type in PointLineType.values) {
+      for (var type in AnnotationType.values) {
         if (_checkPointType(trimmedLine, type)) {
           _scanner.startScanning(type);
           break;

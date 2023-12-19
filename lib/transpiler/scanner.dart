@@ -3,9 +3,9 @@ import 'package:flyer/transpiler.dart';
 class Scanner {
   bool isScanning = false;
   final StringBuffer _parts = StringBuffer();
-  PointLineType? _type;
+  AnnotationType? _type;
 
-  startScanning(PointLineType type) {
+  startScanning(AnnotationType type) {
     isScanning = true;
     _type = type;
   }
@@ -23,7 +23,7 @@ class Scanner {
   TransformedCode transform() {
     final trimmedLine = _parts.toString();
     switch (_type) {
-      case PointLineType.observable:
+      case AnnotationType.observable:
         final split = trimmedLine.split('=');
         if (split.length != 2) throw "Error during parsing: $trimmedLine";
 
@@ -36,7 +36,7 @@ class Scanner {
           dart: trimmedLine,
           javaScript: transformed,
         );
-      case PointLineType.computed:
+      case AnnotationType.computed:
         final split = trimmedLine.split('=>');
         if (split.length != 2) throw "Error during parsing: $trimmedLine";
 
