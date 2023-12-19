@@ -1,6 +1,7 @@
 enum AnnotationType {
   observable,
   computed,
+  script,
   ;
 
   const AnnotationType();
@@ -26,9 +27,9 @@ class TransformedCode {
     int num = 70;
     return """$type:
 ${"=" * num}
-  Dart: $dart 
+Dart:\n$dart 
 ${"-" * num}
-    JS: $javaScript
+JavaScript:\n$javaScript
 ${"=" * num}
 """;
   }

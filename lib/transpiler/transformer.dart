@@ -6,6 +6,7 @@ class Transformer {
   final List<String> fileLines;
   final List<TransformedCode> _stack = [];
   final _scanner = Scanner();
+  var _openedFunction = 0;
 
   bool _isPointStartLine(String line) => line.substring(0, 1) == '@';
 
@@ -32,12 +33,15 @@ class Transformer {
       if (trimmedLine.isEmpty) continue;
 
       if (_scanner.isScanning) {
-        if (_isPointEndLine(trimmedLine)) {
+        if (_isPointEndLine(trimmedLine) && _openedFunction <= 0) {
           _scanner.scan(trimmedLine);
-          _stack.add(_scanner.transform());
+          final transCode = _scanner.transform();
+          if (transCode != null) _stack.add(transCode);
           _scanner.stopScanning();
         } else {
           _scanner.scan(trimmedLine);
+          _openedFunction += trimmedLine.split('{').length-1;
+          _openedFunction -= trimmedLine.split('}').length-1;
         }
       } else {
         _findPoint(trimmedLine);

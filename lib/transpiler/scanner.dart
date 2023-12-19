@@ -17,11 +17,39 @@ class Scanner {
   }
 
   scan(String line) {
-    _parts.write(line);
+    _parts.writeln(line);
   }
 
-  TransformedCode transform() {
-    final trimmedLine = _parts.toString();
+  String _formatCode(String code) {
+    final List<String> line = [];
+    final List<String> text = [];
+    final characters = code.split('');
+    int tabNum = 0;
+    for (String char in characters) {
+      if ('{[('.contains(char)) {
+        ++tabNum;
+      }
+      if (')]}'.contains(char)) {
+        --tabNum;
+        text.removeLast();
+        text.add('  ' * tabNum);
+      }
+      if (char == '\n') {
+        line.add(char);
+        text.add(line.join());
+        text.add('  ' * tabNum);
+        line.clear();
+      } else {
+        line.add(char);
+      }
+    }
+    text.add(line.join());
+
+    return text.join();
+  }
+
+  TransformedCode? transform() {
+    final trimmedLine = _parts.toString().trim();
     switch (_type) {
       case AnnotationType.observable:
         final split = trimmedLine.split('=');
@@ -49,6 +77,19 @@ class Scanner {
           dart: trimmedLine,
           javaScript: transformed,
         );
+      case AnnotationType.script:
+        final split = trimmedLine.split('=');
+
+        if (split[1].trim().substring(0, 7) == "Script(") {
+          return TransformedCode(
+            type: _type!,
+            dart: _formatCode(trimmedLine),
+            javaScript: "Not implemented..",
+          );
+        } else {
+          return null;
+        }
+
       case null:
         throw "Cannot transform when PointLineType is null";
     }
