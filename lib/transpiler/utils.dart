@@ -26,4 +26,8 @@ class Utils {
 
     return text.join();
   }
+
+  static lastChar(String text) {
+    return text.trim().split('').last;
+  }
 }

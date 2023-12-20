@@ -1,18 +1,25 @@
+import 'package:flyer/transpiler/utils.dart';
+
+enum ScriptType { multiLine, oneLine }
+
 class ParsedScript {
   ParsedScript({
     required this.name,
     required this.arguments,
     required this.body,
+    required this.type,
   });
 
   final String name;
   final List<String> arguments;
   final String body;
+  final ScriptType type;
 }
 
 class ScriptParser {
   String name = '';
   List<String> body = [];
+  ScriptType? type;
   bool reading = false;
   int blockNum = 0;
 
@@ -29,7 +36,7 @@ class ScriptParser {
     name = stack.join().replaceAll('#', '').replaceAll(',', '');
   }
 
-  void _readBody(String line) {
+  void _parseMultiLineBody(String line) {
     List<String> characters = line.split('');
     for (String char in characters) {
       if (char == '{') {
@@ -41,6 +48,10 @@ class ScriptParser {
       }
       if (blockNum > 0 && !'{}'.contains(char)) {
         body.add(char);
+        if (char == ';') {
+          body.add('\n');
+          body.add('  ' * blockNum);
+        }
       }
       if (char == '}') {
         --blockNum;
@@ -52,33 +63,36 @@ class ScriptParser {
     }
   }
 
-  ParsedScript parse(String line) {
-    final split = line.split('=');
-    final lines = line.split('\n');
+  _parseOneLineBody(String line) {
+    final lambdaBody = line.split('=>')[1].trim().split('');
 
-    if (split[1].trim().substring(0, 7) == "Script(") {
-      for (String line in lines) {
-        if (line.contains("name:") && name.isEmpty) _parseName(line);
+    if (lambdaBody.last == ',') {
+      lambdaBody.removeLast();
+    }
+    body = lambdaBody;
+  }
 
-        if (reading) _readBody(line);
-        if (line.contains("function:")) {
-          if (line.replaceAll(' ', '').contains('(){')) {
-            _readBody(line);
-          }
+  ParsedScript parse(List<String> lines) {
+    for (String line in lines) {
+      if (line.contains("name:") && name.isEmpty) _parseName(line);
+
+      if (reading) _parseMultiLineBody(line);
+      if (line.contains("function:")) {
+        if (line.replaceAll(' ', '').contains('){')) {
+          type = ScriptType.multiLine;
+          _parseMultiLineBody(line);
+        } else if (line.replaceAll(' ', '').contains(')=>')) {
+          type = ScriptType.oneLine;
+          _parseOneLineBody(line);
         }
       }
-
-      return ParsedScript(
-        name: name,
-        arguments: [],
-        body: body.join(),
-      );
-    } else {
-      return ParsedScript(
-        name: name,
-        arguments: [],
-        body: body.join(),
-      );
     }
+
+    return ParsedScript(
+      name: name,
+      arguments: [],
+      body: body.join(''),
+      type: type!,
+    );
   }
 }

@@ -53,13 +53,23 @@ class Scanner {
           javaScript: transformed,
         );
       case AnnotationType.script:
-        final parsedCode = ScriptParser().parse(trimmedLine);
+        final split = trimmedLine.split('=');
+        final lines = trimmedLine.split('\n');
 
-        return TransformedCode(
-          type: _type!,
-          dart: Utils.indentCode(trimmedLine),
-          javaScript: "function ${parsedCode.name}(${parsedCode.arguments.join()}) ${parsedCode.body}",
-        );
+        if (split[1].trim().substring(0, 7) == "Script(") {
+          final parsedCode = ScriptParser().parse(lines);
+
+          return TransformedCode(
+            type: _type!,
+            dart: Utils.indentCode(trimmedLine),
+            javaScript: "function ${parsedCode.name}"
+                "(${parsedCode.arguments.join()})"
+                "${parsedCode.type == ScriptType.oneLine ? ' => ' : ' '}"
+                "${parsedCode.body}",
+          );
+        } else {
+          return null;
+        }
       case null:
         throw "Cannot transform when PointLineType is null";
     }
