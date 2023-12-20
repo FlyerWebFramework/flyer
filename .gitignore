@@ -3,6 +3,9 @@
 .vscode/
 .dart_tool/
 
+*.freezed.dart
+*.g.dart
+
 sandbox/
 output/
 build/

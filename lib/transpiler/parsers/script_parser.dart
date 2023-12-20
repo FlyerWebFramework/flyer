@@ -1,20 +1,6 @@
+import 'package:flyer/transpiler/common.dart';
+import 'package:flyer/transpiler/models/parsed_script.dart';
 import 'package:flyer/transpiler/utils.dart';
-
-enum ScriptType { multiLine, oneLine }
-
-class ParsedScript {
-  ParsedScript({
-    required this.name,
-    required this.arguments,
-    required this.body,
-    required this.type,
-  });
-
-  final String name;
-  final List<String> arguments;
-  final String body;
-  final ScriptType type;
-}
 
 class ScriptParser {
   String name = '';
@@ -90,7 +76,6 @@ class ScriptParser {
       readingArgs = false;
       arguments.add(line.trim());
       _parseOneLineArguments(arguments.join());
-      arguments.remove('');
     }
   }
 
@@ -101,10 +86,12 @@ class ScriptParser {
         .replaceAll(RegExp(r'<[a-zA-Z0-9]\w+,?\s?[a-zA-Z0-9]\w+>'), '')
         .split(',')
         .map((e) => e.split(' ').last)
-        .toList();
+        .toList()
+      ..remove('');
   }
 
-  ParsedScript parse(List<String> lines) {
+  ParsedScript parse(String code) {
+    final lines = code.split('\n');
     for (String line in lines) {
       if (line.contains("name:") && name.isEmpty) _parseName(line);
 
@@ -123,13 +110,6 @@ class ScriptParser {
           _parseOneLineBody(line);
         } else if (Utils.lastChar(line) == '(' && !readingBody) {
           _parseMultiLineArguments(line);
-        } else {
-          return ParsedScript(
-            name: "Unknown",
-            arguments: arguments,
-            body: body.join(''),
-            type: ScriptType.multiLine,
-          );
         }
       }
     }

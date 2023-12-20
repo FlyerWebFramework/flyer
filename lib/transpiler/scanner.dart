@@ -1,4 +1,5 @@
 import 'package:flyer/transpiler.dart';
+import 'package:flyer/transpiler/models/parsed_script.dart';
 
 import 'parsers/script_parser.dart';
 import 'utils.dart';
@@ -24,11 +25,11 @@ class Scanner {
   }
 
   TransformedCode? transform() {
-    final trimmedLine = _parts.toString().trim();
+    final code = _parts.toString().trim();
     switch (_type) {
       case AnnotationType.observable:
-        final split = trimmedLine.split('=');
-        if (split.length != 2) throw "Error during parsing: $trimmedLine";
+        final split = code.split('=');
+        if (split.length != 2) throw "Error during parsing: $code";
 
         final name = split[0].trim().split(' ').last;
         final value = split[1].substring(0, split[1].length - 1).trim();
@@ -36,12 +37,12 @@ class Scanner {
 
         return TransformedCode(
           type: _type!,
-          dart: trimmedLine,
+          dart: code,
           javaScript: transformed,
         );
       case AnnotationType.computed:
-        final split = trimmedLine.split('=>');
-        if (split.length != 2) throw "Error during parsing: $trimmedLine";
+        final split = code.split('=>');
+        if (split.length != 2) throw "Error during parsing: $code";
 
         final name = split[0].trim().split(' ').last;
         final value = split[1].substring(0, split[1].length - 1).trim();
@@ -49,19 +50,18 @@ class Scanner {
 
         return TransformedCode(
           type: _type!,
-          dart: trimmedLine,
+          dart: code,
           javaScript: transformed,
         );
       case AnnotationType.script:
-        final split = trimmedLine.split('=');
-        final lines = trimmedLine.split('\n');
+        final split = code.split('=');
 
         if (split[1].trim().substring(0, 7) == "Script(") {
-          final parsedCode = ScriptParser().parse(lines);
+          final parsedCode = ScriptParser().parse(code);
 
           return TransformedCode(
             type: _type!,
-            dart: Utils.indentCode(trimmedLine),
+            dart: Utils.indentCode(code),
             javaScript: "function ${parsedCode.name}"
                 "(${parsedCode.arguments.join(', ')})"
                 "${parsedCode.type == ScriptType.oneLine ? ' => ' : ' '}"
