@@ -1,6 +1,7 @@
 import 'package:flyer/transpiler.dart';
 
 import 'parsers/script_parser.dart';
+import 'utils.dart';
 
 class Scanner {
   bool isScanning = false;
@@ -20,34 +21,6 @@ class Scanner {
 
   scan(String line) {
     _parts.writeln(line);
-  }
-
-  String _indentCode(String code) {
-    final List<String> line = [];
-    final List<String> text = [];
-    final characters = code.split('');
-    int tabNum = 0;
-    for (String char in characters) {
-      if ('{[('.contains(char)) {
-        ++tabNum;
-      }
-      if (')]}'.contains(char)) {
-        --tabNum;
-        text.removeLast();
-        text.add('  ' * tabNum);
-      }
-      if (char == '\n') {
-        line.add(char);
-        text.add(line.join());
-        text.add('  ' * tabNum);
-        line.clear();
-      } else {
-        line.add(char);
-      }
-    }
-    text.add(line.join());
-
-    return text.join();
   }
 
   TransformedCode? transform() {
@@ -84,7 +57,7 @@ class Scanner {
 
         return TransformedCode(
           type: _type!,
-          dart: _indentCode(trimmedLine),
+          dart: Utils.indentCode(trimmedLine),
           javaScript: "function ${parsedCode.name}(${parsedCode.arguments.join()}) ${parsedCode.body}",
         );
       case null:
