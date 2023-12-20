@@ -63,7 +63,7 @@ class Scanner {
             type: _type!,
             dart: Utils.indentCode(trimmedLine),
             javaScript: "function ${parsedCode.name}"
-                "(${parsedCode.arguments.join()})"
+                "(${parsedCode.arguments.join(', ')})"
                 "${parsedCode.type == ScriptType.oneLine ? ' => ' : ' '}"
                 "${parsedCode.body}",
           );

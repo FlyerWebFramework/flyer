@@ -52,6 +52,20 @@ class TestComponent extends Component {
   );
 
   @script
+  final testScript3 = Script(
+    name: #myFunc2,
+    function: (
+      String name,
+      int age,
+      Map<String, dynamic> object,
+    ) {
+      print('Hello $name!!');
+      print("Are you $age years old?");
+      print("Here is some object: ${object["uio"]}");
+    },
+  );
+
+  @script
   final lambdaScript = Script(
     name: #myFunc,
     function: () => print('Hello World!!'),
