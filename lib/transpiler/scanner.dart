@@ -1,5 +1,7 @@
 import 'package:flyer/transpiler.dart';
 
+import 'parsers/script_parser.dart';
+
 class Scanner {
   bool isScanning = false;
   final StringBuffer _parts = StringBuffer();
@@ -20,7 +22,7 @@ class Scanner {
     _parts.writeln(line);
   }
 
-  String _formatCode(String code) {
+  String _indentCode(String code) {
     final List<String> line = [];
     final List<String> text = [];
     final characters = code.split('');
@@ -78,18 +80,13 @@ class Scanner {
           javaScript: transformed,
         );
       case AnnotationType.script:
-        final split = trimmedLine.split('=');
+        final parsedCode = ScriptParser().parse(trimmedLine);
 
-        if (split[1].trim().substring(0, 7) == "Script(") {
-          return TransformedCode(
-            type: _type!,
-            dart: _formatCode(trimmedLine),
-            javaScript: "Not implemented..",
-          );
-        } else {
-          return null;
-        }
-
+        return TransformedCode(
+          type: _type!,
+          dart: _indentCode(trimmedLine),
+          javaScript: "function ${parsedCode.name}(${parsedCode.arguments.join()}) ${parsedCode.body}",
+        );
       case null:
         throw "Cannot transform when PointLineType is null";
     }
