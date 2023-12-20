@@ -30,4 +30,8 @@ class Utils {
   static lastChar(String text) {
     return text.trim().split('').last;
   }
+
+  static substring(String text, int start, [int end = 0]) {
+    return text.substring(start, end <= 0 ? text.length + end : end);
+  }
 }

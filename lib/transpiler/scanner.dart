@@ -1,4 +1,5 @@
 import 'package:flyer/transpiler.dart';
+import 'package:flyer/transpiler/convertor.dart';
 import 'package:flyer/transpiler/models/parsed_script.dart';
 
 import 'parsers/script_parser.dart';
@@ -58,15 +59,18 @@ class Scanner {
 
         if (split[1].trim().substring(0, 7) == "Script(") {
           final parsedCode = ScriptParser().parse(code);
+          final body = Convertor(parsedCode.body).dartToJs();
 
           return TransformedCode(
-            type: _type!,
-            dart: Utils.indentCode(code),
-            javaScript: "function ${parsedCode.name}"
-                "(${parsedCode.arguments.join(', ')})"
-                "${parsedCode.type == ScriptType.oneLine ? ' => ' : ' '}"
-                "${parsedCode.body}",
-          );
+              type: _type!,
+              dart: Utils.indentCode(code),
+              javaScript: [
+                "function ${parsedCode.name}",
+                "(${parsedCode.arguments.join(', ')})",
+                parsedCode.type == ScriptType.oneLine ? ' => ' : ' {\n  ',
+                parsedCode.type == ScriptType.oneLine ? body : Utils.substring(body.replaceAll('\n', '\n  '), 0, -2),
+                if (parsedCode.type == ScriptType.multiLine) '}',
+              ].join());
         } else {
           return null;
         }

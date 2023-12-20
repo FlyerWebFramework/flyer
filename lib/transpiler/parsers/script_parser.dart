@@ -1,4 +1,3 @@
-import 'package:flyer/transpiler/common.dart';
 import 'package:flyer/transpiler/models/parsed_script.dart';
 import 'package:flyer/transpiler/utils.dart';
 
@@ -32,28 +31,21 @@ class ScriptParser {
       if (char == '{') {
         ++blockNum;
         readingBody = true;
-        body.add(char);
-        body.add('\n');
-        body.add('  ' * blockNum);
+        if (blockNum > 1) {
+          body.add(char);
+        }
       }
       if (blockNum > 0 && !'{}'.contains(char)) {
         body.add(char);
-        if (char == ';') {
-          body.add('\n');
-          body.add('  ' * blockNum);
-        }
       }
       if (char == '}') {
         --blockNum;
+        body.add(char);
         if (blockNum <= 0 && readingBody) {
           readingBody = false;
           parsingFunction = false;
           body.removeLast();
-        } else {
-          body.add('\n');
-          body.add('  ' * blockNum);
         }
-        body.add(char);
       }
     }
   }
@@ -117,7 +109,7 @@ class ScriptParser {
     return ParsedScript(
       name: name,
       arguments: arguments,
-      body: body.join(''),
+      body: body,
       type: type!,
     );
   }

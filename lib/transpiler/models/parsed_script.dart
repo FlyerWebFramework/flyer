@@ -10,7 +10,7 @@ class ParsedScript with _$ParsedScript {
   const factory ParsedScript({
     required String name,
     required List<String> arguments,
-    required String body,
+    required List<String> body,
     required ScriptType type,
   }) = _ParsedScript;
 }
