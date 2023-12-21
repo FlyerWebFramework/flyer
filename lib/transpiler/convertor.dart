@@ -9,11 +9,6 @@ class Convertor {
 
   final StringBuffer _stack = StringBuffer();
 
-  bool readingBlock = false;
-  bool readingString = false;
-  bool readingStringInterpolation = false;
-  int blockNum = 0;
-
   bool _scanFunction = true;
 
   String dartToJs() {
@@ -45,51 +40,8 @@ class Convertor {
       buffer.write(char);
     }
 
-    return reformat(_stack.toString());
-  }
+    _stack.write(buffer);
 
-  String reformat(String code) {
-    final List<String> body = [];
-    List<String> characters = code.split('');
-    for (String char in characters) {
-      if (char == '"' || char == "'") {
-        readingString = !readingString;
-      }
-      if (char == '\$' && readingString) {
-        readingStringInterpolation = true;
-      }
-      if (char == ' ' && readingStringInterpolation) {
-        readingStringInterpolation = false;
-      }
-      if (char == '{') {
-        body.add(char);
-        if (!readingStringInterpolation) {
-          ++blockNum;
-          readingBlock = true;
-          body.add('\n');
-          body.add('  ' * blockNum);
-        }
-      }
-      if (!'{}'.contains(char)) {
-        body.add(char);
-        if (char == ';') {
-          body.add('\n');
-          body.add('  ' * blockNum);
-        }
-      }
-      if (char == '}') {
-        if (!readingStringInterpolation) {
-          --blockNum;
-          body.removeLast();
-          body.add('\n');
-          body.add('  ' * blockNum);
-        } else {
-          readingStringInterpolation = false;
-        }
-        body.add(char);
-      }
-    }
-
-    return body.join();
+    return _stack.toString();
   }
 }

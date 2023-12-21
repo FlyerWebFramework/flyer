@@ -1,5 +1,6 @@
 import 'package:flyer/transpiler.dart';
 import 'package:flyer/transpiler/convertor.dart';
+import 'package:flyer/transpiler/formatter.dart';
 import 'package:flyer/transpiler/models/parsed_script.dart';
 
 import 'parsers/script_parser.dart';
@@ -55,11 +56,12 @@ class Scanner {
           javaScript: transformed,
         );
       case AnnotationType.script:
-        final split = code.split('=');
+        final split = code.split(code.split('\n').first.contains('=>') ? '=>' : '=');
 
         if (split[1].trim().substring(0, 7) == "Script(") {
           final parsedCode = ScriptParser().parse(code);
-          final body = Convertor(parsedCode.body).dartToJs();
+          final convertedCode = Convertor(parsedCode.body).dartToJs();
+          final body = Formatter().reformat(convertedCode);
 
           return TransformedCode(
               type: _type!,
