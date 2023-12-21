@@ -7,15 +7,51 @@ class Convertor {
 
   final List<String> code;
 
-  final List<String> _stack = [];
+  final StringBuffer _stack = StringBuffer();
 
   bool readingBlock = false;
   bool readingString = false;
   bool readingStringInterpolation = false;
   int blockNum = 0;
 
+  bool _scanFunction = true;
+
   String dartToJs() {
+    StringBuffer buffer = StringBuffer();
     for (String char in code) {
+
+      if (';\n'.contains(char)) {
+        if (_scanFunction) {
+          buffer.write(char);
+        } else {
+          _stack.write(char);
+        }
+        continue;
+      }
+
+      if (char == '(') {
+        _scanFunction = true;
+        buffer.write(char);
+        continue;
+      }
+      if (char == ')') {
+        _scanFunction = false;
+        _stack.write(buffer.toString().replaceAll('print(', 'console.log('));
+        _stack.write(char);
+        buffer.clear();
+        continue;
+      }
+
+      buffer.write(char);
+    }
+
+    return reformat(_stack.toString());
+  }
+
+  String reformat(String code) {
+    final List<String> body = [];
+    List<String> characters = code.split('');
+    for (String char in characters) {
       if (char == '"' || char == "'") {
         readingString = !readingString;
       }
@@ -26,34 +62,34 @@ class Convertor {
         readingStringInterpolation = false;
       }
       if (char == '{') {
-        _stack.add(char);
+        body.add(char);
         if (!readingStringInterpolation) {
           ++blockNum;
           readingBlock = true;
-          _stack.add('\n');
-          _stack.add('  ' * blockNum);
+          body.add('\n');
+          body.add('  ' * blockNum);
         }
       }
       if (!'{}'.contains(char)) {
-        _stack.add(char);
+        body.add(char);
         if (char == ';') {
-          _stack.add('\n');
-          _stack.add('  ' * blockNum);
+          body.add('\n');
+          body.add('  ' * blockNum);
         }
       }
       if (char == '}') {
         if (!readingStringInterpolation) {
           --blockNum;
-          _stack.removeLast();
-          _stack.add('\n');
-          _stack.add('  ' * blockNum);
+          body.removeLast();
+          body.add('\n');
+          body.add('  ' * blockNum);
         } else {
           readingStringInterpolation = false;
         }
-        _stack.add(char);
+        body.add(char);
       }
     }
 
-    return _stack.join();
+    return body.join();
   }
 }
