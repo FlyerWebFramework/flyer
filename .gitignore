@@ -9,5 +9,7 @@
 sandbox/
 output/
 build/
+web/
 
+.logs
 
