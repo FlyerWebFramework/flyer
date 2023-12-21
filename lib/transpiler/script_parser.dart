@@ -1,6 +1,9 @@
 import 'package:flyer/transpiler/models/parsed_script.dart';
 import 'package:flyer/transpiler/utils.dart';
 
+///
+/// Parse @script annotation
+///
 class ScriptParser {
   String name = '';
   List<String> body = [];

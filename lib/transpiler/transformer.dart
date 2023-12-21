@@ -1,52 +1,86 @@
-import 'package:flyer/transpiler.dart';
+import 'package:flyer/transpiler/transpiler.dart';
+import 'package:flyer/transpiler/formatter.dart';
+import 'package:flyer/transpiler/models/parsed_script.dart';
 
+import 'common.dart';
+import 'script_parser.dart';
+import 'utils.dart';
+
+///
+/// Scan annotation and run convertor for transform Dart to JS
+///
 class Transformer {
-  Transformer(this.fileLines);
+  bool isScanning = false;
+  final StringBuffer _parts = StringBuffer();
+  AnnotationType? _type;
 
-  final List<String> fileLines;
-  final List<TransformedCode> _stack = [];
-  final _scanner = Scanner();
-  var _openedFunction = 0;
-
-  bool _isPointStartLine(String line) => line.substring(0, 1) == '@';
-
-  bool _isPointEndLine(String line) => line.substring(line.length - 1, line.length) == ';';
-
-  bool _checkPointType(String line, AnnotationType type) {
-    return line.contains(type.toString());
+  startScanning(AnnotationType type) {
+    isScanning = true;
+    _type = type;
   }
 
-  void _findPoint(String trimmedLine) {
-    if (_isPointStartLine(trimmedLine)) {
-      for (var type in AnnotationType.values) {
-        if (_checkPointType(trimmedLine, type)) {
-          _scanner.startScanning(type);
-          break;
-        }
-      }
-    }
+  stopScanning() {
+    isScanning = false;
+    _parts.clear();
+    _type = null;
   }
 
-  List<TransformedCode> transform() {
-    for (String line in fileLines) {
-      final String trimmedLine = line.trim();
-      if (trimmedLine.isEmpty) continue;
+  scan(String line) {
+    _parts.writeln(line);
+  }
 
-      if (_scanner.isScanning) {
-        if (_isPointEndLine(trimmedLine) && _openedFunction <= 0) {
-          _scanner.scan(trimmedLine);
-          final transCode = _scanner.transform();
-          if (transCode != null) _stack.add(transCode);
-          _scanner.stopScanning();
+  TransformedCode? transform() {
+    final code = _parts.toString().trim();
+    switch (_type) {
+      case AnnotationType.observable:
+        final split = code.split('=');
+        if (split.length != 2) throw "Error during parsing: $code";
+
+        final name = split[0].trim().split(' ').last;
+        final value = split[1].substring(0, split[1].length - 1).trim();
+        final transformed = "let $name = \$state($value);";
+
+        return TransformedCode(
+          type: _type!,
+          dart: code,
+          javaScript: transformed,
+        );
+      case AnnotationType.computed:
+        final split = code.split('=>');
+        if (split.length != 2) throw "Error during parsing: $code";
+
+        final name = split[0].trim().split(' ').last;
+        final value = split[1].substring(0, split[1].length - 1).trim();
+        final transformed = "let $name = \$derived($value);";
+
+        return TransformedCode(
+          type: _type!,
+          dart: code,
+          javaScript: transformed,
+        );
+      case AnnotationType.script:
+        final split = code.split(code.split('\n').first.contains('=>') ? '=>' : '=');
+
+        if (split[1].trim().substring(0, 7) == "Script(") {
+          final parsedCode = ScriptParser().parse(code);
+          final convertedCode = Transpiler().dartToJs(parsedCode.body);
+          final body = Formatter().reformat(convertedCode);
+
+          return TransformedCode(
+              type: _type!,
+              dart: Utils.indentCode(code),
+              javaScript: [
+                "function ${parsedCode.name}",
+                "(${parsedCode.arguments.join(', ')})",
+                parsedCode.type == ScriptType.oneLine ? ' => ' : ' {\n  ',
+                parsedCode.type == ScriptType.oneLine ? body : Utils.substring(body.replaceAll('\n', '\n  '), 0, -2),
+                if (parsedCode.type == ScriptType.multiLine) '}',
+              ].join());
         } else {
-          _scanner.scan(trimmedLine);
-          _openedFunction += trimmedLine.split('{').length-1;
-          _openedFunction -= trimmedLine.split('}').length-1;
+          return null;
         }
-      } else {
-        _findPoint(trimmedLine);
-      }
+      case null:
+        throw "Cannot transform when PointLineType is null";
     }
-    return _stack;
   }
 }

@@ -1,5 +1,5 @@
 import 'package:flyer/transpiler/models/parsed_script.dart';
-import 'package:flyer/transpiler/parsers/script_parser.dart';
+import 'package:flyer/transpiler/script_parser.dart';
 import 'package:test/test.dart';
 
 import 'test_codes.dart';

@@ -1,3 +1,6 @@
+///
+/// Format code for better readability
+///
 class Formatter {
   bool readingBlock = false;
   bool readingString = false;

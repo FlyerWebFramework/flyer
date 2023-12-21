@@ -1,83 +1,53 @@
-import 'package:flyer/transpiler.dart';
-import 'package:flyer/transpiler/convertor.dart';
-import 'package:flyer/transpiler/formatter.dart';
-import 'package:flyer/transpiler/models/parsed_script.dart';
+import 'common.dart';
+import 'transformer.dart';
 
-import 'parsers/script_parser.dart';
-import 'utils.dart';
-
+///
+/// Find flyer annotation and run scanner for transform it
+///
 class Scanner {
-  bool isScanning = false;
-  final StringBuffer _parts = StringBuffer();
-  AnnotationType? _type;
+  final List<TransformedCode> _stack = [];
+  final _scanner = Transformer();
+  var _openedFunction = 0;
 
-  startScanning(AnnotationType type) {
-    isScanning = true;
-    _type = type;
+  bool _isPointStartLine(String line) => line.substring(0, 1) == '@';
+
+  bool _isPointEndLine(String line) => line.substring(line.length - 1, line.length) == ';';
+
+  bool _checkPointType(String line, AnnotationType type) {
+    return line.contains(type.toString());
   }
 
-  stopScanning() {
-    isScanning = false;
-    _parts.clear();
-    _type = null;
-  }
-
-  scan(String line) {
-    _parts.writeln(line);
-  }
-
-  TransformedCode? transform() {
-    final code = _parts.toString().trim();
-    switch (_type) {
-      case AnnotationType.observable:
-        final split = code.split('=');
-        if (split.length != 2) throw "Error during parsing: $code";
-
-        final name = split[0].trim().split(' ').last;
-        final value = split[1].substring(0, split[1].length - 1).trim();
-        final transformed = "let $name = \$state($value);";
-
-        return TransformedCode(
-          type: _type!,
-          dart: code,
-          javaScript: transformed,
-        );
-      case AnnotationType.computed:
-        final split = code.split('=>');
-        if (split.length != 2) throw "Error during parsing: $code";
-
-        final name = split[0].trim().split(' ').last;
-        final value = split[1].substring(0, split[1].length - 1).trim();
-        final transformed = "let $name = \$derived($value);";
-
-        return TransformedCode(
-          type: _type!,
-          dart: code,
-          javaScript: transformed,
-        );
-      case AnnotationType.script:
-        final split = code.split(code.split('\n').first.contains('=>') ? '=>' : '=');
-
-        if (split[1].trim().substring(0, 7) == "Script(") {
-          final parsedCode = ScriptParser().parse(code);
-          final convertedCode = Convertor(parsedCode.body).dartToJs();
-          final body = Formatter().reformat(convertedCode);
-
-          return TransformedCode(
-              type: _type!,
-              dart: Utils.indentCode(code),
-              javaScript: [
-                "function ${parsedCode.name}",
-                "(${parsedCode.arguments.join(', ')})",
-                parsedCode.type == ScriptType.oneLine ? ' => ' : ' {\n  ',
-                parsedCode.type == ScriptType.oneLine ? body : Utils.substring(body.replaceAll('\n', '\n  '), 0, -2),
-                if (parsedCode.type == ScriptType.multiLine) '}',
-              ].join());
-        } else {
-          return null;
+  void _findPoint(String trimmedLine) {
+    if (_isPointStartLine(trimmedLine)) {
+      for (var type in AnnotationType.values) {
+        if (_checkPointType(trimmedLine, type)) {
+          _scanner.startScanning(type);
+          break;
         }
-      case null:
-        throw "Cannot transform when PointLineType is null";
+      }
     }
+  }
+
+  List<TransformedCode> parse(List<String> fileLines) {
+    for (String line in fileLines) {
+      final String trimmedLine = line.trim();
+      if (trimmedLine.isEmpty) continue;
+
+      if (_scanner.isScanning) {
+        if (_isPointEndLine(trimmedLine) && _openedFunction <= 0) {
+          _scanner.scan(trimmedLine);
+          final transCode = _scanner.transform();
+          if (transCode != null) _stack.add(transCode);
+          _scanner.stopScanning();
+        } else {
+          _scanner.scan(trimmedLine);
+          _openedFunction += trimmedLine.split('{').length-1;
+          _openedFunction -= trimmedLine.split('}').length-1;
+        }
+      } else {
+        _findPoint(trimmedLine);
+      }
+    }
+    return _stack;
   }
 }

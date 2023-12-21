@@ -1,17 +1,12 @@
-class Convertor {
-  Convertor(this.code);
-
-  factory Convertor.fromString(String code) {
-    return Convertor(code.split(''));
-  }
-
-  final List<String> code;
-
+///
+/// Transpile Dart code into JS code
+///
+class Transpiler {
   final StringBuffer _stack = StringBuffer();
 
   bool _scanFunction = true;
 
-  String dartToJs() {
+  String dartToJs(List<String> code) {
     StringBuffer buffer = StringBuffer();
     for (String char in code) {
 
