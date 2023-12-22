@@ -19,7 +19,7 @@ class Render {
       if (name != null) "name='$name'",
       if (content != null) "content='$content'",
     ].join(" "))
-      ..writeln(">");
+      ..write(">");
   }
 
   static StringBuffer link(RenderContext context, {required String rel, required String href}) {
@@ -29,7 +29,7 @@ class Render {
       "rel='$rel'",
       "href='$href'",
     ].join(" "))
-      ..writeln(">");
+      ..write(">");
   }
 
   static StringBuffer text(RenderContext context, String text) {
@@ -37,10 +37,7 @@ class Render {
   }
 
   static StringBuffer list(List<StringBuffer> elements) {
-    return elements.fold(
-      StringBuffer(),
-      (previousValue, element) => previousValue..write(element),
-    );
+    return StringBuffer(elements.join("\n"));
   }
 
   static StringBuffer element(

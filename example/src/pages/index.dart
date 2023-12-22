@@ -2,7 +2,6 @@ import 'package:flyer/widgets.dart';
 
 import '../layouts/default_layout.dart';
 
-
 class IndexPage extends WebPage {
   IndexPage();
 
@@ -10,7 +9,12 @@ class IndexPage extends WebPage {
   Widget build() {
     return DefaultLayout(
       content: Page(
-        content: Text("Hello world!!!"),
+        content: Wrap(
+          children: [
+            Text("Hello world!!!"),
+            Text("Ahoj!!!"),
+          ],
+        ),
       ),
     );
   }

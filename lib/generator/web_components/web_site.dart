@@ -42,7 +42,6 @@ class WebSite extends Widget {
                 context.indent(3),
                 tag: "title",
                 child: Render.text(context.indent(3), title!),
-                newLine: true,
                 oneLine: true,
               ),
             Render.link(context.indent(2), rel: "icon", href: "%sveltekit.assets%/favicon.png"),
@@ -54,7 +53,6 @@ class WebSite extends Widget {
             Render.text(context.indent(2), "%sveltekit.head%"),
           ]),
         ),
-        Render.newLine,
         Render.element(
           context.indent(2),
           tag: 'body',

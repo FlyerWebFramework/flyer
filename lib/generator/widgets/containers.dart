@@ -61,3 +61,14 @@ class Container extends SizedBox {
     );
   }
 }
+
+class Wrap extends Widget {
+  const Wrap({required this.children});
+
+  final List<Widget> children;
+
+  @override
+  StringBuffer render(RenderContext context) {
+    return Render.list(children.map((e) => e.render(context)).toList());
+  }
+}
