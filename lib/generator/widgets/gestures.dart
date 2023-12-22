@@ -20,7 +20,7 @@ class GestureDetector extends Widget with Gestures {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Element.render(
+    return Render.element(
       context,
       tag: 'div',
       events: events,

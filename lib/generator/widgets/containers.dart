@@ -53,7 +53,7 @@ class Container extends SizedBox {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Element.render(
+    return Render.element(
       context,
       tag: 'div',
       classes: classes,

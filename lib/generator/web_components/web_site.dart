@@ -19,25 +19,22 @@ class WebSite extends Widget {
 
   @override
   StringBuffer render(RenderContext context) {
-    return StringBuffer(Element.render(
+    return Render.element(
       context.copy,
       tag: 'html',
-      child: StringBuffer()
-        ..writeln(
-          Element.render(
-            context.indent(2),
-            tag: 'head',
-            child: StringBuffer()..writeln("%sveltekit.head%"),
-          ),
-        )
-        ..writeln()
-        ..write(
-          Element.render(
-            context.indent(2),
-            tag: 'body',
-            child: StringBuffer()..writeln("%sveltekit.body%"),
-          ),
+      child: Render.list([
+        Render.element(
+          context.indent(2),
+          tag: 'head',
+          child: Render.text(context.indent(2), "%sveltekit.head%"),
         ),
-    ));
+        Render.newLine,
+        Render.element(
+          context.indent(2),
+          tag: 'body',
+          child: Render.text(context.indent(2), "%sveltekit.body%"),
+        )
+      ]),
+    );
   }
 }

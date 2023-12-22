@@ -28,7 +28,7 @@ class Button extends SizedBox with Gestures {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Element.render(
+    return Render.element(
       context,
       tag: 'button',
       events: events,

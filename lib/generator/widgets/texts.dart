@@ -9,11 +9,11 @@ class Text extends Widget {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Element.render(
+    return Render.element(
       context,
       tag: 'span',
       classes: style!.classes,
-      child: StringBuffer(Constants.indent * (context.indentation + 1) + text),
+      child: Render.text(context.indent(1), text),
     );
   }
 }

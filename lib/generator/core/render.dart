@@ -1,14 +1,27 @@
 import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
 
-class Element {
-  static StringBuffer render(
-      RenderContext context, {
-        required String tag,
-        List<Event>? events,
-        List<String>? classes,
-        StringBuffer? child,
-      }) {
+class Render {
+  static StringBuffer get newLine => StringBuffer('\n');
+
+  static StringBuffer text(RenderContext context, String text) {
+    return StringBuffer("${Constants.indent * (context.indentation + 1)}$text");
+  }
+
+  static StringBuffer list(List<StringBuffer> elements) {
+    return elements.fold(
+      StringBuffer(),
+      (previousValue, element) => previousValue..write(element),
+    );
+  }
+
+  static StringBuffer element(
+    RenderContext context, {
+    required String tag,
+    List<Event>? events,
+    List<String>? classes,
+    StringBuffer? child,
+  }) {
     final String indentation = Constants.indent * context.indentation;
     final StringBuffer buffer = StringBuffer();
     buffer.write("$indentation<$tag");
@@ -26,8 +39,8 @@ class Element {
       buffer.writeAll(classes, " ");
       buffer.write("'");
     }
-    buffer.write(">\n");
-    if (child != null) buffer.write(child);
+    buffer.writeln(">");
+    if (child != null) buffer.write(child.toString());
     if (child != null) buffer.writeln();
     buffer.write("$indentation</$tag>");
     return buffer;
