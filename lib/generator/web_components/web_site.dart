@@ -8,6 +8,7 @@ class WebSite extends Widget {
     this.description,
     this.keywords,
     this.charset = 'utf-8',
+    this.language = 'en',
     this.refresh,
     required this.routes,
   });
@@ -20,7 +21,8 @@ class WebSite extends Widget {
   final String? title;
   final String? author;
   final String? description;
-  final String? charset;
+  final String charset;
+  final String language;
   final Duration? refresh;
   final List<String>? keywords;
 
@@ -28,43 +30,48 @@ class WebSite extends Widget {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Render.element(
-      context.copy,
-      tag: 'html',
-      child: Render.list([
-        Render.element(
-          context.indent(2),
-          tag: 'head',
-          child: Render.list([
-            Render.meta(context.indent(2), charset: charset),
-            if (title != null)
-              Render.element(
-                context.indent(3),
-                tag: "title",
-                child: Render.text(context.indent(3), title!),
-                oneLine: true,
-              ),
-            Render.link(context.indent(2), rel: "icon", href: "%sveltekit.assets%/favicon.png"),
-            if (author != null) Render.meta(context.indent(2), name: "author", content: author),
-            if (description != null) Render.meta(context.indent(2), name: "description", content: description),
-            if (keywords != null) Render.meta(context.indent(2), name: "keywords", content: keywords!.join(", ")),
-            if (refresh != null) Render.meta(context.indent(2), httpEquiv: "refresh", content: "${refresh!.inSeconds}"),
-            Render.meta(context.indent(2), name: "viewport", content: "width=device-width, initial-scale=1"),
-            Render.text(context.indent(2), "%sveltekit.head%"),
-          ]),
-        ),
-        Render.element(
-          context.indent(2),
-          tag: 'body',
-          custom: {"data-sveltekit-preload-data": "hover"},
-          child: Render.element(
-            context.indent(3),
-            tag: "div",
-            styles: {"display": "contents"},
-            child: Render.text(context.indent(3), "%sveltekit.body%"),
+    return Render.list([
+      Render.text(context, "<!doctype html>"),
+      Render.element(
+        context.copy,
+        tag: 'html',
+        custom: {"lang": language},
+        child: Render.list([
+          Render.element(
+            context.indent(2),
+            tag: 'head',
+            child: Render.list([
+              Render.meta(context.indent(2), charset: charset),
+              if (title != null)
+                Render.element(
+                  context.indent(3),
+                  tag: "title",
+                  child: Render.text(context.indent(3), title!),
+                  oneLine: true,
+                ),
+              Render.link(context.indent(2), rel: "icon", href: "%sveltekit.assets%/favicon.png"),
+              if (author != null) Render.meta(context.indent(2), name: "author", content: author),
+              if (description != null) Render.meta(context.indent(2), name: "description", content: description),
+              if (keywords != null) Render.meta(context.indent(2), name: "keywords", content: keywords!.join(", ")),
+              if (refresh != null)
+                Render.meta(context.indent(2), httpEquiv: "refresh", content: "${refresh!.inSeconds}"),
+              Render.meta(context.indent(2), name: "viewport", content: "width=device-width, initial-scale=1"),
+              Render.text(context.indent(2), "%sveltekit.head%"),
+            ]),
           ),
-        )
-      ]),
-    );
+          Render.element(
+            context.indent(2),
+            tag: 'body',
+            custom: {"data-sveltekit-preload-data": "hover"},
+            child: Render.element(
+              context.indent(3),
+              tag: "div",
+              styles: {"display": "contents"},
+              child: Render.text(context.indent(3), "%sveltekit.body%"),
+            ),
+          )
+        ]),
+      ),
+    ]);
   }
 }
