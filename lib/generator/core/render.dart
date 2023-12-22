@@ -4,6 +4,34 @@ import 'package:flyer/generator/foundation.dart';
 class Render {
   static StringBuffer get newLine => StringBuffer('\n');
 
+  static StringBuffer meta(
+    RenderContext context, {
+    String? name,
+    String? content,
+    String? charset,
+    String? httpEquiv,
+  }) {
+    final indentation = Constants.indent * (context.indentation + 1);
+    return StringBuffer([
+      "$indentation<meta",
+      if (charset != null) "charset='$charset'",
+      if (httpEquiv != null) "http-equiv='$httpEquiv'",
+      if (name != null) "name='$name'",
+      if (content != null) "content='$content'",
+    ].join(" "))
+      ..writeln(">");
+  }
+
+  static StringBuffer link(RenderContext context, {required String rel, required String href}) {
+    final indentation = Constants.indent * (context.indentation + 1);
+    return StringBuffer([
+      "$indentation<link",
+      "rel='$rel'",
+      "href='$href'",
+    ].join(" "))
+      ..writeln(">");
+  }
+
   static StringBuffer text(RenderContext context, String text) {
     return StringBuffer("${Constants.indent * (context.indentation + 1)}$text");
   }
@@ -21,6 +49,10 @@ class Render {
     List<Event>? events,
     List<String>? classes,
     StringBuffer? child,
+    Map<String, String>? styles,
+    Map<String, String>? custom,
+    bool newLine = false,
+    bool oneLine = false,
   }) {
     final String indentation = Constants.indent * context.indentation;
     final StringBuffer buffer = StringBuffer();
@@ -39,10 +71,22 @@ class Render {
       buffer.writeAll(classes, " ");
       buffer.write("'");
     }
-    buffer.writeln(">");
-    if (child != null) buffer.write(child.toString());
-    if (child != null) buffer.writeln();
-    buffer.write("$indentation</$tag>");
+    if (styles != null) {
+      buffer.write(" ");
+      buffer.write("style='");
+      buffer.write([for (var e in styles.entries) "${e.key}:${e.value}"].join(';'));
+      buffer.write("'");
+    }
+    if (custom != null) {
+      buffer.write(" ");
+      buffer.write([for (var e in custom.entries) "${e.key}='${e.value}'"].join(' '));
+    }
+    buffer.write(">");
+    if (!oneLine) buffer.writeln();
+    if (child != null) buffer.write(!oneLine ? child : child.toString().trim());
+    if (child != null && !oneLine) buffer.writeln();
+    buffer.write(!oneLine ? "$indentation</$tag>" : "</$tag>");
+    if (newLine) buffer.writeln();
     return buffer;
   }
 }
