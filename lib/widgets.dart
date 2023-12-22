@@ -1,13 +1,8 @@
 library widgets;
 
-export 'widgets/mixins.dart';
-export 'widgets/widgets.dart';
-export 'widgets/annotations.dart';
-export 'widgets/foundation/border.dart';
-export 'widgets/foundation/edge_insets.dart';
-export 'widgets/foundation/text_style.dart';
-export 'widgets/foundation/common.dart';
-
+export 'generator/widgets.dart';
+export 'generator/foundation.dart';
+export 'generator/core/annotations.dart';
 
 T $prop<T>(T value) => value;
 

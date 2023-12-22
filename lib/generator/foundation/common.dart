@@ -1,4 +1,4 @@
-import 'package:flyer/widgets.dart';
+import 'border.dart';
 
 class Colors {
   static const red = Color("red");
