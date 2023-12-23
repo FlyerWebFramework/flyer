@@ -25,7 +25,7 @@ Future<void> main(List<String> arguments) async {
       createProjectIfNotExists(webPath: webPath, logsPath: logsPath);
       await build(
         filePath: path.join(DartScript.self.pathToProjectRoot, arguments[1]),
-        outputPath: path.join(webPath, "src", "routes", "+page.svelte"),
+        outputPath: path.join(DartScript.self.pathToProjectRoot, arguments[2]),
       );
     case 'clean':
       deleteDir(webPath, recursive: true);
@@ -65,9 +65,28 @@ createProjectIfNotExists({required String webPath, required String logsPath}) {
 }
 
 Future<void> build({required String filePath, required String outputPath}) async {
+  "dart run src/main.dart".start();
   final fileLines = await File(filePath).readAsLines();
   List<TransformedCode> transformedCode = Scanner().parse(fileLines);
-  final scriptPart = "<script>\n${transformedCode.map((e) => e.javaScript).join('\n\n')}\n</script>\n\n";
-  File(outputPath).writeAsString(scriptPart);
-  "dart run $filePath".start(progress: Progress(outputPath.append));
+  final scriptPart = "\n\n<script>\n${transformedCode.map((e) => e.javaScript).join('\n\n')}\n</script>\n\n";
+  print(scriptPart);
+  outputPath.append(scriptPart);
+  appendImports();
+}
+
+appendImports() {
+  final allLayouts = find(r"*layout.svelte", recursive: true).toList();
+  for (var page in allLayouts) {
+    page.append("\n\n<script>\n  import '/src/app.css';\n</script>");
+  }
+
+  final allPages = find(r"*page.svelte", recursive: true).toList();
+  for (var page in allPages) {
+    page.append("\n\n<script>\n  import {${allComponents.join(', ')}} from \"\$lib/components/index.js\"\n</script>");
+  }
+}
+
+List<String> get allComponents {
+  final components = path.join(DartScript.self.pathToProjectRoot, "web", "src", "lib", "components", "index.js");
+  return File(components).readAsLinesSync().map((line) => line.split('}').first.split(' ').last).toList()..remove('');
 }
