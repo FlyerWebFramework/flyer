@@ -1,5 +1,6 @@
 import 'package:flyer/widgets.dart';
 
+import '../components/simple_button.dart';
 import '../layouts/default_layout.dart';
 
 class IndexPage extends WebPage {
@@ -13,6 +14,7 @@ class IndexPage extends WebPage {
           children: [
             Text("Header"),
             Text("Some text"),
+            SimpleButton(),
           ],
         ),
       ),

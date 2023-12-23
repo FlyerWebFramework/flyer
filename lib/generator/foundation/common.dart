@@ -1,3 +1,5 @@
+import 'package:flyer/generator/foundation.dart';
+
 import 'border.dart';
 
 class Colors {
@@ -52,12 +54,20 @@ class RenderContext {
   final int indentation;
   final bool slot;
 
+  RenderContext copyWith({int? indentation, bool? slot}) {
+    return RenderContext(indentation: indentation ?? this.indentation, slot: slot ?? this.slot);
+  }
+
   RenderContext get copy {
-    return RenderContext(indentation: indentation + 1);
+    return copyWith(indentation: indentation + 1);
   }
 
   RenderContext indent([int num = 1]) {
-    return RenderContext(indentation: indentation + num);
+    return copyWith(indentation: indentation + num);
+  }
+
+  RenderContext indentBack([int num = 1]) {
+    return copyWith(indentation: indentation - num);
   }
 }
 

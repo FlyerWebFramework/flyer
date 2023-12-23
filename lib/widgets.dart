@@ -15,4 +15,3 @@ $effect(Function() func) {}
 $scripts(Map<Symbol, Function> scripts) {}
 //$script({required Symbol name, required Function() function}) {}
 $script(Symbol name, Function function) {}
-

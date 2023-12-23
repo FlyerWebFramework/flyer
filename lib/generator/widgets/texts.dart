@@ -13,7 +13,7 @@ class Text extends Widget {
       context,
       tag: 'span',
       classes: style?.classes,
-      child: Render.text(context.indent(1), text),
+      child: Render.text(context, text),
     );
   }
 }

@@ -36,6 +36,10 @@ class Render {
     return StringBuffer("${Constants.indent * (context.indentation + 1)}$text");
   }
 
+  static StringBuffer slot(RenderContext context) {
+    return StringBuffer("${Constants.indent * (context.indentation)}\n<slot/>\n");
+  }
+
   static StringBuffer list(List<StringBuffer> elements) {
     return StringBuffer(elements.join("\n"));
   }
