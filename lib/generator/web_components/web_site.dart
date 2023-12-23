@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:path/path.dart' as path;
 import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
 
@@ -26,7 +29,7 @@ class WebSite extends Widget {
   final Duration? refresh;
   final List<String>? keywords;
 
-  final Map<String, Widget> routes;
+  final Map<String, WebPage> routes;
 
   @override
   StringBuffer render(RenderContext context) {
@@ -73,5 +76,16 @@ class WebSite extends Widget {
         ]),
       ),
     ]);
+  }
+
+  @override
+  generate({bool debug = false, required String outputPath}) {
+    final htmlPage = render(RenderContext()).toString();
+    File(path.join(outputPath, 'src', 'app.html')).writeAsStringSync(htmlPage);
+
+    for (MapEntry<String, WebPage> route in routes.entries) {
+      final pagePath = path.join(outputPath, 'src', 'routes', route.key == '/' ? '' : route.key);
+      route.value.generate(outputPath: pagePath);
+    }
   }
 }

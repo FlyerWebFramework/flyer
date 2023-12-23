@@ -47,9 +47,10 @@ enum EventType { click }
 class BuildContext {}
 
 class RenderContext {
-  const RenderContext({this.indentation = -1});
+  const RenderContext({this.indentation = -1, this.slot = false});
 
   final int indentation;
+  final bool slot;
 
   RenderContext get copy {
     return RenderContext(indentation: indentation + 1);

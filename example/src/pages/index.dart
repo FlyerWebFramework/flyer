@@ -11,8 +11,8 @@ class IndexPage extends WebPage {
       content: Page(
         content: Wrap(
           children: [
-            Text("Hello world!!!"),
-            Text("Ahoj!!!"),
+            Text("Header"),
+            Text("Some text"),
           ],
         ),
       ),

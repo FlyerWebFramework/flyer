@@ -1,3 +1,4 @@
+import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/widgets.dart';
 
 import 'pages/index.dart';
@@ -8,5 +9,5 @@ void main(List<String> arguments) {
     routes: {
       "/": IndexPage(),
     },
-  ).run();
+  ).generate(debug: true, outputPath: Constants.outputPath);
 }
