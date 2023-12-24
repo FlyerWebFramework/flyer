@@ -16,16 +16,16 @@ Future<void> main(List<String> arguments) async {
       createProjectIfNotExists(webPath: webPath, logsPath: logsPath);
       'npm run dev'.start(workingDirectory: webPath);
     case 'build':
-      if (arguments.length <= 1) {
-        print("File path is missing.\n");
-        print("You have to run:");
-        print("flyer build <path-to-file>");
-        exit(1);
-      }
+      // if (arguments.length <= 1) {
+      //   print("File path is missing.\n");
+      //   print("You have to run:");
+      //   print("flyer build <path-to-file>");
+      //   exit(1);
+      // }
       createProjectIfNotExists(webPath: webPath, logsPath: logsPath);
       await build(
-        filePath: path.join(DartScript.self.pathToProjectRoot, arguments[1]),
-        outputPath: path.join(DartScript.self.pathToProjectRoot, arguments[2]),
+        // filePath: path.join(DartScript.self.pathToProjectRoot, arguments[1]),
+        // outputPath: path.join(DartScript.self.pathToProjectRoot, arguments[2]),
       );
     case 'clean':
       deleteDir(webPath, recursive: true);
@@ -64,13 +64,13 @@ createProjectIfNotExists({required String webPath, required String logsPath}) {
   'npm install'.start(workingDirectory: webPath, progress: Progress(logsPath.append));
 }
 
-Future<void> build({required String filePath, required String outputPath}) async {
+Future<void> build() async {
   "dart run src/main.dart".start();
-  final fileLines = await File(filePath).readAsLines();
-  List<TransformedCode> transformedCode = Scanner().parse(fileLines);
-  final scriptPart = "\n\n<script>\n${transformedCode.map((e) => e.javaScript).join('\n\n')}\n</script>\n\n";
-  print(scriptPart);
-  outputPath.append(scriptPart);
+  // final fileLines = await File(filePath).readAsLines();
+  // List<TransformedCode> transformedCode = Scanner().parse(fileLines);
+  // final scriptPart = "\n\n<script>\n${transformedCode.map((e) => e.javaScript).join('\n\n')}\n</script>\n\n";
+  // print(scriptPart);
+  // outputPath.append(scriptPart);
   appendImports();
 }
 
