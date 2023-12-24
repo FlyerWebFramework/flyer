@@ -80,6 +80,7 @@ class WebSite extends Widget {
 
   @override
   generate({bool debug = false, required String outputPath}) {
+    Constants.webPath = outputPath;
     final htmlPage = render(RenderContext()).toString();
     File(path.join(outputPath, 'src', 'app.html')).writeAsStringSync(htmlPage);
 

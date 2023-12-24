@@ -8,5 +8,5 @@ void main(List<String> arguments) {
     routes: {
       "/": IndexPage(),
     },
-  ).generate(debug: true, outputPath: Constants.outputPath);
+  ).generate(debug: true, outputPath: arguments.first);
 }

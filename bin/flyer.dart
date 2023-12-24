@@ -24,9 +24,9 @@ Future<void> main(List<String> arguments) async {
       // }
       createProjectIfNotExists(webPath: webPath, logsPath: logsPath);
       await build(
-        // filePath: path.join(DartScript.self.pathToProjectRoot, arguments[1]),
-        // outputPath: path.join(DartScript.self.pathToProjectRoot, arguments[2]),
-      );
+          // filePath: path.join(DartScript.self.pathToProjectRoot, arguments[1]),
+          // outputPath: path.join(DartScript.self.pathToProjectRoot, arguments[2]),
+          );
     case 'clean':
       deleteDir(webPath, recursive: true);
     case 'doctor':
@@ -65,7 +65,8 @@ createProjectIfNotExists({required String webPath, required String logsPath}) {
 }
 
 Future<void> build() async {
-  "dart run src/main.dart".start();
+  final output = path.join(DartScript.self.pathToProjectRoot, 'web');
+  "dart run -r src/main.dart $output".start();
   // final fileLines = await File(filePath).readAsLines();
   // List<TransformedCode> transformedCode = Scanner().parse(fileLines);
   // final scriptPart = "\n\n<script>\n${transformedCode.map((e) => e.javaScript).join('\n\n')}\n</script>\n\n";

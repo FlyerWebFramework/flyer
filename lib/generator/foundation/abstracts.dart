@@ -17,7 +17,7 @@ abstract class Widget {
     return this;
   }
 
-  generate({bool debug = false, required String outputPath}) {
+  generate({bool debug = false, required String outputPath}) async {
     throw UnimplementedError();
   }
 }
@@ -26,6 +26,7 @@ abstract class Component extends Widget {
   const Component();
 
   Map<String, dynamic> get obs => {};
+
   Scripts get scripts => Scripts({});
 
   @override
@@ -36,7 +37,7 @@ abstract class Component extends Widget {
   @override
   StringBuffer render(RenderContext context) {
     if (context.indentation >= 0 && context.slot) {
-      generate(outputPath: path.join(Constants.outputPath, "src", "lib", "components"));
+      generate(outputPath: path.join(Constants.webPath!, "src", "lib", "components"));
       return Render.element(context, tag: runtimeType.toString());
     } else {
       return build().render(context.copy);
@@ -75,7 +76,7 @@ abstract class Component extends Widget {
   }
 }
 
-abstract class Layout extends Widget {
+abstract class Layout extends Component {
   const Layout({required this.content});
 
   final Page content;
@@ -102,7 +103,7 @@ abstract class Layout extends Widget {
   }
 }
 
-abstract class WebPage extends Widget {
+abstract class WebPage extends Component {
   const WebPage();
 
   @override
