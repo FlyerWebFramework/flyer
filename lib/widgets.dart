@@ -3,6 +3,7 @@ library widgets;
 export 'generator/widgets.dart';
 export 'generator/foundation.dart';
 export 'generator/core/annotations.dart';
+export 'generator/core/constants.dart';
 
 T $prop<T>(T value) => value;
 

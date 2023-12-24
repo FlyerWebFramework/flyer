@@ -4,7 +4,7 @@ enum N { count, handleClick }
 
 class SimpleButton extends Component {
   @override
-  Map<String, dynamic> obs = {N.count.name: 0};
+  Map<String, dynamic> get obs => {N.count.name: 0};
 
   @override
   Scripts get scripts => Scripts({

@@ -23,10 +23,10 @@ abstract class Widget {
 }
 
 abstract class Component extends Widget {
-  Component();
+  const Component();
 
-  final Map<String, dynamic> obs = {};
-  final Scripts scripts = Scripts({});
+  Map<String, dynamic> get obs => {};
+  Scripts get scripts => Scripts({});
 
   @override
   Widget build() {

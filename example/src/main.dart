@@ -1,5 +1,4 @@
-import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/widgets.dart';
+import 'package:flyer/widgets.dart';
 
 import 'pages/index.dart';
 
