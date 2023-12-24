@@ -23,7 +23,10 @@ abstract class Widget {
 }
 
 abstract class Component extends Widget {
-  const Component();
+  Component();
+
+  final Map<String, dynamic> obs = {};
+  final Scripts scripts = Scripts({});
 
   @override
   Widget build() {
@@ -40,13 +43,7 @@ abstract class Component extends Widget {
     }
   }
 
-  @override
-  generate({bool debug = false, required String outputPath}) async {
-    final page = render(RenderContext(slot: true)).toString();
-
-    if (!exists(outputPath)) createDir(outputPath);
-    File(path.join(outputPath, '$runtimeType.svelte')).writeAsStringSync(page);
-
+  _generateExportLine(String outputPath) {
     final indexPath = path.join(outputPath, 'index.js');
     final exportLine = 'export {default as $runtimeType} from "\$lib/components/$runtimeType.svelte"\n';
     if (!exists(indexPath)) {
@@ -57,6 +54,23 @@ abstract class Component extends Widget {
         indexPath.append(exportLine);
       }
     }
+  }
+
+  String renderScriptPart() {
+    final variables = obs.entries.map((e) => "let ${e.key} = \$state(${e.value});\n").join("");
+    final functions = scripts.list.entries.map((e) => "function ${e.key}${e.value}\n\n").join("");
+    return "<script>\n$variables\n$functions</script>\n\n";
+  }
+
+  @override
+  generate({bool debug = false, required String outputPath}) async {
+    final page = renderScriptPart() + render(RenderContext(slot: true)).toString();
+
+    if (!exists(outputPath)) createDir(outputPath);
+    File(path.join(outputPath, '$runtimeType.svelte')).writeAsStringSync(page);
+
+    _generateExportLine(outputPath);
+
     return true;
   }
 }

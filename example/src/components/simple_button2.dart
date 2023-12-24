@@ -1,17 +1,11 @@
 import 'package:flyer/widgets.dart';
 
-enum N { count, handleClick }
-
 class SimpleButton extends Component {
-  @override
-  Map<String, dynamic> obs = {N.count.name: 0};
+  int count = 0;
 
-  @override
-  Scripts get scripts => Scripts({
-        N.handleClick.name: """() {
-          count += 1;
-        }""",
-      });
+  get handleClick => Script(() {
+    count += 1;
+  });
 
   @override
   Widget build() {
@@ -19,9 +13,9 @@ class SimpleButton extends Component {
       width: 240,
       height: 70,
       color: Colors.red,
-      onTap: scripts.get(N.handleClick.name),
+      onTap: handleClick,
       child: Text(
-        "Clicked {${N.count.name}}x",
+        "Clicked ${count}x",
         style: TextStyle(
           fontSize: 22,
           color: Colors.blue.shade800,

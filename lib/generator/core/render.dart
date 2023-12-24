@@ -62,8 +62,7 @@ class Render {
       buffer.write(" ");
       for (Event event in events) {
         if (event.script == null) continue;
-        final symbol = event.script!.name.toString();
-        buffer.write("on:${event.type.name}={${symbol.substring(8, symbol.length - 2)}}");
+        buffer.write("on:${event.type.name}={${event.script!.name}}");
       }
     }
     if (classes != null) {

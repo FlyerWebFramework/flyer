@@ -2,7 +2,7 @@ import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
 
 class Page extends Component {
-  const Page({
+  Page({
     required this.content,
   });
 

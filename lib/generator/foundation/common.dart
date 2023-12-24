@@ -102,18 +102,29 @@ enum Alignment {
 }
 
 class Scripts {
-  late final Map<Symbol, Script> _scripts;
+  late final Map<String, Script> _scripts;
 
-  Script get(Symbol key) => _scripts.containsKey(key) ? _scripts[key]! : throw 'Cannot find key: $key';
+  get list => _scripts;
 
-  Scripts(Map<Symbol, Function> functions) {
-    _scripts = functions.map((key, value) => MapEntry(key, Script(name: key, function: value)));
+  Script get(String key) => _scripts.containsKey(key) ? _scripts[key]! : throw 'Cannot find key: $key';
+
+  Scripts(Map<String, dynamic> functions) {
+    _scripts = functions.map((key, value) => MapEntry(key, Script.create(name: key, function: value)));
   }
 }
 
 class Script {
-  final Symbol name;
-  final Function function;
+  final String name;
+  final dynamic function;
 
-  const Script({required this.name, required this.function});
+  const Script(this.function, [this.name = "<unknown>"]);
+
+  factory Script.create({required String name, dynamic function}) {
+    return Script(function, name);
+  }
+
+  @override
+  String toString() {
+    return function;
+  }
 }
