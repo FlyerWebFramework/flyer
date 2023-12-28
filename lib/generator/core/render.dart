@@ -36,8 +36,12 @@ class Render {
     return StringBuffer("${Constants.indent * (context.indentation + 1)}$text");
   }
 
-  static StringBuffer slot(RenderContext context) {
-    return StringBuffer("${Constants.indent * (context.indentation)}\n<slot/>\n");
+  static StringBuffer slot(RenderContext context, {String? name}) {
+    return StringBuffer("${Constants.indent * (context.indentation)}<slot ${name != null ? "name='$name'" : ""}/>");
+  }
+
+  static StringBuffer fragment(RenderContext context, {required String name, required StringBuffer child}) {
+    return Render.element(context, tag: "svelte:fragment", custom: {"slot": name}, child: child);
   }
 
   static StringBuffer list(List<StringBuffer> elements) {

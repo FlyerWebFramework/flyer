@@ -17,7 +17,7 @@ abstract class Widget {
     return this;
   }
 
-  generateClass(String template, Variable? variable) {
+  String generateClass(String template, Variable? variable) {
     final genClassesPath = path.join(Constants.webPath!, "src", "lib", "index.js");
     if (variable != null) {
       final classLine = template.replaceAll("{}", variable.value.toString());
@@ -27,6 +27,8 @@ abstract class Widget {
       }
 
       return template.replaceAll("{}", variable.toString());
+    } else {
+      return "";
     }
   }
 
@@ -36,11 +38,23 @@ abstract class Widget {
 }
 
 class Slot extends Widget {
-  const Slot();
+  const Slot({this.name = Constants.defaultFragmentName});
+
+  final String name;
 
   @override
   StringBuffer render(RenderContext context) {
-    return Render.element(context.copy, tag: 'slot', oneLine: true);
+    return Render.slot(context, name: name);
+  }
+}
+
+class Fragment extends Slot {
+  const Fragment({required super.name, required this.child});
+
+  final Widget child;
+
+  StringBuffer renderFragment(RenderContext context) {
+    return Render.fragment(context, name: name, child: child.render(context.copy));
   }
 }
 
@@ -53,6 +67,8 @@ abstract class Component extends Widget {
 
   Scripts get scripts => Scripts({});
 
+  List<Fragment> get fragments => [];
+
   final Widget child;
 
   @override
@@ -64,11 +80,15 @@ abstract class Component extends Widget {
   StringBuffer render(RenderContext context) {
     if (context.indentation >= 0 && context.slot) {
       generate(outputPath: path.join(Constants.webPath!, "src", "lib", "components"));
+      final defaultFragment = child is Slot ? null : Fragment(name: Constants.defaultFragmentName, child: child);
       return Render.element(
         context,
         tag: runtimeType.toString(),
         custom: {...props.list},
-        child: child is Slot ? null : child.render(context.copy),
+        child: Render.list([
+          if (defaultFragment != null) defaultFragment.renderFragment(context.copy),
+          ...fragments.map((e) => e.renderFragment(context.copy)),
+        ]),
       );
     } else {
       return build().render(context.copy);
@@ -77,7 +97,7 @@ abstract class Component extends Widget {
 
   _generateExportLine(String outputPath) {
     final indexPath = path.join(outputPath, 'index.js');
-    final exportLine = 'export {default as $runtimeType} from "\$lib/components/$runtimeType.svelte"\n';
+    final exportLine = 'export {default as $runtimeType} from "\$lib/components/$runtimeType.svelte"';
     if (!exists(indexPath)) {
       indexPath.write(exportLine);
     } else {
@@ -89,10 +109,10 @@ abstract class Component extends Widget {
   }
 
   String renderScriptPart() {
-    final properties = "let { ${props.list.keys.join(', ')} } = \$props();";
-    final variables = obs.entries.map((e) => "let ${e.key} = \$state(${e.value});\n").join("");
+    final properties = props.list.isNotEmpty ? "let { ${props.list.keys.join(', ')} } = \$props();\n\n" : "";
+    final variables = obs.entries.map((e) => "let ${e.key} = \$state(${e.value});\n\n").join("");
     final functions = scripts.list.entries.map((e) => "function ${e.key}${e.value}\n\n").join("");
-    return "<script>\n$properties\n$variables\n$functions</script>\n\n";
+    return "<script>\n$properties$variables$functions</script>\n\n";
   }
 
   @override

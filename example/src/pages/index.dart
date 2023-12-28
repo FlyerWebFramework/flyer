@@ -1,5 +1,6 @@
 import 'package:flyer/widgets.dart';
 
+import '../components/simple_article.dart';
 import '../components/simple_button.dart';
 import '../components/simple_rectangle.dart';
 import '../layouts/default_layout.dart';
@@ -29,6 +30,12 @@ class IndexPage extends WebPage {
             SimpleRectangle(size: 150, child: Text("Test123")),
             Text("<br>"),
             SimpleRectangle(size: 200),
+            Text("<br>"),
+            SimpleArticle(
+              header: Fragment(name: "header", child: Text("This is title")),
+              content: Fragment(name: "content", child: Text("Here is some text")),
+              footer: Fragment(name: "footer", child: Text("This is end of article")),
+            ),
           ],
         ),
       ),

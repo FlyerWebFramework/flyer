@@ -15,8 +15,8 @@ class Padding extends Widget {
 
 class SizedBox extends Widget {
   const SizedBox({
-    this.width = const Variable(0),
-    this.height = const Variable(0),
+    this.width,
+    this.height,
   });
 
   final Variable<double>? width;
@@ -26,7 +26,7 @@ class SizedBox extends Widget {
     return [
       generateClass("w-[{}px]", width),
       generateClass("h-[{}px]", height),
-    ];
+    ]..remove("");
   }
 
   @override
