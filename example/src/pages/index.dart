@@ -26,7 +26,7 @@ class IndexPage extends WebPage {
             Text("<br>"),
             SimpleRectangle(size: 100),
             Text("<br>"),
-            SimpleRectangle(size: 150),
+            SimpleRectangle(size: 150, child: Text("Test123")),
             Text("<br>"),
             SimpleRectangle(size: 200),
           ],

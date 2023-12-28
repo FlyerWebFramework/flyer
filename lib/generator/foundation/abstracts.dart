@@ -35,14 +35,25 @@ abstract class Widget {
   }
 }
 
+class Slot extends Widget {
+  const Slot();
+
+  @override
+  StringBuffer render(RenderContext context) {
+    return Render.element(context.copy, tag: 'slot', oneLine: true);
+  }
+}
+
 abstract class Component extends Widget {
-  const Component();
+  const Component({this.child = const Slot()});
 
   Map<String, dynamic> get obs => {};
 
   Props get props => Props([]);
 
   Scripts get scripts => Scripts({});
+
+  final Widget child;
 
   @override
   Widget build() {
@@ -53,7 +64,12 @@ abstract class Component extends Widget {
   StringBuffer render(RenderContext context) {
     if (context.indentation >= 0 && context.slot) {
       generate(outputPath: path.join(Constants.webPath!, "src", "lib", "components"));
-      return Render.element(context, tag: runtimeType.toString(), custom: {...props.list});
+      return Render.element(
+        context,
+        tag: runtimeType.toString(),
+        custom: {...props.list},
+        child: child is Slot ? null : child.render(context.copy),
+      );
     } else {
       return build().render(context.copy);
     }

@@ -1,7 +1,7 @@
 import 'package:flyer/widgets.dart';
 
 class SimpleRectangle extends Component {
-  const SimpleRectangle({required this.size});
+  const SimpleRectangle({super.child, required this.size});
 
   final double size;
 
@@ -19,7 +19,7 @@ class SimpleRectangle extends Component {
       color: Colors.green,
       width: props.get('size'),
       height: props.get('size'),
-      child: SizedBox(),
+      child: child,
     );
   }
 }
