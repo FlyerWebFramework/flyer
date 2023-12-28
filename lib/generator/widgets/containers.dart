@@ -14,14 +14,28 @@ class Padding extends Widget {
 }
 
 class SizedBox extends Widget {
-  const SizedBox({this.width, this.height});
+  const SizedBox({
+    this.width = const Variable(0),
+    this.height = const Variable(0),
+  });
 
-  final double? width;
-  final double? height;
+  final Variable<double>? width;
+  final Variable<double>? height;
+
+  List<String> get classes {
+    return [
+      generateClass("w-[{}px]", width),
+      generateClass("h-[{}px]", height),
+    ];
+  }
 
   @override
   StringBuffer render(RenderContext context) {
-    throw UnimplementedError();
+    return Render.element(
+      context,
+      tag: 'div',
+      classes: classes,
+    );
   }
 }
 
@@ -42,10 +56,10 @@ class Container extends SizedBox {
   final Decoration? decoration;
   final Widget child;
 
+  @override
   List<String> get classes {
     return [
-      if (width != null) "w-[${width}px]",
-      if (height != null) "h-[${height}px]",
+      ...super.classes,
       if (color != null) "bg-${color!.value}-${color!.shade}",
       if (alignment == Alignment.center) "grid place-content-center",
     ];

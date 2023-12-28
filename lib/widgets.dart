@@ -16,32 +16,3 @@ $effect(Function() func) {}
 $scripts(Map<Symbol, Function> scripts) {}
 //$script({required Symbol name, required Function() function}) {}
 $script(Symbol name, Function function) {}
-
-class Prop<T> extends Obs<T> {
-  const Prop(super.name, super.value);
-}
-
-class Obs<T> {
-  const Obs(this.name, this.value);
-
-  final Symbol name;
-  final T? value;
-
-  Obs<T> operator +(value) => this;
-
-  Obs<T> operator -(value) => this;
-}
-
-class Comp<T> {
-  const Comp(this.name, this.value);
-
-  final Symbol name;
-  final Function() value;
-}
-
-// class Script {
-//   const Script(this.name, this.value);
-//
-//   final Symbol name;
-//   final Function value;
-// }

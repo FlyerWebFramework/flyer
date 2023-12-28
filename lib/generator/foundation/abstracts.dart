@@ -17,6 +17,19 @@ abstract class Widget {
     return this;
   }
 
+  generateClass(String template, Variable? variable) {
+    final genClassesPath = path.join(Constants.webPath!, "src", "lib", "index.js");
+    if (variable != null) {
+      final classLine = template.replaceAll("{}", variable.value.toString());
+      final indexContent = File(genClassesPath).readAsStringSync();
+      if (!indexContent.contains(classLine)) {
+        genClassesPath.append("// $classLine");
+      }
+
+      return template.replaceAll("{}", variable.toString());
+    }
+  }
+
   generate({bool debug = false, required String outputPath}) async {
     throw UnimplementedError();
   }
@@ -26,6 +39,8 @@ abstract class Component extends Widget {
   const Component();
 
   Map<String, dynamic> get obs => {};
+
+  Props get props => Props([]);
 
   Scripts get scripts => Scripts({});
 
@@ -38,7 +53,7 @@ abstract class Component extends Widget {
   StringBuffer render(RenderContext context) {
     if (context.indentation >= 0 && context.slot) {
       generate(outputPath: path.join(Constants.webPath!, "src", "lib", "components"));
-      return Render.element(context, tag: runtimeType.toString());
+      return Render.element(context, tag: runtimeType.toString(), custom: {...props.list});
     } else {
       return build().render(context.copy);
     }
@@ -58,9 +73,10 @@ abstract class Component extends Widget {
   }
 
   String renderScriptPart() {
+    final properties = "let { ${props.list.keys.join(', ')} } = \$props();";
     final variables = obs.entries.map((e) => "let ${e.key} = \$state(${e.value});\n").join("");
     final functions = scripts.list.entries.map((e) => "function ${e.key}${e.value}\n\n").join("");
-    return "<script>\n$variables\n$functions</script>\n\n";
+    return "<script>\n$properties\n$variables\n$functions</script>\n\n";
   }
 
   @override

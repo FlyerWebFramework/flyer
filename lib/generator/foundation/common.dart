@@ -104,7 +104,7 @@ enum Alignment {
 class Scripts {
   late final Map<String, Script> _scripts;
 
-  get list => _scripts;
+  Map<String, Script> get list => _scripts;
 
   Script get(String key) => _scripts.containsKey(key) ? _scripts[key]! : throw 'Cannot find key: $key';
 
@@ -126,5 +126,41 @@ class Script {
   @override
   String toString() {
     return function;
+  }
+}
+
+abstract class PropObject {
+  List get props => [];
+}
+
+class Props {
+  final Map<String, dynamic> _props = {};
+
+  Map<String, String> get list => _props.map((key, value) => MapEntry(key, value.toString()));
+
+  Variable<T> get<T>(String key) {
+    return _props.containsKey(key) ? Variable<T>.create(name: key, value: _props[key]! as T) : throw 'Cannot find key: $key';
+  }
+
+  Props(List<Variable> props) {
+    for (var prop in props) {
+      _props[prop.name!] = prop.value;
+    }
+  }
+}
+
+class Variable<T> {
+  final String? name;
+  final T value;
+
+  const Variable(this.value, {this.name});
+
+  factory Variable.create({required T value, required String name}) {
+    return Variable<T>(value, name: name);
+  }
+
+  @override
+  String toString() {
+    return name != null ? "{$name}" : "$value";
   }
 }

@@ -18,10 +18,10 @@ class Button extends SizedBox with Gestures {
   final Decoration? decoration;
   final Widget child;
 
+  @override
   List<String> get classes {
     return [
-      if (width != null) "w-[${width}px]",
-      if (height != null) "h-[${height}px]",
+      ...super.classes,
       if (color != null) "bg-${color!.value}-${color!.shade}",
     ];
   }
