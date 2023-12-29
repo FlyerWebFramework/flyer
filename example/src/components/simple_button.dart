@@ -44,13 +44,13 @@ class SimpleButton extends Component {
     return Button(
       width: props.get('width'),
       height: props.get('height'),
-      color: Colors.red,
+      color: Color.red,
       onTap: scripts.get(N.handleClick.name),
       child: Text(
         "Clicked {${N.count.name}}x",
         style: TextStyle(
           fontSize: 22,
-          color: Colors.blue.shade800,
+          color: Color.blue.shade800,
           fontWeight: FontWeight.bold,
           decoration: TextDecoration.underline,
           lineHeight: 2.3,

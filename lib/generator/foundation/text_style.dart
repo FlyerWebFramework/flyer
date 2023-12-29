@@ -1,4 +1,4 @@
-import 'common.dart';
+import 'package:flyer/generator/core/colors.dart';
 
 enum FontWeight { normal, bold, italic }
 enum TextDecoration { none, underline, overline, lineThrough }
@@ -21,7 +21,7 @@ class TextStyle {
 
   List<String> get classes {
     List<String> buffer = [];
-    if(color != null) buffer.add("text-${color!.value}-${color!.shade}");
+    if(color != null) buffer.add("text-${color!.value}");
     if(fontSize != null) buffer.add("text-[${fontSize}pt]");
     if(fontWeight != null) buffer.add("font-${fontWeight!.name}");
     if(decoration != null) buffer.add(decoration!.name);

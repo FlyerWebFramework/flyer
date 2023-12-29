@@ -1,4 +1,4 @@
-import 'common.dart';
+import 'package:flyer/generator/core/colors.dart';
 
 enum BorderStyle {
   /// Skip the border.
@@ -15,7 +15,7 @@ class BorderSide {
   ///
   /// By default, the border is 1.0 logical pixels wide and solid black.
   const BorderSide({
-    this.color = Colors.black,
+    this.color = Color.black,
     this.width = 1.0,
     this.style = BorderStyle.solid,
     this.strokeAlign = 0.0,
@@ -100,7 +100,7 @@ class Border {
   ///
   /// The sides default to black solid borders, one logical pixel wide.
   factory Border.all({
-    Color color = Colors.black,
+    Color color = Color.black,
     double width = 1.0,
     BorderStyle style = BorderStyle.solid,
     double strokeAlign = BorderSide.strokeAlignInside,

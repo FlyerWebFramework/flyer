@@ -12,6 +12,8 @@ dependencies:
   dcli: ^3.2.3
   freezed: ^2.4.6
   freezed_annotation: 2.4.1
+  color:
+    git: git@github.com:FlutterPackages/Color.git
 
 dev_dependencies:
   lints: ^2.0.0

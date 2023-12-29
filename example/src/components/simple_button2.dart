@@ -12,13 +12,13 @@ class SimpleButton extends Component {
     return Button(
       width: const Variable(240),
       height: const Variable(70),
-      color: Colors.red,
+      color: Color.red,
       onTap: handleClick,
       child: Text(
         "Clicked ${count}x",
         style: TextStyle(
           fontSize: 22,
-          color: Colors.blue.shade800,
+          color: Color.blue.shade800,
           fontWeight: FontWeight.bold,
           decoration: TextDecoration.underline,
           lineHeight: 2.3,

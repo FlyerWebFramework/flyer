@@ -113,6 +113,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.18.0"
+  color:
+    dependency: transitive
+    description:
+      path: "."
+      ref: HEAD
+      resolved-ref: "7e1329eb804965fbafa5488603667c8432ff1585"
+      url: "git@github.com:FlutterPackages/Color.git"
+    source: git
+    version: "3.0.0"
   completer_ex:
     dependency: transitive
     description:
