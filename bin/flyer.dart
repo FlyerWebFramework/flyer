@@ -65,14 +65,21 @@ createProjectIfNotExists({required String webPath, required String logsPath}) {
 }
 
 Future<void> build() async {
-  final output = path.join(DartScript.self.pathToProjectRoot, 'web');
-  "dart run -r src/main.dart $output".start();
+  final webRootPath = path.join(DartScript.self.pathToProjectRoot, 'web');
+  "dart run -r src/main.dart $webRootPath".start();
   // final fileLines = await File(filePath).readAsLines();
   // List<TransformedCode> transformedCode = Scanner().parse(fileLines);
   // final scriptPart = "\n\n<script>\n${transformedCode.map((e) => e.javaScript).join('\n\n')}\n</script>\n\n";
   // print(scriptPart);
   // outputPath.append(scriptPart);
   appendImports();
+  copyTree(
+    path.join(DartScript.self.pathToProjectRoot, 'static'),
+    path.join(webRootPath, "static"),
+    recursive: true,
+    overwrite: true,
+    includeHidden: true,
+  );
 }
 
 appendImports() {
