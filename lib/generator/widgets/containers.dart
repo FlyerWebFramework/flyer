@@ -50,7 +50,7 @@ class Container extends SizedBox {
     required this.child,
   });
 
-  final Color? color;
+  final $<Color>? color;
   final EdgeInsets? padding;
   final Alignment? alignment;
   final Decoration? decoration;
@@ -60,7 +60,7 @@ class Container extends SizedBox {
   List<String> get classes {
     return [
       ...super.classes,
-      if (color != null) "bg-${color!.value}",
+      generateClass("bg-{}", color),
       if (alignment == Alignment.center) "grid place-content-center",
     ];
   }

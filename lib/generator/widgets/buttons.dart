@@ -14,15 +14,15 @@ class Button extends SizedBox with Gestures {
     this.onTap = onTap;
   }
 
-  final Color? color;
-  final Decoration? decoration;
+  final $<Color>? color;
+  final $<Decoration>? decoration;
   final Widget child;
 
   @override
   List<String> get classes {
     return [
       ...super.classes,
-      if (color != null) "bg-${color!.value}",
+      generateClass("bg-{}", color),
     ];
   }
 

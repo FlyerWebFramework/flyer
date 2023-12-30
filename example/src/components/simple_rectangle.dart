@@ -14,7 +14,7 @@ class SimpleRectangle extends Component {
   @override
   Widget build() {
     return Container(
-      color: Color.green,
+      color: $(Color.green),
       width: props.get('size'),
       height: props.get('size'),
       child: child,

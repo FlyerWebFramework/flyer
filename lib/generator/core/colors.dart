@@ -33,7 +33,10 @@ class HexColor implements Color {
   color.HexColor? _color;
 
   @override
-  String get value => _color!.toCssString();
+  String get value => "[${_color!.toCssString()}]";
+
+  @override
+  String toString() => value;
 }
 
 class RgbaColor implements Color {
@@ -44,7 +47,10 @@ class RgbaColor implements Color {
   color.RgbaColor? _color;
 
   @override
-  String get value => _color!.toCssString();
+  String get value => "[${_color!.toCssString()}]";
+
+  @override
+  String toString() => value;
 }
 
 class NamedColor implements Color {
@@ -56,6 +62,9 @@ class NamedColor implements Color {
 
   @override
   String get value => "$name-$shade";
+
+  @override
+  String toString() => value;
 
   NamedColor get shade50 => NamedColor(name, shade: 50);
 

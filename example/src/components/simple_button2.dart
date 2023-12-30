@@ -12,7 +12,7 @@ class SimpleButton extends Component {
     return Button(
       width: $(240.px),
       height: $(70.px),
-      color: Color.red,
+      color: $(Color.red),
       onTap: handleClick,
       child: Text(
         $("Clicked ${count}x"),

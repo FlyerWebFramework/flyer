@@ -24,7 +24,7 @@ class SimpleArticle extends Component {
   @override
   Widget build() {
     return Container(
-      color: Color.green,
+      color: $(Color.green),
       width: $(500.px),
       //height: Variable(500),
       child: Wrap(children: [

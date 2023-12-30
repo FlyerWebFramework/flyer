@@ -25,9 +25,7 @@ class SimpleButton extends Component {
   final Size size;
 
   @override
-  Props get props => Props([
-        ...size.toProps(),
-      ]);
+  Props get props => Props([...size.toProps()]);
 
   @override
   Map<String, dynamic> get obs => {N.count.name: 0};
@@ -44,7 +42,7 @@ class SimpleButton extends Component {
     return Button(
       width: props.get('width'),
       height: props.get('height'),
-      color: Color.red,
+      color: $(Color.red),
       onTap: scripts.get(N.handleClick.name),
       child: Text(
         $("Clicked {${N.count.name}}x"),
