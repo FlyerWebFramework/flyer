@@ -106,7 +106,11 @@ class Props {
   Map<String, String> get list => _props.map((key, value) => MapEntry(key, value.toString()));
 
   $<T> get<T>(String key) {
-    return _props.containsKey(key) ? $<T>(_props[key]! as T, name: key) : throw 'Cannot find key: $key';
+    if (_props.containsKey(key)) {
+      return $<T>(_props[key] as T, name: key);
+    } else {
+      return $<T>(null, name: key);
+    }
   }
 
   Props(List<$> props) {

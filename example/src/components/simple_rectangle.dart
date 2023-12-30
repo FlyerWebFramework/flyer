@@ -1,10 +1,10 @@
 import 'package:flyer/widgets.dart';
 
 class SimpleRectangle extends Component {
-  const SimpleRectangle({super.child, required this.size, required this.align});
+  const SimpleRectangle({super.child, required this.size, this.align});
 
   final Unit size;
-  final Alignment align;
+  final Alignment? align;
 
   @override
   Props get props => Props([$(size, name: 'size'), $(align, name: 'align')]);

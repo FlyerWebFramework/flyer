@@ -12,8 +12,8 @@ class Text extends Widget {
     return Render.element(
       context,
       tag: 'span',
-      classes: style?.value.classes,
-      child: Render.text(context, text.value),
+      classes: style?.value?.classes,
+      child: Render.text(context, text.value!),
     );
   }
 }

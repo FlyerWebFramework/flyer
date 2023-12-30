@@ -52,7 +52,7 @@ class Container extends SizedBox {
 
   final $<Color>? color;
   final EdgeInsets? padding;
-  final $<Alignment>? alignment;
+  final $<Alignment?>? alignment;
   final Decoration? decoration;
   final Widget child;
 

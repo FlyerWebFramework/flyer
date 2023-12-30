@@ -37,11 +37,11 @@ class Unit {
 
 class Variable<T> {
   final String? name;
-  final T value;
+  final T? value;
 
   const Variable(this.value, {this.name});
 
-  factory Variable.create({required T value, required String name}) {
+  factory Variable.create({required T? value, required String name}) {
     return Variable<T>(value, name: name);
   }
 
@@ -52,7 +52,7 @@ class Variable<T> {
 }
 
 class $<T> extends Variable<T> {
-  $(super.value, {super.name});
+  const $(super.value, {super.name});
 }
 
 extension Var<T> on T {
