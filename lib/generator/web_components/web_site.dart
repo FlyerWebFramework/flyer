@@ -13,14 +13,15 @@ class WebSite extends Widget {
     this.charset = 'utf-8',
     this.language = 'en',
     this.refresh,
+    this.baseUrl,
     required this.routes,
   });
 
   // TODO:
   // final Theme theme;
   // final Favicon icon;
-  // final Url baseUrl;
 
+  final Uri? baseUrl;
   final String? title;
   final String? author;
   final String? description;
@@ -50,6 +51,13 @@ class WebSite extends Widget {
                   context.indent(3),
                   tag: "title",
                   child: Render.text(context.indent(3), title!),
+                  oneLine: true,
+                ),
+              if (baseUrl != null && baseUrl!.isAbsolute)
+                Render.element(
+                  context.indent(3),
+                  tag: "base",
+                  custom: {"href": baseUrl!.origin},
                   oneLine: true,
                 ),
               Render.link(context.indent(2), rel: "icon", href: "%sveltekit.assets%/favicon.png"),
