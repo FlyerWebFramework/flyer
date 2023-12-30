@@ -60,6 +60,7 @@ class Container extends SizedBox {
   List<String> get classes {
     final builder = ClassBuilder(super.classes);
     builder.add("bg-{}", color);
+    builder.add("{}", alignment);
     return builder.classes;
   }
 
