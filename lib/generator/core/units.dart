@@ -26,9 +26,9 @@ class Unit {
       case UnitType.pt:
       case UnitType.em:
       case UnitType.rem:
-        return "$value${unit.name}";
+        return "[$value${unit.name}]";
       case UnitType.percent:
-        return "$value%";
+        return "[$value%]";
       case UnitType.custom:
         return value.toString();
     }

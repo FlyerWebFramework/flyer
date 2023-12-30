@@ -24,8 +24,8 @@ class SizedBox extends Widget {
 
   List<String> get classes {
     return [
-      generateClass("w-[{}]", width),
-      generateClass("h-[{}]", height),
+      generateClass("w-{}", width),
+      generateClass("h-{}", height),
     ]..remove("");
   }
 
