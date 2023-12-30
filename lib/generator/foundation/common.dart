@@ -49,15 +49,23 @@ class BoxDecoration extends Decoration {
 }
 
 enum Alignment {
-  topLeft,
-  topCenter,
-  topRight,
-  centerLeft,
-  center,
-  centerRight,
-  bottomLeft,
-  bottomCenter,
-  bottomRight,
+  topLeft(""),
+  topCenter(""),
+  topRight(""),
+  centerLeft("grid items-center justify-items-start"),
+  center("grid items-center justify-items-center"),
+  centerRight("grid items-center justify-items-end"),
+  bottomLeft(""),
+  bottomCenter(""),
+  bottomRight(""),
+  ;
+
+  const Alignment(this.cssValue);
+
+  final String cssValue;
+
+  @override
+  toString() => cssValue;
 }
 
 class Scripts {

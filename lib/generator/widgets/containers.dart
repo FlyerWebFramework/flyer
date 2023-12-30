@@ -52,7 +52,7 @@ class Container extends SizedBox {
 
   final $<Color>? color;
   final EdgeInsets? padding;
-  final Alignment? alignment;
+  final $<Alignment>? alignment;
   final Decoration? decoration;
   final Widget child;
 
@@ -61,7 +61,7 @@ class Container extends SizedBox {
     return [
       ...super.classes,
       generateClass("bg-{}", color),
-      if (alignment == Alignment.center) "grid place-content-center",
+      alignment.toString(),
     ];
   }
 
