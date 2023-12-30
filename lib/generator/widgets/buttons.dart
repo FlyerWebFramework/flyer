@@ -4,7 +4,7 @@ import 'package:flyer/generator/widgets.dart';
 
 class Button extends SizedBox with Gestures {
   Button({
-    Script? onTap,
+    $<Script?>? onTap,
     super.width,
     super.height,
     this.color,

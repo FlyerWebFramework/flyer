@@ -34,7 +34,7 @@ class Event {
   Event({required this.type, this.script});
 
   EventType type;
-  final Script? script;
+  final $<Script?>? script;
 }
 
 class Decoration {

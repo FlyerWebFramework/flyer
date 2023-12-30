@@ -4,7 +4,7 @@ import 'package:flyer/generator/foundation.dart';
 class Padding extends Widget {
   const Padding({required this.padding, required this.child});
 
-  final EdgeInsets padding;
+  final $<EdgeInsets> padding;
   final Widget child;
 
   @override
@@ -51,9 +51,9 @@ class Container extends SizedBox {
   });
 
   final $<Color>? color;
-  final EdgeInsets? padding;
+  final $<EdgeInsets?>? padding;
   final $<Alignment?>? alignment;
-  final Decoration? decoration;
+  final $<Decoration?>? decoration;
   final Widget child;
 
   @override

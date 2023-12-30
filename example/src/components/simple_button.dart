@@ -43,7 +43,7 @@ class SimpleButton extends Component {
       width: props.get('width'),
       height: props.get('height'),
       color: $(Color.red),
-      onTap: scripts.get(N.handleClick.name),
+      onTap: $(scripts.get(N.handleClick.name)),
       child: Text(
         $("Clicked {${N.count.name}}x"),
         style: $(
