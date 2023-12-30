@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flyer/generator/widgets/images.dart';
 import 'package:path/path.dart' as path;
 import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
@@ -14,13 +15,13 @@ class WebSite extends Widget {
     this.language = 'en',
     this.refresh,
     this.baseUrl,
+    this.favicon = const Favicon(Constants.defaultFaviconUrl),
     required this.routes,
   });
 
   // TODO:
-  // final Theme theme;
-  // final Favicon icon;
-
+  // final Theme? theme;
+  final Favicon favicon;
   final Uri? baseUrl;
   final String? title;
   final String? author;
@@ -60,7 +61,7 @@ class WebSite extends Widget {
                   custom: {"href": baseUrl!.origin},
                   oneLine: true,
                 ),
-              Render.link(context.indent(2), rel: "icon", href: "%sveltekit.assets%/favicon.png"),
+              favicon.render(context.indent(2)),
               if (author != null) Render.meta(context.indent(2), name: "author", content: author),
               if (description != null) Render.meta(context.indent(2), name: "description", content: description),
               if (keywords != null) Render.meta(context.indent(2), name: "keywords", content: keywords!.join(", ")),
