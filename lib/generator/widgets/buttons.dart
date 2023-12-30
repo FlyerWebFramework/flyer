@@ -20,10 +20,9 @@ class Button extends SizedBox with Gestures {
 
   @override
   List<String> get classes {
-    return [
-      ...super.classes,
-      generateClass("bg-{}", color),
-    ];
+    final builder = ClassBuilder(super.classes);
+    builder.add("bg-{}", color);
+    return builder.classes;
   }
 
   @override

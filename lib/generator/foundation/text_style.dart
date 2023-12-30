@@ -1,7 +1,25 @@
-import 'package:flyer/generator/core/colors.dart';
+import 'package:flyer/generator/core.dart';
 
-enum FontWeight { normal, bold, italic }
-enum TextDecoration { none, underline, overline, lineThrough }
+enum FontWeight {
+  normal,
+  bold,
+  italic,
+  ;
+
+  @override
+  toString() => name;
+}
+
+enum TextDecoration {
+  none,
+  underline,
+  overline,
+  lineThrough,
+  ;
+
+  @override
+  toString() => name;
+}
 
 class TextStyle {
   TextStyle({
@@ -12,20 +30,19 @@ class TextStyle {
     this.decoration,
   });
 
-  final Color? color;
-  final int? fontSize;
-  final double? lineHeight;
-  final FontWeight? fontWeight;
-  final TextDecoration? decoration;
-
+  final $<Color?>? color;
+  final $<Unit?>? fontSize;
+  final $<Unit?>? lineHeight;
+  final $<FontWeight?>? fontWeight;
+  final $<TextDecoration?>? decoration;
 
   List<String> get classes {
-    List<String> buffer = [];
-    if(color != null) buffer.add("text-${color!.value}");
-    if(fontSize != null) buffer.add("text-[${fontSize}pt]");
-    if(fontWeight != null) buffer.add("font-${fontWeight!.name}");
-    if(decoration != null) buffer.add(decoration!.name);
-    if(lineHeight != null) buffer.add("leading-[${lineHeight}rem]");
-    return buffer;
+    final builder = ClassBuilder();
+    builder.add("text-{}", color);
+    builder.add("text-{}", fontSize);
+    builder.add("font-{}", fontWeight);
+    builder.add("{}", decoration);
+    builder.add("leading-{}", lineHeight);
+    return builder.classes;
   }
 }

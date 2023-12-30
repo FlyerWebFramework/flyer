@@ -5,14 +5,14 @@ class Text extends Widget {
   const Text(this.text, {this.style});
 
   final $<String> text;
-  final $<TextStyle>? style;
+  final TextStyle? style;
 
   @override
   StringBuffer render(RenderContext context) {
     return Render.element(
       context,
       tag: 'span',
-      classes: style?.value?.classes,
+      classes: style?.classes,
       child: Render.text(context, text.value!),
     );
   }

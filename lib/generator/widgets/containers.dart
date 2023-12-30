@@ -23,10 +23,10 @@ class SizedBox extends Widget {
   final $<Unit>? height;
 
   List<String> get classes {
-    return [
-      generateClass("w-{}", width),
-      generateClass("h-{}", height),
-    ]..remove("");
+    final builder = ClassBuilder();
+    builder.add("w-{}", width);
+    builder.add("h-{}", height);
+    return builder.classes;
   }
 
   @override
@@ -58,11 +58,9 @@ class Container extends SizedBox {
 
   @override
   List<String> get classes {
-    return [
-      ...super.classes,
-      generateClass("bg-{}", color),
-      alignment.toString(),
-    ];
+    final builder = ClassBuilder(super.classes);
+    builder.add("bg-{}", color);
+    return builder.classes;
   }
 
   @override

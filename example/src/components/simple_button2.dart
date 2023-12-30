@@ -13,17 +13,15 @@ class SimpleButton extends Component {
       width: $(240.px),
       height: $(70.px),
       color: $(Color.red),
-      onTap: handleClick,
+      onTap: $(handleClick),
       child: Text(
         $("Clicked ${count}x"),
-        style: $(
-          TextStyle(
-            fontSize: 22,
-            color: Color.blue.shade800,
-            fontWeight: FontWeight.bold,
-            decoration: TextDecoration.underline,
-            lineHeight: 2.3,
-          ),
+        style: TextStyle(
+          fontSize: $(22.pt),
+          color: $(Color.blue.shade800),
+          fontWeight: $(FontWeight.bold),
+          decoration: $(TextDecoration.underline),
+          lineHeight: $(2.3.px),
         ),
       ),
     );

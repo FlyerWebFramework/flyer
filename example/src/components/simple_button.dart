@@ -46,14 +46,12 @@ class SimpleButton extends Component {
       onTap: $(scripts.get(N.handleClick.name)),
       child: Text(
         $("Clicked {${N.count.name}}x"),
-        style: $(
-          TextStyle(
-            fontSize: 22,
-            color: Color.blue.shade800,
-            fontWeight: FontWeight.bold,
-            decoration: TextDecoration.underline,
-            lineHeight: 2.3,
-          ),
+        style: TextStyle(
+          fontSize: $(22.pt),
+          color: $(Color.blue.shade800),
+          fontWeight: $(FontWeight.bold),
+          decoration: $(TextDecoration.underline),
+          lineHeight: $(2.3.px),
         ),
       ),
     );

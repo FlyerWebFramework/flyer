@@ -17,39 +17,11 @@ abstract class Widget {
     return this;
   }
 
-  _saveClass(String line) {
-    final genClassesPath = path.join(Constants.webPath!, "src", "lib", "index.js");
-    final indexContent = File(genClassesPath).readAsStringSync();
-    if (!indexContent.contains(line)) {
-      genClassesPath.append("// $line");
-    }
-  }
-
-  String generateClass(String template, $? variable) {
-    if (variable != null) {
-      switch (variable.value) {
-        case Unit:
-          _saveClass(template.replaceAll("{}", variable.value.toString()));
-          return template.replaceAll("{}", variable.toString());
-        case Color:
-          _saveClass(template.replaceAll("{}", variable.value.toString()));
-          return template.replaceAll("{}", variable.toString());
-        case Enum:
-          _saveClass(template.replaceAll("{}", variable.value.name));
-          return template.replaceAll("{}", variable.toString());
-        default:
-          _saveClass(template.replaceAll("{}", variable.value.toString()));
-          return template.replaceAll("{}", variable.toString());
-      }
-    } else {
-      return "";
-    }
-  }
-
   generate({bool debug = false, required String outputPath}) async {
     throw UnimplementedError();
   }
 }
+
 
 class Slot extends Widget {
   const Slot({this.name = Constants.defaultFragmentName});
