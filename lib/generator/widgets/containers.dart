@@ -19,8 +19,8 @@ class SizedBox extends Widget {
     this.height,
   });
 
-  final Variable<Unit>? width;
-  final Variable<Unit>? height;
+  final $<Unit>? width;
+  final $<Unit>? height;
 
   List<String> get classes {
     return [

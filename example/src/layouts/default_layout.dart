@@ -6,9 +6,9 @@ class DefaultLayout extends Layout {
   @override
   Widget build() {
     return Wrap(children: [
-      Text("Navigation"),
+      Text($("Navigation")),
       content,
-      Text("Footer"),
+      Text($("Footer")),
     ]);
   }
 }

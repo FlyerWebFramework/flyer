@@ -11,10 +11,10 @@ class Size implements PropObject {
   @override
   List get props => [width, height];
 
-  List<Variable> toProps() {
+  List<$> toProps() {
     return [
-      Variable.create(name: 'width', value: width),
-      Variable.create(name: 'height', value: height),
+      $(width, name: 'width'),
+      $(height, name: 'height'),
     ];
   }
 }
@@ -47,13 +47,15 @@ class SimpleButton extends Component {
       color: Color.red,
       onTap: scripts.get(N.handleClick.name),
       child: Text(
-        "Clicked {${N.count.name}}x",
-        style: TextStyle(
-          fontSize: 22,
-          color: Color.blue.shade800,
-          fontWeight: FontWeight.bold,
-          decoration: TextDecoration.underline,
-          lineHeight: 2.3,
+        $("Clicked {${N.count.name}}x"),
+        style: $(
+          TextStyle(
+            fontSize: 22,
+            color: Color.blue.shade800,
+            fontWeight: FontWeight.bold,
+            decoration: TextDecoration.underline,
+            lineHeight: 2.3,
+          ),
         ),
       ),
     );

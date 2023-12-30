@@ -6,9 +6,7 @@ class SimpleRectangle extends Component {
   final Unit size;
 
   @override
-  Props get props => Props([
-        Variable.create(name: 'size', value: size),
-      ]);
+  Props get props => Props([$(size, name: 'size')]);
 
   @override
   Map<String, dynamic> get obs => {};

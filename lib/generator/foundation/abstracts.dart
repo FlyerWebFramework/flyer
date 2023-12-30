@@ -17,7 +17,7 @@ abstract class Widget {
     return this;
   }
 
-  String generateClass(String template, Variable? variable) {
+  String generateClass(String template, $? variable) {
     final genClassesPath = path.join(Constants.webPath!, "src", "lib", "index.js");
     if (variable != null) {
       final classLine = template.replaceAll("{}", variable.value.toString());

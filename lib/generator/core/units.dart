@@ -50,3 +50,11 @@ class Variable<T> {
     return name != null ? "{$name}" : "$value";
   }
 }
+
+class $<T> extends Variable<T> {
+  $(super.value, {super.name});
+}
+
+extension Var<T> on T {
+  $<T> get v => $(this);
+}

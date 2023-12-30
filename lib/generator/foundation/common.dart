@@ -3,8 +3,6 @@ import 'package:flyer/generator/foundation.dart';
 
 import 'border.dart';
 
-
-
 enum EventType { click }
 
 class BuildContext {}
@@ -99,11 +97,11 @@ class Props {
 
   Map<String, String> get list => _props.map((key, value) => MapEntry(key, value.toString()));
 
-  Variable<T> get<T>(String key) {
-    return _props.containsKey(key) ? Variable<T>.create(name: key, value: _props[key]! as T) : throw 'Cannot find key: $key';
+  $<T> get<T>(String key) {
+    return _props.containsKey(key) ? $<T>(_props[key]! as T, name: key) : throw 'Cannot find key: $key';
   }
 
-  Props(List<Variable> props) {
+  Props(List<$> props) {
     for (var prop in props) {
       _props[prop.name!] = prop.value;
     }

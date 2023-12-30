@@ -25,19 +25,19 @@ class SimpleArticle extends Component {
   Widget build() {
     return Container(
       color: Color.green,
-      width: Variable(500.px),
+      width: $(500.px),
       //height: Variable(500),
       child: Wrap(children: [
-        Text("<br>"),
+        Text($("<br>")),
         header,
-        Text("<br>"),
-        Text("<br>"),
+        Text($("<br>")),
+        Text($("<br>")),
         content,
-        Text("<br>"),
-        Text("<br>"),
+        Text($("<br>")),
+        Text($("<br>")),
         footer,
-        Text("<br>"),
-        Text("<br>"),
+        Text($("<br>")),
+        Text($("<br>")),
       ]),
     );
   }
