@@ -19,13 +19,13 @@ class SizedBox extends Widget {
     this.height,
   });
 
-  final Variable<double>? width;
-  final Variable<double>? height;
+  final Variable<Unit>? width;
+  final Variable<Unit>? height;
 
   List<String> get classes {
     return [
-      generateClass("w-[{}px]", width),
-      generateClass("h-[{}px]", height),
+      generateClass("w-[{}]", width),
+      generateClass("h-[{}]", height),
     ]..remove("");
   }
 

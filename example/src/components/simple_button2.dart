@@ -10,8 +10,8 @@ class SimpleButton extends Component {
   @override
   Widget build() {
     return Button(
-      width: const Variable(240),
-      height: const Variable(70),
+      width: Variable(240.px),
+      height: Variable(70.px),
       color: Color.red,
       onTap: handleClick,
       child: Text(

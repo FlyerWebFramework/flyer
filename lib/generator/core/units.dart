@@ -1,5 +1,3 @@
-import '../foundation/common.dart';
-
 extension UnitsExtension on num {
   Unit get px => Unit(value: this, unit: UnitType.px);
 
@@ -14,13 +12,9 @@ extension UnitsExtension on num {
 
 enum UnitType { px, pt, em, rem, percent, custom }
 
-class Unit implements Variable {
-  const Unit({required this.value, required this.unit, this.name});
+class Unit {
+  const Unit({required this.value, required this.unit});
 
-  @override
-  final String? name;
-
-  @override
   final num value;
 
   final UnitType unit;

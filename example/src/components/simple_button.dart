@@ -5,8 +5,8 @@ enum N { count, handleClick }
 class Size implements PropObject {
   Size(this.width, this.height);
 
-  final double width;
-  final double height;
+  final Unit width;
+  final Unit height;
 
   @override
   List get props => [width, height];

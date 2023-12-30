@@ -3,11 +3,11 @@ import 'package:flyer/widgets.dart';
 class SimpleRectangle extends Component {
   const SimpleRectangle({super.child, required this.size});
 
-  final double size;
+  final Unit size;
 
   @override
   Props get props => Props([
-        Variable<double>.create(name: 'size', value: size),
+        Variable.create(name: 'size', value: size),
       ]);
 
   @override

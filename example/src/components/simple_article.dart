@@ -25,7 +25,7 @@ class SimpleArticle extends Component {
   Widget build() {
     return Container(
       color: Color.green,
-      width: Variable(500),
+      width: Variable(500.px),
       //height: Variable(500),
       child: Wrap(children: [
         Text("<br>"),
