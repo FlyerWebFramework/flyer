@@ -49,7 +49,7 @@ abstract class Component extends Widget {
 
   Map<String, dynamic> get obs => {};
 
-  Props get props => Props([]);
+  Arguments get args => Arguments({});
 
   Scripts get scripts => Scripts({});
 
@@ -70,7 +70,7 @@ abstract class Component extends Widget {
       return Render.element(
         context,
         tag: runtimeType.toString(),
-        custom: {...props.list},
+        custom: {...args.list},
         child: Render.list([
           if (defaultFragment != null) defaultFragment.renderFragment(context.copy),
           ...fragments.map((e) => e.renderFragment(context.copy)),
@@ -95,7 +95,7 @@ abstract class Component extends Widget {
   }
 
   String renderScriptPart() {
-    final properties = props.list.isNotEmpty ? "let { ${props.list.keys.join(', ')} } = \$props();\n\n" : "";
+    final properties = args.list.isNotEmpty ? "let { ${args.list.keys.join(', ')} } = \$props();\n\n" : "";
     final variables = obs.entries.map((e) => "let ${e.key} = \$state(${e.value});\n\n").join("");
     final functions = scripts.list.entries.map((e) => "function ${e.key}${e.value}\n\n").join("");
     return "<script>\n$properties$variables$functions</script>\n\n";

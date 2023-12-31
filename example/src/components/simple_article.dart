@@ -13,7 +13,7 @@ class SimpleArticle extends Component {
   final Fragment footer;
 
   @override
-  Props get props => Props([]);
+  Arguments get args => Arguments({});
 
   @override
   List<Fragment> get fragments => [header, content, footer];
@@ -26,7 +26,6 @@ class SimpleArticle extends Component {
     return Container(
       color: $(Color.green),
       width: $(500.px),
-      //height: Variable(500),
       child: Wrap(children: [
         Text($("<br>")),
         header,

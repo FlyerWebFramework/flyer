@@ -2,20 +2,18 @@ import 'package:flyer/widgets.dart';
 
 enum N { count, handleClick }
 
-class Size implements PropObject {
+class Size extends ArgsObject {
   Size(this.width, this.height);
 
   final Unit width;
   final Unit height;
 
   @override
-  List get props => [width, height];
+  List get args => [width, height];
 
-  List<$> toProps() {
-    return [
-      $(width, name: 'width'),
-      $(height, name: 'height'),
-    ];
+  @override
+  Map<String, dynamic> toArgs() {
+    return {'width': width, 'height': height};
   }
 }
 
@@ -25,7 +23,7 @@ class SimpleButton extends Component {
   final Size size;
 
   @override
-  Props get props => Props([...size.toProps()]);
+  Arguments get args => Arguments().addObject(size);
 
   @override
   Map<String, dynamic> get obs => {N.count.name: 0};
@@ -40,8 +38,8 @@ class SimpleButton extends Component {
   @override
   Widget build() {
     return Button(
-      width: props.get('width'),
-      height: props.get('height'),
+      width: args.get('width'),
+      height: args.get('height'),
       color: $(Color.red),
       onTap: $(scripts.get(N.handleClick.name)),
       child: Text(

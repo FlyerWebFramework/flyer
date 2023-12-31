@@ -9,8 +9,8 @@ class SimpleRectangle extends Component {
   Widget build() {
     return Container(
       color: $(Color.green),
-      width: props.get('size'),
-      height: props.get('size'),
+      width: args.get('size'),
+      height: args.get('size'),
       child: SizedBox(),
     );
   }

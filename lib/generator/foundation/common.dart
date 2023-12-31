@@ -96,26 +96,42 @@ class Script {
   }
 }
 
-abstract class PropObject {
-  List get props => [];
+abstract class ArgsObject {
+  List get args => [];
+
+  Map<String, dynamic> toArgs();
 }
 
-class Props {
-  final Map<String, dynamic> _props = {};
-
-  Map<String, String> get list => _props.map((key, value) => MapEntry(key, value.toString()));
-
-  $<T> get<T>(String key) {
-    if (_props.containsKey(key)) {
-      return $<T>(_props[key] as T, name: key);
-    } else {
-      return $<T>(null, name: key);
+class Arguments {
+  Arguments([Map<String, dynamic>? args]) {
+    if (args != null) {
+      for (var arg in args.entries) {
+        _args[arg.key] = arg.value;
+      }
     }
   }
 
-  Props(List<$> props) {
-    for (var prop in props) {
-      _props[prop.name!] = prop.value;
+  final Map<String, dynamic> _args = {};
+
+  Map<String, String> get list => _args.map((key, value) => MapEntry(key, value.toString()));
+
+  Arguments add(String name, dynamic value) {
+    _args[name] = value;
+    return this;
+  }
+
+  Arguments addObject(ArgsObject object) {
+    for (var arg in object.toArgs().entries) {
+      _args[arg.key] = arg.value;
+    }
+    return this;
+  }
+
+  $<T> get<T>(String key) {
+    if (_args.containsKey(key)) {
+      return $<T>(_args[key] as T, name: key);
+    } else {
+      return $<T>(null, name: key);
     }
   }
 }

@@ -7,7 +7,7 @@ class SimpleRectangle extends Component {
   final Alignment? align;
 
   @override
-  Props get props => Props([$(size, name: 'size'), $(align, name: 'align')]);
+  Arguments get args => Arguments({'size': size, 'align': align});
 
   @override
   Map<String, dynamic> get obs => {};
@@ -16,9 +16,9 @@ class SimpleRectangle extends Component {
   Widget build() {
     return Container(
       color: $(Color.green),
-      alignment: props.get('align'),
-      width: props.get('size'),
-      height: props.get('size'),
+      alignment: args.get('align'),
+      width: args.get('size'),
+      height: args.get('size'),
       child: child,
     );
   }
