@@ -1,7 +1,7 @@
 name: flyer
-description: A starting point for Dart libraries or applications.
-version: 0.0.1
-# repository: https://github.com/my_org/my_repo
+description: Framework for creating web pages in Dart language
+repository: https://github.com/mjablecnik/flyer
+version: 0.1.0
 
 environment:
   sdk: ^3.1.0
