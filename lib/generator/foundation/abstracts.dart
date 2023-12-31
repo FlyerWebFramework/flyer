@@ -22,7 +22,6 @@ abstract class Widget {
   }
 }
 
-
 class Slot extends Widget {
   const Slot({this.name = Constants.defaultFragmentName});
 
@@ -61,6 +60,15 @@ abstract class Component extends Widget {
   Widget build() {
     throw UnimplementedError();
   }
+
+  $<T> $argByName<T>(String name) => args.get(name);
+
+  $<T> $arg<T>(T value) {
+    hasSameValue(e) => e.value.toString() == value.toString();
+    return $(value, name: args.list.entries.where(hasSameValue).first.key);
+  }
+
+  $<T> $var<T>(T value) => $(value);
 
   @override
   StringBuffer render(RenderContext context) {

@@ -15,10 +15,10 @@ class SimpleRectangle extends Component {
   @override
   Widget build() {
     return Container(
-      color: $(Color.green),
-      alignment: args.get('align'),
-      width: args.get('size'),
-      height: args.get('size'),
+      color: $var(Color.green),
+      alignment: $arg(align),
+      width: $arg(size),
+      height: $arg(size),
       child: child,
     );
   }

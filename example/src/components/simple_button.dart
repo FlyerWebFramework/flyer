@@ -38,8 +38,8 @@ class SimpleButton extends Component {
   @override
   Widget build() {
     return Button(
-      width: args.get('width'),
-      height: args.get('height'),
+      width: $arg(size.width),
+      height: $arg(size.height),
       color: $(Color.red),
       onTap: $(scripts.get(N.handleClick.name)),
       child: Text(
