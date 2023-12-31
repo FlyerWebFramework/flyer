@@ -83,11 +83,6 @@ Future<void> build() async {
 }
 
 appendImports() {
-  final allLayouts = find(r"*layout.svelte", recursive: true).toList();
-  for (var page in allLayouts) {
-    page.append("\n\n<script>\n  import '/src/app.css';\n</script>");
-  }
-
   final allPages = find(r"*page.svelte", recursive: true).toList();
   for (var page in allPages) {
     page.append("\n\n<script>\n  import {${allComponents.join(', ')}} from \"\$lib/components/index.js\"\n</script>");

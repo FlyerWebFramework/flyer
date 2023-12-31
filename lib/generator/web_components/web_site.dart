@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flyer/generator/web_components/web_page.dart';
 import 'package:flyer/generator/widgets/images.dart';
 import 'package:path/path.dart' as path;
 import 'package:flyer/generator/core.dart';
@@ -16,6 +17,7 @@ class WebSite extends Widget {
     this.refresh,
     this.baseUrl,
     this.favicon = const Favicon(Constants.defaultFaviconUrl),
+    this.buildLayout,
     required this.routes,
   });
 
@@ -30,6 +32,7 @@ class WebSite extends Widget {
   final String language;
   final Duration? refresh;
   final List<String>? keywords;
+  final Layout Function(Widget content)? buildLayout;
 
   final Map<String, WebPage> routes;
 
@@ -92,6 +95,9 @@ class WebSite extends Widget {
     Constants.webPath = outputPath;
     final htmlPage = render(RenderContext()).toString();
     File(path.join(outputPath, 'src', 'app.html')).writeAsStringSync(htmlPage);
+
+    final layout = (buildLayout ?? (Widget content) => Layout()).call(Slot.empty());
+    layout.generate(outputPath: path.join(outputPath, 'src', 'routes'));
 
     for (MapEntry<String, WebPage> route in routes.entries) {
       final pagePath = path.join(outputPath, 'src', 'routes', route.key == '/' ? '' : route.key);

@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:dcli/dcli.dart';
 import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/widgets.dart';
 import 'package:path/path.dart' as path;
 import 'package:flyer/generator/foundation.dart';
 
@@ -24,8 +23,9 @@ abstract class Widget {
 
 class Slot extends Widget {
   const Slot({this.name = Constants.defaultFragmentName});
+  const Slot.empty([this.name]);
 
-  final String name;
+  final String? name;
 
   @override
   StringBuffer render(RenderContext context) {
@@ -39,7 +39,7 @@ class Fragment extends Slot {
   final Widget child;
 
   StringBuffer renderFragment(RenderContext context) {
-    return Render.fragment(context, name: name, child: child.render(context.copy));
+    return Render.fragment(context, name: name!, child: child.render(context.copy));
   }
 }
 
@@ -122,19 +122,29 @@ abstract class Component extends Widget {
   }
 }
 
-abstract class Layout extends Component {
-  const Layout({required this.content});
+class Layout extends Component {
+  const Layout({this.content = const Slot.empty()});
 
-  final Page content;
+  final Widget content;
 
   @override
   Widget build() {
-    throw UnimplementedError();
+    return content;
   }
 
   @override
   StringBuffer render(RenderContext context) {
-    return build().render(context.copy);
+    return Render.list([
+      build().render(context.copy),
+      Render.element(
+        context,
+        tag: "script",
+        child: Render.text(
+          context.copy,
+          "import '/src/app.css';",
+        ),
+      ),
+    ]);
   }
 
   @override
@@ -142,28 +152,5 @@ abstract class Layout extends Component {
     if (!exists(outputPath)) createDir(outputPath);
     final layoutPage = render(RenderContext(slot: true)).toString();
     File(path.join(outputPath, '+layout.svelte')).writeAsStringSync(layoutPage);
-
-    final page = content.render(RenderContext(slot: true)).toString();
-    File(path.join(outputPath, '+page.svelte')).writeAsStringSync(page);
-    return true;
-  }
-}
-
-abstract class WebPage extends Component {
-  const WebPage();
-
-  @override
-  Widget build() {
-    throw UnimplementedError();
-  }
-
-  @override
-  generate({bool debug = false, required String outputPath}) {
-    final result = build().generate(outputPath: outputPath);
-    if (result != true) {
-      if (!exists(outputPath)) createDir(outputPath);
-      final page = render(RenderContext()).toString();
-      File(path.join(outputPath, '+page.svelte')).writeAsStringSync(page);
-    }
   }
 }
