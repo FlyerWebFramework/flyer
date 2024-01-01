@@ -11,16 +11,31 @@ Simple web framework in Dart inspired by Flutter.
 
 ## Getting started
 
-1) Install [nodejs 20.10.0](https://nodejs.org/en)
-2) flyer build
-3) flyer run
+1) Install [nodejs 20.10.0](https://nodejs.org/en) and [Dart 3](https://dart.dev)
+2) dart compile exe bin/flyer.dart && mv bin/flyer.exe example/bin/flyer.exe
+3) ./example/bin/flyer.exe build
+4) ./example/bin/flyer.exe run
 
-## Usage
+## Features
 
-```
-flyer build example/main.dart
-flyer run
-```
+- Create web pages in Flutter-like style.
+- Setup SEO for better google search optimalisation.
+- Build web pages with predefined Flyer Components and Widgets.
+- Create your own Flyer Components and Widgets or use community packages.
+- Flyer builder convert Flyer Project into SvelteKit project under one second.
+- Flyer is using Svelte, SvelteKit, Tailwind, DaisyUI and Vite under the hood.
+- Flyer generate SvelteKit project in human-readable code for simple debugging.
+
+## Roadmap
+
+- i18n
+- Theme
+- Scripts
+- Animations
+- State management
+- Responsive design
+- Static site generation
+- More predefined Components and Widgets
 
 
 ## Contributing
@@ -31,7 +46,6 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 👤 **Martin Jablečník**
 
-* Website: [martin-jablecnik.cz](https://www.martin-jablecnik.cz)
 * Github: [@mjablecnik](https://github.com/mjablecnik)
 * Blog: [dev.to](https://dev.to/mjablecnik)
 
@@ -48,4 +62,4 @@ Give a ⭐️ if this project helped you!
 ## 📝 License
 
 Copyright © 2023-2024 [Martin Jablečník](https://github.com/mjablecnik).<br />
-This project is [GNU License](https://choosealicense.com/licenses/mit/) licensed.
+This project is licensed under [MIT License](https://choosealicense.com/licenses/mit/).
