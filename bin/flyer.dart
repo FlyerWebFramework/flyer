@@ -57,7 +57,7 @@ createProjectIfNotExists({required String webPath, required String logsPath}) {
   if (exists(webPath)) return;
   checkCommand('git');
   checkCommand('npm');
-  'git clone git@github.com:mjablecnik/svelte-project.git web'.start(
+  'git clone https://github.com/FlyerWebFramework/svelte-project.git web'.start(
     workingDirectory: DartScript.self.pathToProjectRoot,
     progress: Progress(logsPath.append),
   );

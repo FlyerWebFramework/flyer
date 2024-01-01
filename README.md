@@ -47,5 +47,5 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2023 [Martin Jablečník](https://github.com/mjablecnik).<br />
+Copyright © 2023-2024 [Martin Jablečník](https://github.com/mjablecnik).<br />
 This project is [GNU License](https://choosealicense.com/licenses/mit/) licensed.
