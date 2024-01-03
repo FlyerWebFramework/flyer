@@ -34,6 +34,14 @@ class ClassBuilder {
     }
   }
 
+  addClass(String classStyle) {
+    _classes.add(classStyle);
+  }
+
+  addClassAll(List<String> classes) {
+    _classes.addAll(classes);
+  }
+
   void add(String template, Variable? variable) {
     if (variable != null) {
       _saveClass(template.replaceAll("{}", variable.value.toString()));

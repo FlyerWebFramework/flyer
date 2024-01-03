@@ -1,5 +1,5 @@
 export 'widgets/buttons.dart';
-export 'widgets/containers.dart';
+export 'widgets/layouts.dart';
 export 'widgets/images.dart';
 export 'widgets/gestures.dart';
 export 'widgets/texts.dart';

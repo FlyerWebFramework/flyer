@@ -1,13 +1,13 @@
 extension UnitsExtension on num {
-  Unit get px => Unit(value: this, unit: UnitType.px);
+  Unit get px => Unit(value: toString(), unit: UnitType.px);
 
-  Unit get pt => Unit(value: this, unit: UnitType.pt);
+  Unit get pt => Unit(value: toString(), unit: UnitType.pt);
 
-  Unit get em => Unit(value: this, unit: UnitType.em);
+  Unit get em => Unit(value: toString(), unit: UnitType.em);
 
-  Unit get rem => Unit(value: this, unit: UnitType.rem);
+  Unit get rem => Unit(value: toString(), unit: UnitType.rem);
 
-  Unit get per => Unit(value: this, unit: UnitType.percent);
+  Unit get per => Unit(value: toString(), unit: UnitType.percent);
 }
 
 enum UnitType { px, pt, em, rem, percent, custom }
@@ -15,9 +15,13 @@ enum UnitType { px, pt, em, rem, percent, custom }
 class Unit {
   const Unit({required this.value, required this.unit});
 
-  final num value;
+  final String value;
 
   final UnitType unit;
+
+  const Unit.empty()
+      : value = "",
+        unit = UnitType.custom;
 
   @override
   String toString() {
@@ -30,7 +34,7 @@ class Unit {
       case UnitType.percent:
         return "[$value%]";
       case UnitType.custom:
-        return value.toString();
+        return "[$value]";
     }
   }
 }

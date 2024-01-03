@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
-import 'package:flyer/generator/widgets/containers.dart';
+import 'package:flyer/generator/widgets/layouts.dart';
 import 'package:path/path.dart' as path;
 import 'package:flyer/generator/foundation.dart';
 

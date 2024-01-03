@@ -1,13 +1,21 @@
 import 'package:flyer/generator/core/colors.dart';
+import 'package:flyer/generator/core/units.dart';
 
 enum BorderStyle {
-  /// Skip the border.
-  none,
+  none("border-"),
+  solid("border-solid"),
+  dashed("border-dashed"),
+  dotted("border-dotted"),
+  double("border-double"),
+  hidden("border-hidden"),
+  ;
 
-  /// Draw the border as a solid line.
-  solid,
+  const BorderStyle(this.cssValue);
 
-  // if you add more, think about how they will lerp
+  final String cssValue;
+
+  @override
+  toString() => cssValue;
 }
 
 class BorderSide {
@@ -16,17 +24,12 @@ class BorderSide {
   /// By default, the border is 1.0 logical pixels wide and solid black.
   const BorderSide({
     this.color = Color.black,
-    this.width = 1.0,
+    this.width = const Unit(value: "1", unit: UnitType.px),
     this.style = BorderStyle.solid,
-    this.strokeAlign = 0.0,
-  })  : assert(color != null),
-        assert(width != null),
-        assert(width >= 0.0),
-        assert(style != null),
-        assert(strokeAlign != null);
+  });
 
   /// The color of this side of the border.
-  final Color color;
+  final Color? color;
 
   /// The width of this side of the border, in logical pixels.
   ///
@@ -37,50 +40,38 @@ class BorderSide {
   /// double-hit pixels, giving it a slightly darker/lighter result.
   ///
   /// To omit the border entirely, set the [style] to [BorderStyle.none].
-  final double width;
+  final Unit? width;
 
   /// The style of this side of the border.
   ///
   /// To omit a side, set [style] to [BorderStyle.none]. This skips
   /// painting the border, but the border still has a [width].
-  final BorderStyle style;
-  final double strokeAlign;
+  final BorderStyle? style;
 
   /// A hairline black border that is not rendered.
-  static const BorderSide none = BorderSide(width: 0.0, style: BorderStyle.none);
+  static const BorderSide none = BorderSide(width: Unit.empty(), style: BorderStyle.none);
 
-  /// The border is drawn fully inside of the border path.
-  ///
-  /// This is the default.
-  static const double strokeAlignInside = -1.0;
-
-  /// The border is drawn on the center of the border path, with half of the
-  /// [BorderSide.width] on the inside, and the other half on the outside of
-  /// the path.
-  static const double strokeAlignCenter = 0.0;
-
-  /// The border is drawn on the outside of the border path.
-  static const double strokeAlignOutside = 1.0;
+  List<String> get classes => [
+        if (color != null) "border-${color!.value}",
+        if (width != null) "border-$width",
+        if (style != null) style!.cssValue,
+      ];
 }
 
 class Border {
-  const Border({
+  const Border._init({
+    this.all = BorderSide.none,
     this.top = BorderSide.none,
     this.right = BorderSide.none,
     this.bottom = BorderSide.none,
     this.left = BorderSide.none,
   });
 
-  final BorderSide top;
-  final BorderSide right;
-  final BorderSide bottom;
-  final BorderSide left;
-
-  const Border.fromBorderSide(BorderSide side)
-      : top = side,
-        right = side,
-        bottom = side,
-        left = side;
+  final BorderSide? all;
+  final BorderSide? top;
+  final BorderSide? right;
+  final BorderSide? bottom;
+  final BorderSide? left;
 
   /// Creates a border with symmetrical vertical and horizontal sides.
   ///
@@ -91,7 +82,8 @@ class Border {
   const Border.symmetric({
     BorderSide vertical = BorderSide.none,
     BorderSide horizontal = BorderSide.none,
-  })  : left = vertical,
+  })  : all = null,
+        left = vertical,
         top = horizontal,
         right = vertical,
         bottom = horizontal;
@@ -100,12 +92,12 @@ class Border {
   ///
   /// The sides default to black solid borders, one logical pixel wide.
   factory Border.all({
-    Color color = Color.black,
-    double width = 1.0,
-    BorderStyle style = BorderStyle.solid,
-    double strokeAlign = BorderSide.strokeAlignInside,
+    Color? color = Color.black,
+    Unit? width = const Unit(value: "1", unit: UnitType.px),
+    BorderStyle? style,
   }) {
-    final BorderSide side = BorderSide(color: color, width: width, style: style, strokeAlign: strokeAlign);
-    return Border.fromBorderSide(side);
+    return Border._init(all: BorderSide(color: color, width: width, style: style));
   }
+
+  List<String> get classes => [if (all != null) ...all!.classes];
 }

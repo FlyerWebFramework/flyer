@@ -48,26 +48,6 @@ class BoxDecoration extends Decoration {
   BoxDecoration({required super.color, required super.border});
 }
 
-enum Alignment {
-  topLeft("grid items-start justify-items-start"),
-  topCenter("grid items-start justify-items-center"),
-  topRight("grid items-start justify-items-end"),
-  centerLeft("grid items-center justify-items-start"),
-  center("grid items-center justify-items-center"),
-  centerRight("grid items-center justify-items-end"),
-  bottomLeft("grid items-end justify-items-start"),
-  bottomCenter("grid items-end justify-items-center"),
-  bottomRight("grid items-end justify-items-end"),
-  ;
-
-  const Alignment(this.cssValue);
-
-  final String cssValue;
-
-  @override
-  toString() => cssValue;
-}
-
 class Scripts {
   late final Map<String, Script> _scripts;
 
@@ -129,7 +109,7 @@ class Arguments {
 
   $<T> get<T>(String key) {
     if (_args.containsKey(key)) {
-      return $<T>(_args[key] as T, name: key);
+      return $<T>(_args[key] as T?, name: key);
     } else {
       return $<T>(null, name: key);
     }

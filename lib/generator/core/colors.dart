@@ -1,6 +1,8 @@
 import 'package:color/color.dart' as color;
 
 class Color {
+  static const transparent = NamedColor("transparent");
+
   static const red = NamedColor("red");
 
   static const yellow = NamedColor("yellow");
@@ -61,7 +63,10 @@ class NamedColor implements Color {
   final double? opacity;
 
   @override
-  String get value => "$name-$shade";
+  String get value {
+    if (name == 'black' || name == 'white' || name == 'transparent') return name;
+    return "$name-$shade";
+  }
 
   @override
   String toString() => value;
