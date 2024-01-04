@@ -43,7 +43,7 @@ class IndexPage extends WebPage {
               ),
               Text("Header".v),
               Text("Some text".v),
-              SimpleButton(size: Size(300.px, 70.px)),
+              SimpleButton(size: Size(300.px, 70.px), disabled: Bool(true)),
               SimpleButton(size: Size(500.px, 100.px)),
               SimpleRectangle(size: 50.px),
               SimpleRectangle(size: 100.px, align: Align.centerRight, child: Text("Test123".v)),

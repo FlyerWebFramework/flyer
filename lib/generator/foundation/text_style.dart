@@ -21,6 +21,18 @@ enum TextDecoration {
   toString() => name;
 }
 
+enum ClassState {
+  none,
+  hover,
+  focus,
+  active,
+  disabled,
+  ;
+
+  @override
+  toString() => this == ClassState.none ? '' : '$name:';
+}
+
 class TextStyle {
   TextStyle({
     this.color,
@@ -36,13 +48,13 @@ class TextStyle {
   final $<FontWeight?>? fontWeight;
   final $<TextDecoration?>? decoration;
 
-  List<String> get classes {
+  List<String> getClasses([ClassState state = ClassState.none]) {
     final builder = ClassBuilder();
-    builder.add("text-{}", color);
-    builder.add("text-{}", fontSize);
-    builder.add("font-{}", fontWeight);
-    builder.add("{}", decoration);
-    builder.add("leading-{}", lineHeight);
+    builder.add("${state}text-{}", color);
+    builder.add("${state}text-{}", fontSize);
+    builder.add("${state}font-{}", fontWeight);
+    builder.add("$state{}", decoration);
+    builder.add("${state}leading-{}", lineHeight);
     return builder.classes;
   }
 }

@@ -1,3 +1,5 @@
+import 'colors.dart';
+
 extension UnitsExtension on num {
   Unit get px => Unit(value: toString(), unit: UnitType.px);
 
@@ -12,6 +14,17 @@ extension UnitsExtension on num {
 
 enum UnitType { px, pt, em, rem, percent, custom }
 
+class Bool {
+  const Bool(this.value);
+
+  final bool value;
+
+  @override
+  String toString() {
+    return "{$value}";
+  }
+}
+
 class Unit {
   const Unit({required this.value, required this.unit});
 
@@ -21,6 +34,10 @@ class Unit {
 
   const Unit.empty()
       : value = "",
+        unit = UnitType.custom;
+
+  const Unit.bool(bool value)
+      : value = "{$value}",
         unit = UnitType.custom;
 
   @override

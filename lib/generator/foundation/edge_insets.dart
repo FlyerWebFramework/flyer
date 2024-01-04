@@ -1,5 +1,7 @@
 import 'package:flyer/generator/core/units.dart';
 
+import 'text_style.dart';
+
 enum Axis {
   /// Left and right.
   ///
@@ -135,27 +137,27 @@ class EdgeInsets {
     );
   }
 
-  List<String> get marginClasses {
+  List<String> getMarginClasses([ClassState state = ClassState.none]) {
     return [
-      if (all != null) "m-$all",
-      if (left != null) "ml-$left",
-      if (top != null) "mt-$top",
-      if (right != null) "mr-$right",
-      if (bottom != null) "mb-$bottom",
-      if (horizontal != null) "mx-$horizontal",
-      if (vertical != null) "my-$vertical",
+      if (all != null) "${state}m-$all",
+      if (left != null) "${state}ml-$left",
+      if (top != null) "${state}mt-$top",
+      if (right != null) "${state}mr-$right",
+      if (bottom != null) "${state}mb-$bottom",
+      if (horizontal != null) "${state}mx-$horizontal",
+      if (vertical != null) "${state}my-$vertical",
     ];
   }
 
-  List<String> get paddingClasses {
+  List<String> getPaddingClasses([ClassState state = ClassState.none]) {
     return [
-      if (all != null) "p-$all",
-      if (left != null) "pl-$left",
-      if (top != null) "pt-$top",
-      if (right != null) "pr-$right",
-      if (bottom != null) "pb-$bottom",
-      if (horizontal != null) "px-$horizontal",
-      if (vertical != null) "py-$vertical",
+      if (all != null) "${state}p-$all",
+      if (left != null) "${state}pl-$left",
+      if (top != null) "${state}pt-$top",
+      if (right != null) "${state}pr-$right",
+      if (bottom != null) "${state}pb-$bottom",
+      if (horizontal != null) "${state}px-$horizontal",
+      if (vertical != null) "${state}py-$vertical",
     ];
   }
 }

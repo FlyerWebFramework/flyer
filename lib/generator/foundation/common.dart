@@ -38,14 +38,30 @@ class Event {
 }
 
 class Decoration {
-  const Decoration({required this.color, required this.border});
+  const Decoration({
+    this.color,
+    this.border,
+    this.margin,
+    this.padding,
+  });
 
-  final Color color;
-  final Border border;
+  final $<Color?>? color;
+  final $<Border?>? border;
+  final $<EdgeInsets?>? margin;
+  final $<EdgeInsets?>? padding;
+
+  List<String> getClasses([ClassState state = ClassState.none]) {
+    final builder = ClassBuilder();
+    builder.add("${state}bg-{}", color);
+    builder.addClassAll(border?.value?.getClasses(state));
+    builder.addClassAll(margin?.value?.getMarginClasses(state));
+    builder.addClassAll(padding?.value?.getPaddingClasses(state));
+    return builder.classes;
+  }
 }
 
 class BoxDecoration extends Decoration {
-  BoxDecoration({required super.color, required super.border});
+  BoxDecoration({super.color, super.border});
 }
 
 class Scripts {

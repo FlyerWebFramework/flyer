@@ -1,5 +1,6 @@
 import 'package:flyer/generator/core/colors.dart';
 import 'package:flyer/generator/core/units.dart';
+import 'package:flyer/generator/foundation.dart';
 
 enum BorderStyle {
   none("border-"),
@@ -51,11 +52,13 @@ class BorderSide {
   /// A hairline black border that is not rendered.
   static const BorderSide none = BorderSide(width: Unit.empty(), style: BorderStyle.none);
 
-  List<String> get classes => [
-        if (color != null) "border-${color!.value}",
-        if (width != null) "border-$width",
-        if (style != null) style!.cssValue,
-      ];
+  List<String> getClasses([ClassState state = ClassState.none]) {
+    return [
+      if (color != null) "${state}border-${color!.value}",
+      if (width != null) "${state}border-$width",
+      if (style != null) "$state${style!.cssValue}",
+    ];
+  }
 }
 
 class Border {
@@ -99,5 +102,7 @@ class Border {
     return Border._init(all: BorderSide(color: color, width: width, style: style));
   }
 
-  List<String> get classes => [if (all != null) ...all!.classes];
+  List<String> getClasses([ClassState state = ClassState.none]) => [
+        if (all != null) ...all!.getClasses(state),
+      ];
 }

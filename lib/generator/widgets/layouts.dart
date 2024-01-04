@@ -9,7 +9,7 @@ class Padding extends Widget {
 
   List<String> get classes {
     final builder = ClassBuilder();
-    if (padding.value != null) builder.addClassAll(padding.value!.paddingClasses);
+    builder.addClassAll(padding.value?.getPaddingClasses());
     return builder.classes;
   }
 
@@ -76,9 +76,9 @@ class Container extends SizedBox {
     final builder = ClassBuilder(super.classes);
     builder.add("bg-{}", color);
     builder.add("{}", alignment);
-    if (margin != null && margin!.value != null) builder.addClassAll(margin!.value!.marginClasses);
-    if (padding != null && padding!.value != null) builder.addClassAll(padding!.value!.paddingClasses);
-    if (border != null && border!.value != null) builder.addClassAll(border!.value!.classes);
+    builder.addClassAll(margin?.value?.getMarginClasses());
+    builder.addClassAll(padding?.value?.getPaddingClasses());
+    builder.addClassAll(border?.value?.getClasses());
     return builder.classes;
   }
 

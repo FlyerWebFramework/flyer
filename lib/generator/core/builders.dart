@@ -34,18 +34,25 @@ class ClassBuilder {
     }
   }
 
-  addClass(String classStyle) {
+  addDaisyClass(String? classStyle) {
+    if (classStyle == null) return;
+    _classes.add('${Constants.daisyPrefix}$classStyle');
+  }
+
+  addClass(String? classStyle) {
+    if (classStyle == null) return;
     _classes.add(classStyle);
   }
 
-  addClassAll(List<String> classes) {
+  addClassAll(List<String>? classes) {
+    if (classes == null) return;
     _classes.addAll(classes);
   }
 
-  void add(String template, Variable? variable) {
+  void add(String template, Variable? variable, {String prefix = ''}) {
     if (variable != null) {
       _saveClass(template.replaceAll("{}", variable.value.toString()));
-      _classes.add(_buildClass(template, variable));
+      _classes.add(prefix+_buildClass(template, variable));
     }
   }
 }

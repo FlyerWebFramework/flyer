@@ -18,12 +18,13 @@ class Size extends ArgsObject {
 }
 
 class SimpleButton extends Component {
-  const SimpleButton({required this.size});
+  const SimpleButton({required this.size, this.disabled = const Bool(false)});
 
   final Size size;
+  final Bool? disabled;
 
   @override
-  Arguments get args => Arguments().addObject(size);
+  Arguments get args => Arguments({'disabled': disabled}).addObject(size);
 
   @override
   Map<String, dynamic> get obs => {N.count.name: 0};
@@ -38,20 +39,31 @@ class SimpleButton extends Component {
   @override
   Widget build() {
     return Button(
+      $("Clicked {${N.count.name}}x"),
+      disabled: $argByName('disabled'),
       width: $arg(size.width),
       height: $arg(size.height),
-      color: $(Color.red),
+      type: $(ButtonType.secondary),
       onTap: $(scripts.get(N.handleClick.name)),
-      child: Text(
-        $("Clicked {${N.count.name}}x"),
-        style: TextStyle(
-          fontSize: $(22.pt),
-          color: $(Color.blue.shade800),
-          fontWeight: $(FontWeight.bold),
-          decoration: $(TextDecoration.underline),
-          lineHeight: $(2.3.px),
-        ),
+      textStyle: TextStyle(
+        fontSize: $(22.pt),
+        color: $(Color.blue.shade800),
+        fontWeight: $(FontWeight.bold),
+        decoration: $(TextDecoration.underline),
+        lineHeight: $(2.3.px),
       ),
+      decoration: BoxDecoration(color: $(Color.red)),
+      styles: [
+        ButtonStyle(
+          state: ButtonState.hover,
+          decoration: BoxDecoration(color: $(Color.red.shade800)),
+          textStyle: TextStyle(color: $(Color.blue)),
+        ),
+        ButtonStyle(
+          state: ButtonState.disabled,
+          textStyle: TextStyle(color: $(Color.white)),
+        ),
+      ],
     );
   }
 }
