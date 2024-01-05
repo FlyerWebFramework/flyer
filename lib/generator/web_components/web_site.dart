@@ -96,11 +96,13 @@ class WebSite extends Widget {
     final htmlPage = render(RenderContext()).toString();
     File(path.join(outputPath, 'src', 'app.html')).writeAsStringSync(htmlPage);
 
+    final routesPath = path.join(outputPath, 'src', 'routes');
+
     final layout = (buildLayout ?? (Widget content) => Layout()).call(Slot.empty());
-    layout.generate(outputPath: path.join(outputPath, 'src', 'routes'));
+    layout.generate(outputPath: routesPath);
 
     for (MapEntry<String, WebPage> route in routes.entries) {
-      final pagePath = path.join(outputPath, 'src', 'routes', route.key == '/' ? '' : route.key);
+      final pagePath = path.join(routesPath, path.joinAll(route.key.split('/')));
       route.value.generate(outputPath: pagePath);
     }
   }
