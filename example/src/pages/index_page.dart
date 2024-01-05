@@ -29,15 +29,12 @@ class IndexPage extends WebPage {
                   spacing: $(1.rem),
                   alignment: $(Alignment.center),
                   children: [
-                    for (var i in List.generate(18, (index) => index))
-                      ...() {
-                        return [
-                          SimpleRectangle(size: 50.px, color: Color.red),
-                          SimpleRectangle(size: 50.px, color: Color.green.shade700),
-                          SimpleRectangle(size: 50.px, color: Color.green.shade700),
-                          SimpleRectangle(size: 50.px, color: Color.green.shade700),
-                        ];
-                      }()
+                    $for(iterations: 12, children: [
+                      SimpleRectangle(size: 50.px, color: Color.red),
+                      SimpleRectangle(size: 50.px, color: Color.green.shade700),
+                      SimpleRectangle(size: 50.px, color: Color.green.shade700),
+                      SimpleRectangle(size: 50.px, color: Color.green.shade700),
+                    ])
                   ],
                 ),
               ),
