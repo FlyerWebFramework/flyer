@@ -5,7 +5,7 @@ import '../components/simple_button.dart';
 import '../components/simple_rectangle.dart';
 
 class IndexPage extends WebPage {
-  IndexPage();
+  const IndexPage();
 
   @override
   Widget build() {
@@ -42,7 +42,31 @@ class IndexPage extends WebPage {
                 ),
               ),
               Text("Header".v),
-              Headline("Nadpis".v),
+              Title("Nadpis".v),
+              Paragraph(children: [
+                Text(
+                  $("Text123"),
+                  style: TextStyle(
+                    color: $(Color.black),
+                    decoration: $(TextDecoration.underline),
+                  ),
+                ),
+                Text(
+                  $("Text123"),
+                  style: TextStyle(
+                    color: $(Color.black),
+                    fontSize: $(20.pt),
+                    fontWeight: $(FontWeight.bold),
+                  ),
+                ),
+                Text(
+                  $("Text123"),
+                  style: TextStyle(
+                    color: $(Color.blue),
+                    fontSize: $(16.pt),
+                  ),
+                ),
+              ]),
               Text("Some text".v),
               SimpleButton(size: Size(300.px, 70.px), disabled: Bool(true)),
               SimpleButton(size: Size(500.px, 100.px)),
