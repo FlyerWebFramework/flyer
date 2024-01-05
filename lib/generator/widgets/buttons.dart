@@ -99,7 +99,7 @@ class Button extends Component with Gestures {
       tag: 'button',
       events: events,
       classes: classes,
-      custom: {"disabled": "{disabled == true ? 'disabled' : ''}"},
+      attributes: {"disabled": "{disabled == true ? 'disabled' : ''}"},
       child: Render.text(context.copy, text.value!),
     );
   }

@@ -59,11 +59,11 @@ class Svg extends Widget {
     return Render.element(
       context,
       tag: "svg",
-      custom: size,
+      attributes: size,
       child: Render.element(
         context.copy,
         tag: 'image',
-        custom: {
+        attributes: {
           'xlink:href': sourcePath,
           ...size,
         },

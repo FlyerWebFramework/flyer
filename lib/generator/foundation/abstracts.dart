@@ -81,7 +81,7 @@ abstract class Component extends Widget {
       return Render.element(
         context,
         tag: runtimeType.toString(),
-        custom: {...args.list},
+        attributes: {...args.list},
         child: Render.list([
           if (defaultFragment != null) defaultFragment.renderFragment(context.copy),
           ...fragments.map((e) => e.renderFragment(context.copy)),

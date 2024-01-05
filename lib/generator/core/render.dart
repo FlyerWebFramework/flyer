@@ -41,7 +41,7 @@ class Render {
   }
 
   static StringBuffer fragment(RenderContext context, {required String name, required StringBuffer child}) {
-    return Render.element(context, tag: "svelte:fragment", custom: {"slot": name}, child: child);
+    return Render.element(context, tag: "svelte:fragment", attributes: {"slot": name}, child: child);
   }
 
   static StringBuffer list(List<StringBuffer> elements) {
@@ -55,7 +55,7 @@ class Render {
     List<String>? classes,
     StringBuffer? child,
     Map<String, String>? styles,
-    Map<String, String>? custom,
+    Map<String, String>? attributes,
     bool newLine = false,
     bool oneLine = false,
   }) {
@@ -81,9 +81,9 @@ class Render {
       buffer.write([for (var e in styles.entries) "${e.key}:${e.value}"].join(';'));
       buffer.write("'");
     }
-    if (custom != null && custom.isNotEmpty) {
+    if (attributes != null && attributes.isNotEmpty) {
       buffer.write(" ");
-      buffer.write([for (var e in custom.entries) "${e.key}='${e.value}'"].join(' '));
+      buffer.write([for (var e in attributes.entries) "${e.key}='${e.value}'"].join(' '));
     }
     if (child != null && child.isNotEmpty) {
       buffer.write(">");

@@ -43,7 +43,7 @@ class WebSite extends Widget {
       Render.element(
         context.copy,
         tag: 'html',
-        custom: {"lang": language},
+        attributes: {"lang": language},
         child: Render.list([
           Render.element(
             context.indent(2),
@@ -61,7 +61,7 @@ class WebSite extends Widget {
                 Render.element(
                   context.indent(3),
                   tag: "base",
-                  custom: {"href": baseUrl!.origin},
+                  attributes: {"href": baseUrl!.origin},
                   oneLine: true,
                 ),
               favicon.render(context.indent(2)),
@@ -77,7 +77,7 @@ class WebSite extends Widget {
           Render.element(
             context.indent(2),
             tag: 'body',
-            custom: {"data-sveltekit-preload-data": "hover"},
+            attributes: {"data-sveltekit-preload-data": "hover"},
             child: Render.element(
               context.indent(3),
               tag: "div",
