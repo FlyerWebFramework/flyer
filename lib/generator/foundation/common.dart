@@ -35,6 +35,13 @@ class Event {
   final $<Script?>? script;
 }
 
+class Size {
+  const Size(this.width, this.height);
+
+  final Unit width;
+  final Unit height;
+}
+
 class Decoration {
   const Decoration({
     this.color,

@@ -28,3 +28,46 @@ class Favicon extends Widget {
     return Render.link(context, rel: "icon", href: href);
   }
 }
+
+class Svg extends Widget {
+  final String sourcePath;
+  final Size size;
+
+  const Svg._init(this.sourcePath, {this.size = Constants.defaultSvgSize});
+
+  factory Svg.asset(String assetPath, {Size size = Constants.defaultSvgSize}) {
+    final svgPath = path.join('static', assetPath);
+    if (exists(svgPath)) {
+      return Svg._init(assetPath, size: size);
+    }
+    throw "Error: Svg in path `$svgPath` doesn't exists.";
+  }
+
+  factory Svg.url(Uri url, {Size size = Constants.defaultSvgSize}) {
+    if (url.isAbsolute) {
+      return Svg._init(url.toString(), size: size);
+    }
+    throw "Error: Svg url must be absolute address.";
+  }
+
+  @override
+  StringBuffer render(RenderContext context) {
+    final Map<String, String> size = {
+      'width': this.size.width.toString(onlyValue: true),
+      'height': this.size.height.toString(onlyValue: true),
+    };
+    return Render.element(
+      context,
+      tag: "svg",
+      custom: size,
+      child: Render.element(
+        context.copy,
+        tag: 'image',
+        custom: {
+          'xlink:href': sourcePath,
+          ...size,
+        },
+      ),
+    );
+  }
+}

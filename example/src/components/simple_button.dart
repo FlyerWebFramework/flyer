@@ -2,8 +2,8 @@ import 'package:flyer/widgets.dart';
 
 enum N { count, handleClick }
 
-class Size extends ArgsObject {
-  Size(this.width, this.height);
+class SimpleSize extends ArgsObject {
+  SimpleSize(this.width, this.height);
 
   final Unit width;
   final Unit height;
@@ -20,7 +20,7 @@ class Size extends ArgsObject {
 class SimpleButton extends Component {
   const SimpleButton({required this.size, this.disabled = const Bool(false)});
 
-  final Size size;
+  final SimpleSize size;
   final Bool? disabled;
 
   @override

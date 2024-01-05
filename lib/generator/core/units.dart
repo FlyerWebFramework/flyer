@@ -39,18 +39,20 @@ class Unit {
         unit = UnitType.custom;
 
   @override
-  String toString() {
+  String toString({bool onlyValue = false}) {
+    String result = '<unknown>';
     switch (unit) {
       case UnitType.px:
       case UnitType.pt:
       case UnitType.em:
       case UnitType.rem:
-        return "[$value${unit.name}]";
+        result = "$value${unit.name}";
       case UnitType.percent:
-        return "[$value%]";
+        result = "$value%";
       case UnitType.custom:
-        return "[$value]";
+        result = value;
     }
+    return onlyValue ? result : '[$result]';
   }
 }
 

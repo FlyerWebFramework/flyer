@@ -43,6 +43,8 @@ class IndexPage extends WebPage {
               ),
               Text("Header".v),
               Title("Nadpis".v),
+              Svg.asset("logo.svg", size: Size(15.rem, 5.rem)),
+              Svg.url(Uri.parse("https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/atom.svg")),
               Paragraph(children: [
                 Text(
                   $("Text123"),
@@ -68,8 +70,8 @@ class IndexPage extends WebPage {
                 ),
               ]),
               Text("Some text".v),
-              SimpleButton(size: Size(300.px, 70.px), disabled: Bool(true)),
-              SimpleButton(size: Size(500.px, 100.px)),
+              SimpleButton(size: SimpleSize(300.px, 70.px), disabled: Bool(true)),
+              SimpleButton(size: SimpleSize(500.px, 100.px)),
               SimpleRectangle(size: 50.px),
               SimpleRectangle(size: 100.px, align: Align.centerRight, child: Text("Test123".v)),
               SimpleRectangle(size: 150.px, align: Align.center, child: Text("Test123".v)),
