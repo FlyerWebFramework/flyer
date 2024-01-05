@@ -79,6 +79,7 @@ class Button extends Component with Gestures {
   @override
   Arguments get args => Arguments({'disabled': disabled});
 
+  @override
   List<String> get classes {
     final builder = ClassBuilder();
     builder.add("w-{}", width);

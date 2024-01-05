@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:flyer/transpiler/common.dart';
-import 'package:flyer/transpiler/scanner.dart';
 import 'package:path/path.dart' as path;
 import 'package:dcli/dcli.dart';
 
@@ -16,17 +14,8 @@ Future<void> main(List<String> arguments) async {
       createProjectIfNotExists(webPath: webPath, logsPath: logsPath);
       'npm run dev'.start(workingDirectory: webPath);
     case 'build':
-      // if (arguments.length <= 1) {
-      //   print("File path is missing.\n");
-      //   print("You have to run:");
-      //   print("flyer build <path-to-file>");
-      //   exit(1);
-      // }
       createProjectIfNotExists(webPath: webPath, logsPath: logsPath);
-      await build(
-          // filePath: path.join(DartScript.self.pathToProjectRoot, arguments[1]),
-          // outputPath: path.join(DartScript.self.pathToProjectRoot, arguments[2]),
-          );
+      await build();
     case 'clean':
       deleteDir(webPath, recursive: true);
     case 'doctor':

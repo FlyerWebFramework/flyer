@@ -7,6 +7,7 @@ class Padding extends Widget {
   final $<EdgeInsets> padding;
   final Widget child;
 
+  @override
   List<String> get classes {
     final builder = ClassBuilder();
     builder.addClassAll(padding.value?.getPaddingClasses());
@@ -35,6 +36,7 @@ class SizedBox extends Widget {
   final $<Unit>? height;
   final Widget? child;
 
+  @override
   List<String> get classes {
     final builder = ClassBuilder();
     builder.add("w-{}", width);
@@ -116,6 +118,7 @@ class Column extends Widget {
 
   final List<Widget> children;
 
+  @override
   List<String> get classes {
     final builder = ClassBuilder();
     builder.add("grid grid-col", $(1));
@@ -156,6 +159,7 @@ class Row extends Widget {
 
   final List<Widget> children;
 
+  @override
   List<String> get classes {
     final builder = ClassBuilder();
     builder.addClass("flex ${wrap == true ? 'flex-wrap' : 'flex-nowrap'}");
@@ -193,6 +197,7 @@ class Grid extends Widget {
 
   final List<Widget> children;
 
+  @override
   List<String> get classes {
     final builder = ClassBuilder();
     builder.addClass("grid");

@@ -25,9 +25,9 @@ class ClassBuilder {
 
   String _buildClass(String template, Variable variable) {
     switch (variable.value) {
-      case Unit:
-      case Enum:
-      case Color:
+      case const (Unit):
+      case const (Enum):
+      case const (Color):
       default:
         _saveClass(template.replaceAll("{}", variable.value.toString()));
         return template.replaceAll("{}", variable.toString());

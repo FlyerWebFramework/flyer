@@ -1,8 +1,6 @@
 import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
 
-import 'border.dart';
-
 enum EventType { click }
 
 class BuildContext {}
