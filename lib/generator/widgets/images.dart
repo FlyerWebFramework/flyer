@@ -71,3 +71,52 @@ class Svg extends Widget {
     );
   }
 }
+
+class Image extends Widget {
+  final String sourcePath;
+  final Size size;
+  final String description;
+
+  const Image._init(
+    this.sourcePath, {
+    this.size = Constants.defaultImageSize,
+    this.description = '',
+  });
+
+  factory Image.asset(
+    String assetPath, {
+    Size size = Constants.defaultImageSize,
+    String description = '',
+  }) {
+    final svgPath = path.join('static', assetPath);
+    if (exists(svgPath)) {
+      return Image._init(assetPath, size: size, description: description);
+    }
+    throw "Error: Image in path `$svgPath` doesn't exists.";
+  }
+
+  factory Image.url(
+    Uri url, {
+    Size size = Constants.defaultImageSize,
+    String description = '',
+  }) {
+    if (url.isAbsolute) {
+      return Image._init(url.toString(), size: size, description: description);
+    }
+    throw "Error: Image url must be absolute address.";
+  }
+
+  @override
+  StringBuffer render(RenderContext context) {
+    return Render.element(
+      context,
+      tag: "img",
+      attributes: {
+        'src': sourcePath,
+        'alt': description,
+        'width': size.width.toString(onlyValue: true),
+        'height': size.height.toString(onlyValue: true),
+      },
+    );
+  }
+}

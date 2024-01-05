@@ -45,6 +45,11 @@ class IndexPage extends WebPage {
               Title("Nadpis".v),
               Svg.asset("logo.svg", size: Size(15.rem, 5.rem)),
               Svg.url(Uri.parse("https://dev.w3.org/SVG/tools/svgweb/samples/svg-files/atom.svg")),
+              Image.url(
+                Uri.parse("https://www.creativefabrica.com/wp-content/uploads/2022/12/06/"
+                    "Rudolph-Reindeer-Christmas-PNG-Clipart-Graphics-50726285-1-1-580x387.png"),
+                size: Size(50.per, 50.per),
+              ),
               Paragraph(children: [
                 Text(
                   $("Text123"),

@@ -11,4 +11,8 @@ class Constants {
     Unit(value: "5", unit: UnitType.rem),
     Unit(value: "5", unit: UnitType.rem),
   );
+  static const Size defaultImageSize = Size(
+    Unit(value: "100", unit: UnitType.percent),
+    Unit(value: "100", unit: UnitType.percent),
+  );
 }
