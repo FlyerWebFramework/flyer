@@ -16,6 +16,8 @@ abstract class Widget {
     return this;
   }
 
+  List<String> get classes => [];
+
   generate({bool debug = false, required String outputPath}) async {
     throw UnimplementedError();
   }
@@ -23,6 +25,7 @@ abstract class Widget {
 
 class Slot extends Widget {
   const Slot({this.name = Constants.defaultFragmentName});
+
   const Slot.empty([this.name]);
 
   final String? name;
@@ -133,9 +136,17 @@ class Layout extends Component {
   }
 
   @override
+  List<String> get classes => ['prose'];
+
+  @override
   StringBuffer render(RenderContext context) {
     return Render.list([
-      build().render(context.copy),
+      Render.element(
+        context,
+        tag: 'span',
+        classes: classes,
+        child: build().render(context.indent(2)),
+      ),
       Render.element(
         context,
         tag: "script",

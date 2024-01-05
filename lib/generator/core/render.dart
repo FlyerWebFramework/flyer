@@ -32,12 +32,12 @@ class Render {
       ..write(">");
   }
 
-  static StringBuffer text(RenderContext context, String text) {
-    return StringBuffer("${Constants.indent * (context.indentation + 1)}$text");
+  static StringBuffer text(RenderContext context, String text, {int indent = 1}) {
+    return StringBuffer("${Constants.indent * (context.indentation + indent)}$text");
   }
 
-  static StringBuffer slot(RenderContext context, {String? name}) {
-    return StringBuffer("${Constants.indent * (context.indentation)}<slot ${name != null ? "name='$name'" : ""}/>");
+  static StringBuffer slot(RenderContext context, {String? name, int indent = 0}) {
+    return StringBuffer("${Constants.indent * (context.indentation + indent)}<slot ${name != null ? "name='$name'" : ""}/>");
   }
 
   static StringBuffer fragment(RenderContext context, {required String name, required StringBuffer child}) {
@@ -62,34 +62,38 @@ class Render {
     final String indentation = Constants.indent * context.indentation;
     final StringBuffer buffer = StringBuffer();
     buffer.write("$indentation<$tag");
-    if (events != null) {
+    if (events != null && events.isNotEmpty) {
       buffer.write(" ");
       for (Event event in events) {
         if (event.script == null) continue;
         buffer.write("on:${event.type.name}={${event.script?.value?.name}}");
       }
     }
-    if (classes != null) {
+    if (classes != null && classes.isNotEmpty) {
       buffer.write(" ");
       buffer.write("class='");
       buffer.writeAll(classes, " ");
       buffer.write("'");
     }
-    if (styles != null) {
+    if (styles != null && styles.isNotEmpty) {
       buffer.write(" ");
       buffer.write("style='");
       buffer.write([for (var e in styles.entries) "${e.key}:${e.value}"].join(';'));
       buffer.write("'");
     }
-    if (custom != null) {
+    if (custom != null && custom.isNotEmpty) {
       buffer.write(" ");
       buffer.write([for (var e in custom.entries) "${e.key}='${e.value}'"].join(' '));
     }
-    buffer.write(">");
-    if (!oneLine) buffer.writeln();
-    if (child != null) buffer.write(!oneLine ? child : child.toString().trim());
-    if (child != null && !oneLine) buffer.writeln();
-    buffer.write(!oneLine ? "$indentation</$tag>" : "</$tag>");
+    if (child != null && child.isNotEmpty) {
+      buffer.write(">");
+      if (!oneLine) buffer.writeln();
+      buffer.write(!oneLine ? child : child.toString().trim());
+      if (!oneLine) buffer.writeln();
+      buffer.write(!oneLine ? "$indentation</$tag>" : "</$tag>");
+    } else {
+      buffer.write("/>");
+    }
     if (newLine) buffer.writeln();
     return buffer;
   }
