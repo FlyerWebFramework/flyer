@@ -2,7 +2,7 @@ import 'package:flyer/widgets.dart';
 
 import 'layouts/default_layout.dart';
 import 'pages/about_page.dart';
-import 'pages/index.dart';
+import 'pages/index_page.dart';
 
 void main(List<String> arguments) {
   WebSite(

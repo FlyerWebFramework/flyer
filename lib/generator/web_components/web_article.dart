@@ -30,7 +30,7 @@ class Footer extends Widget {
   StringBuffer render(RenderContext context) {
     return Render.element(
       context,
-      tag: 'header',
+      tag: 'footer',
       child: Render.list([...content.map((e) => e.render(context.copy))]),
     );
   }
@@ -47,7 +47,7 @@ class Article extends Widget {
   StringBuffer render(RenderContext context) {
     return Render.element(
       context,
-      tag: 'header',
+      tag: 'article',
       child: Render.list([
         header.render(context.copy),
         ...content.map((e) => e.render(context.copy)),
