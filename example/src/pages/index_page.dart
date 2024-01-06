@@ -11,7 +11,6 @@ class IndexPage extends WebPage {
   Widget build() {
     return Page(
       content: Container(
-        align: $(Align.center),
         child: SizedBox(
           width: $(50.per),
           child: Column(
@@ -75,8 +74,8 @@ class IndexPage extends WebPage {
               SimpleButton(size: SimpleSize(300.px, 70.px), disabled: Bool(true)),
               SimpleButton(size: SimpleSize(500.px, 100.px)),
               SimpleRectangle(size: 50.px),
-              SimpleRectangle(size: 100.px, align: Align.centerRight, child: Text("Test123".v)),
-              SimpleRectangle(size: 150.px, align: Align.center, child: Text("Test123".v)),
+              SimpleRectangle(size: 100.px, child: Text("Test123".v)),
+              SimpleRectangle(size: 150.px, child: Text("Test123".v)),
               SimpleRectangle(size: 200.px),
               SimpleArticle(
                 header: Fragment(name: "header", child: Text("This is title".v)),

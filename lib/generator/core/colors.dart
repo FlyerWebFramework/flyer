@@ -11,6 +11,8 @@ class Color {
 
   static const green = NamedColor("green");
 
+  static const gray = NamedColor("gray");
+
   static const black = NamedColor("black");
 
   static const white = NamedColor("white");
@@ -22,7 +24,7 @@ class Color {
 
   factory Color.name(String value) = NamedColor;
 
-  factory Color.hex(String value) = NamedColor;
+  factory Color.hex(String value) = HexColor;
 
   factory Color.rgba(num r, num g, num b, num a) = RgbaColor;
 }

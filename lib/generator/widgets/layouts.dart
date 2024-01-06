@@ -1,6 +1,31 @@
 import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
 
+class Align extends Widget {
+  const Align({required this.alignment, required this.child});
+
+  final $<Alignment> alignment;
+  final Widget child;
+
+  @override
+  List<String> get classes {
+    final builder = ClassBuilder();
+    builder.addClass("flex");
+    builder.addClass(alignment.toString());
+    return builder.classes;
+  }
+
+  @override
+  StringBuffer render(RenderContext context) {
+    return Render.element(
+      context,
+      tag: 'div',
+      classes: classes,
+      child: child.render(context.copy),
+    );
+  }
+}
+
 class Padding extends Widget {
   const Padding({required this.padding, required this.child});
 
@@ -63,21 +88,21 @@ class Container extends SizedBox {
     this.margin,
     this.border,
     this.padding,
-    this.align,
+    //this.align,
     required super.child,
   });
 
   final $<Color?>? color;
   final $<EdgeInsets?>? margin;
   final $<EdgeInsets?>? padding;
-  final $<Align?>? align;
+  //final $<Align?>? align;
   final $<Border?>? border;
 
   @override
   List<String> get classes {
     final builder = ClassBuilder(super.classes);
     builder.add("bg-{}", color);
-    builder.add("{}", align);
+    //builder.add("{}", align);
     builder.addClassAll(margin?.value?.getMarginClasses());
     builder.addClassAll(padding?.value?.getPaddingClasses());
     builder.addClassAll(border?.value?.getClasses());
@@ -143,17 +168,20 @@ class Column extends Widget {
 class Row extends Widget {
   const Row({
     required this.children,
-    this.alignment,
+    this.mainRowAlignment,
+    this.crossRowAlignment,
     this.spacing,
   }) : wrap = true;
 
   const Row.nowrap({
     required this.children,
-    this.alignment,
+    this.mainRowAlignment,
+    this.crossRowAlignment,
     this.spacing,
   }) : wrap = false;
 
-  final $<Alignment?>? alignment;
+  final $<MainRowAlignment?>? mainRowAlignment;
+  final $<CrossRowAlignment?>? crossRowAlignment;
   final $<Unit?>? spacing;
   final bool? wrap;
 
@@ -163,7 +191,8 @@ class Row extends Widget {
   List<String> get classes {
     final builder = ClassBuilder();
     builder.addClass("flex ${wrap == true ? 'flex-wrap' : 'flex-nowrap'}");
-    builder.add("{}", alignment);
+    builder.add("{}", mainRowAlignment);
+    builder.add("{}", crossRowAlignment);
     builder.add("gap-{}", spacing);
     return builder.classes;
   }

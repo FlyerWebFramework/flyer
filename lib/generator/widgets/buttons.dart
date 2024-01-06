@@ -33,6 +33,11 @@ enum ButtonState {
     return "$name:";
   }
 
+  ClassState get classState {
+    if (this == ButtonState.normal) return ClassState.none;
+    return ClassState.values.byName(name);
+  }
+
   @override
   toString() => cssValue;
 }
@@ -46,8 +51,8 @@ class ButtonStyle {
 
   List<String> get classes {
     final builder = ClassBuilder();
-    builder.addClassAll(textStyle?.getClasses(ClassState.values.byName(state.name)));
-    builder.addClassAll(decoration?.getClasses(ClassState.values.byName(state.name)));
+    builder.addClassAll(textStyle?.getClasses(state.classState));
+    builder.addClassAll(decoration?.getClasses(state.classState));
     return builder.classes;
   }
 }
@@ -92,10 +97,12 @@ class Button extends Widget with Gestures {
     builder.add("w-{}", width);
     builder.add("h-{}", height);
     builder.addDaisyClass('btn');
-    builder.addDaisyClass('type');
+    builder.addDaisyClass('btn-sm');
+    builder.addDaisyClass('$type');
     builder.addClassAll(textStyle?.getClasses());
     builder.addClassAll(decoration?.getClasses());
     styles?.map((e) => e.classes).forEach(builder.addClassAll);
+    builder.addClass('underline-offset-[1.5px]');
     return builder.classes;
   }
 

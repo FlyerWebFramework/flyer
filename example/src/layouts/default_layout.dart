@@ -1,14 +1,20 @@
 import 'package:flyer/widgets.dart';
 
+import '../components/navigation_bar.dart';
+
 class DefaultLayout extends Layout {
   DefaultLayout({required super.content});
 
   @override
   Widget build() {
-    return Wrap(children: [
-      Text($("Navigation")),
-      content,
-      Text($("Footer")),
-    ]);
+    return Column(
+      alignment: $(Alignment.center),
+      spacing: $(7.rem),
+      children: [
+        NavigationBar(width: 1440.px, height: 50.px),
+        content,
+        Text($("Footer")),
+      ],
+    );
   }
 }

@@ -11,14 +11,18 @@ enum FontWeight {
 }
 
 enum TextDecoration {
-  none,
-  underline,
-  overline,
-  lineThrough,
+  none("no-underline"),
+  underline("underline"),
+  overline("overline"),
+  lineThrough("line-through"),
   ;
 
+  const TextDecoration(this.cssValue);
+
+  final String cssValue;
+
   @override
-  toString() => name;
+  toString() => cssValue;
 }
 
 enum ClassState {
