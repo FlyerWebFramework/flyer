@@ -17,7 +17,7 @@ class SimpleRectangle extends Component {
   Widget build() {
     return Container(
       color: $argByName('color'),
-      alignment: $arg(align),
+      align: $arg(align),
       width: $arg(size),
       height: $arg(size),
       child: child,

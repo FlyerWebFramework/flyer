@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flyer/generator/core/constants.dart';
 import 'package:path/path.dart' as path;
 import 'package:dcli/dcli.dart';
 
@@ -57,23 +58,9 @@ Future<void> build() async {
   final webRootPath = path.join(DartScript.self.pathToProjectRoot, 'web');
   "dart run -r src/main.dart $webRootPath".start();
 
-  appendImports();
-
   final staticProjectPath = path.join(DartScript.self.pathToProjectRoot, 'static');
   final String staticWebPath = path.join(webRootPath, "static");
   if (exists(staticWebPath)) deleteDir(staticWebPath, recursive: true);
   createDir(staticWebPath);
   copyTree(staticProjectPath, staticWebPath, recursive: true, overwrite: true, includeHidden: true);
-}
-
-appendImports() {
-  final allPages = find(r"*page.svelte", recursive: true).toList();
-  for (var page in allPages) {
-    page.append("\n\n<script>\n  import {${allComponents.join(', ')}} from \"\$lib/components/index.js\"\n</script>");
-  }
-}
-
-List<String> get allComponents {
-  final components = path.join(DartScript.self.pathToProjectRoot, "web", "src", "lib", "components", "index.js");
-  return File(components).readAsLinesSync().map((line) => line.split('}').first.split(' ').last).toList()..remove('');
 }

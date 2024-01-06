@@ -6,13 +6,26 @@ enum EventType { click }
 class BuildContext {}
 
 class RenderContext {
-  const RenderContext({this.indentation = -1, this.slot = false});
+  RenderContext({this.indentation = -1, this.slot = false, String? internalId}){
+    _internalId = internalId ?? Utils.getRandomString(16);
+  }
 
   final int indentation;
   final bool slot;
+  late final String _internalId;
 
-  RenderContext copyWith({int? indentation, bool? slot}) {
-    return RenderContext(indentation: indentation ?? this.indentation, slot: slot ?? this.slot);
+  importComponent(Component component) {
+    ComponentImporter.instance.add(_internalId, component.runtimeType.toString());
+  }
+
+  String? get componentsImport => ComponentImporter.instance.getImport(_internalId);
+
+  RenderContext copyWith({int? indentation, bool? slot, String? parentId}) {
+    return RenderContext(
+      indentation: indentation ?? this.indentation,
+      slot: slot ?? this.slot,
+      internalId: _internalId,
+    );
   }
 
   RenderContext get copy {

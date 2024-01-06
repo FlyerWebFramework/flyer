@@ -7,6 +7,7 @@ class Constants {
   static const String defaultFragmentName = "defaultFragment";
   static const String defaultFaviconUrl = '%sveltekit.assets%/favicon.png';
   static const String daisyPrefix = 'daisy-';
+  static const String componentsImportTag = '{{import components}}';
   static const Size defaultSvgSize = Size(
     Unit(value: "5", unit: UnitType.rem),
     Unit(value: "5", unit: UnitType.rem),

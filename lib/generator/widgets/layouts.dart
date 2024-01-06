@@ -63,21 +63,21 @@ class Container extends SizedBox {
     this.margin,
     this.border,
     this.padding,
-    this.alignment,
+    this.align,
     required super.child,
   });
 
   final $<Color?>? color;
   final $<EdgeInsets?>? margin;
   final $<EdgeInsets?>? padding;
-  final $<Align?>? alignment;
+  final $<Align?>? align;
   final $<Border?>? border;
 
   @override
   List<String> get classes {
     final builder = ClassBuilder(super.classes);
     builder.add("bg-{}", color);
-    builder.add("{}", alignment);
+    builder.add("{}", align);
     builder.addClassAll(margin?.value?.getMarginClasses());
     builder.addClassAll(padding?.value?.getPaddingClasses());
     builder.addClassAll(border?.value?.getClasses());

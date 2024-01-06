@@ -21,7 +21,7 @@ abstract class WebPage extends Component {
   }
 }
 
-class Page extends Component {
+class Page extends Widget {
   Page({
     this.header,
     required this.content,
@@ -39,10 +39,5 @@ class Page extends Component {
       content,
       if (header != null) footer!,
     ]);
-  }
-
-  @override
-  StringBuffer render(RenderContext context) {
-    return build().render(context.copy);
   }
 }

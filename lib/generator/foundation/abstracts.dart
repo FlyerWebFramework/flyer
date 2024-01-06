@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dcli/dcli.dart';
 import 'package:flyer/generator/core.dart';
+import 'package:flyer/generator/core/annotations.dart';
 import 'package:path/path.dart' as path;
 import 'package:flyer/generator/foundation.dart';
 
@@ -78,6 +79,7 @@ abstract class Component extends Widget {
     if (context.indentation >= 0 && context.slot) {
       generate(outputPath: path.join(Constants.webPath!, "src", "lib", "components"));
       final defaultFragment = child is Slot ? null : Fragment(name: Constants.defaultFragmentName, child: child);
+      context.importComponent(this);
       return Render.element(
         context,
         tag: runtimeType.toString(),
@@ -88,7 +90,9 @@ abstract class Component extends Widget {
         ]),
       );
     } else {
-      return build().render(context.copy);
+      final template = build().render(context);
+      final scripts = renderScript(context);
+      return Render.list([scripts, Render.emptySpace(), template]);
     }
   }
 
@@ -105,16 +109,23 @@ abstract class Component extends Widget {
     }
   }
 
-  String renderScriptPart() {
-    final properties = args.list.isNotEmpty ? "let { ${args.list.keys.join(', ')} } = \$props();\n\n" : "";
-    final variables = obs.entries.map((e) => "let ${e.key} = \$state(${e.value});\n\n").join("");
-    final functions = scripts.list.entries.map((e) => "function ${e.key}${e.value}\n\n").join("");
-    return "<script>\n$properties$variables$functions</script>\n\n";
+  StringBuffer renderScript(RenderContext context, {List<String> imports = const []}) {
+    final properties = args.list.isNotEmpty ? "let { ${args.list.keys.join(', ')} } = \$props();" : null;
+    final variables = obs.entries.map((e) => "let ${e.key} = \$state(${e.value});").join("");
+    final functions = scripts.list.entries.map((e) => "function ${e.key}${e.value}").join("");
+    imports = [...imports, context.componentsImport ?? '']..remove('');
+
+    return Render.script([
+      if (imports.isNotEmpty) Render.text(context.copy, imports.join(';\n  ')),
+      if (properties != null) Render.text(context.copy, properties),
+      if (obs.isNotEmpty) Render.text(context.copy, variables),
+      if (scripts.list.isNotEmpty) Render.text(context.copy, functions),
+    ]);
   }
 
   @override
   generate({bool debug = false, required String outputPath}) async {
-    final page = renderScriptPart() + render(RenderContext(slot: true)).toString();
+    final page = render(RenderContext(slot: true)).toString();
 
     if (!exists(outputPath)) createDir(outputPath);
     File(path.join(outputPath, '$runtimeType.svelte')).writeAsStringSync(page);
@@ -140,22 +151,10 @@ class Layout extends Component {
 
   @override
   StringBuffer render(RenderContext context) {
-    return Render.list([
-      Render.element(
-        context,
-        tag: 'span',
-        classes: classes,
-        child: build().render(context.indent(2)),
-      ),
-      Render.element(
-        context,
-        tag: "script",
-        child: Render.text(
-          context.copy,
-          "import '/src/app.css';",
-        ),
-      ),
-    ]);
+    final content = build().render(context.indent(2));
+    final template = Render.element(context, tag: 'span', classes: classes, child: content);
+    final scripts = renderScript(context, imports: ["import '/src/app.css'"]);
+    return Render.list([scripts, Render.emptySpace(), template]);
   }
 
   @override

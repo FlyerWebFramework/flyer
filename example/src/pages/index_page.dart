@@ -11,7 +11,7 @@ class IndexPage extends WebPage {
   Widget build() {
     return Page(
       content: Container(
-        alignment: $(Align.center),
+        align: $(Align.center),
         child: SizedBox(
           width: $(50.per),
           child: Column(

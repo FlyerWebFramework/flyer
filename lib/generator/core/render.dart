@@ -2,8 +2,6 @@ import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
 
 class Render {
-  static StringBuffer get newLine => StringBuffer('\n');
-
   static StringBuffer meta(
     RenderContext context, {
     String? name,
@@ -36,8 +34,13 @@ class Render {
     return StringBuffer("${Constants.indent * (context.indentation + indent)}$text");
   }
 
+  static StringBuffer emptySpace() {
+    return StringBuffer("");
+  }
+
   static StringBuffer slot(RenderContext context, {String? name, int indent = 0}) {
-    return StringBuffer("${Constants.indent * (context.indentation + indent)}<slot ${name != null ? "name='$name'" : ""}/>");
+    final indentSpace = Constants.indent * (context.indentation + indent);
+    return StringBuffer("$indentSpace<slot ${name != null ? "name='$name'" : ""}/>");
   }
 
   static StringBuffer fragment(RenderContext context, {required String name, required StringBuffer child}) {
@@ -46,6 +49,11 @@ class Render {
 
   static StringBuffer list(List<StringBuffer> elements) {
     return StringBuffer(elements.join("\n"));
+  }
+
+  static StringBuffer script(List<StringBuffer> lines) {
+    if (lines.isEmpty) return StringBuffer();
+    return Render.element(RenderContext(), tag: 'script', child: Render.list(lines));
   }
 
   static StringBuffer element(
