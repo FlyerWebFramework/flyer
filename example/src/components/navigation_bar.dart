@@ -15,17 +15,6 @@ class NavigationBar extends Component {
 
   @override
   Widget build() {
-    final buttonStyles = [
-      ButtonStyle(
-        textStyle: TextStyle(
-          color: $(Color.gray.shade800),
-          decoration: $(TextDecoration.none),
-          fontWeight: $(FontWeight.normal),
-          fontSize: $(12.pt),
-        ),
-      ),
-    ];
-
     return Align(
       alignment: $(Alignment.center),
       child: Container(
@@ -42,70 +31,111 @@ class NavigationBar extends Component {
             Row(
               spacing: $(2.rem),
               children: [
-                Button.link($('Home'), styles: buttonStyles),
-                Button.link($('Service'), styles: buttonStyles),
-                Button.link($('Feature'), styles: buttonStyles),
-                Button.link($('Testimonial'), styles: buttonStyles),
-                Button.link($('FAQ'), styles: buttonStyles),
+                NavigationButton('Home'),
+                NavigationButton('Service'),
+                NavigationButton('Feature'),
+                NavigationButton('Testimonial'),
+                NavigationButton('FAQ'),
               ],
             ),
             Row(
               spacing: $(1.rem),
               crossRowAlignment: $(CrossRowAlignment.center),
-              children: [
-                Button.link($('Login'), styles: [
-                  ButtonStyle(
-                    textStyle: TextStyle(
-                      color: $(Color.hex('#4CAF4F')),
-                      decoration: $(TextDecoration.none),
-                      fontWeight: $(FontWeight.normal),
-                      fontSize: $(11.pt),
-                    ),
-                  ),
-                  ButtonStyle(
-                    state: ButtonState.hover,
-                    textStyle: TextStyle(
-                      color: $(Color.hex('#3f8f41')),
-                      decoration: $(TextDecoration.none),
-                      fontWeight: $(FontWeight.normal),
-                    ),
-                  ),
-                ]),
-                Button(
-                  $('Sign up'),
-                  width: $(6.rem),
-                  height: $(2.5.rem),
-                  styles: [
-                    ButtonStyle(
-                      textStyle: TextStyle(
-                        decoration: $(TextDecoration.none),
-                        fontWeight: $(FontWeight.normal),
-                        fontSize: $(11.pt),
-                        color: $(Color.white),
-                      ),
-                      decoration: BoxDecoration(
-                        color: $(Color.hex('#4CAF4F')),
-                        border: $(Border.all(width: 0.px)),
-                      ),
-                    ),
-                    ButtonStyle(
-                      state: ButtonState.hover,
-                      textStyle: TextStyle(
-                        decoration: $(TextDecoration.none),
-                        fontWeight: $(FontWeight.normal),
-                      ),
-                      decoration: BoxDecoration(
-                        color: $(Color.hex('#3f8f41')),
-                        border: $(Border.all(width: 0.px)),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+              children: [LoginButton(), SignUpButton()],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class NavigationButton extends Component {
+  const NavigationButton(this.text, {super.child});
+
+  final String text;
+
+  @override
+  Arguments get args => Arguments({'text': text});
+
+  @override
+  Widget build() {
+    return Button.link(
+      $argByName('text'),
+      styles: [
+        ButtonStyle(
+          textStyle: TextStyle(
+            color: $(Color.gray.shade800),
+            decoration: $(TextDecoration.none),
+            fontWeight: $(FontWeight.normal),
+            fontSize: $(12.pt),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class LoginButton extends Component {
+  const LoginButton({super.child});
+
+  @override
+  Widget build() {
+    return Button.link($('Login'), styles: [
+      ButtonStyle(
+        textStyle: TextStyle(
+          color: $(Color.hex('#4CAF4F')),
+          decoration: $(TextDecoration.none),
+          fontWeight: $(FontWeight.normal),
+          fontSize: $(11.pt),
+        ),
+      ),
+      ButtonStyle(
+        state: ButtonState.hover,
+        textStyle: TextStyle(
+          color: $(Color.hex('#3f8f41')),
+          decoration: $(TextDecoration.none),
+          fontWeight: $(FontWeight.normal),
+        ),
+      ),
+    ]);
+  }
+}
+
+class SignUpButton extends Component {
+  const SignUpButton({super.child});
+
+  @override
+  Widget build() {
+    return Button(
+      $('Sign up'),
+      width: $(6.rem),
+      height: $(2.5.rem),
+      styles: [
+        ButtonStyle(
+          textStyle: TextStyle(
+            decoration: $(TextDecoration.none),
+            fontWeight: $(FontWeight.normal),
+            fontSize: $(11.pt),
+            color: $(Color.white),
+          ),
+          decoration: BoxDecoration(
+            color: $(Color.hex('#4CAF4F')),
+            border: $(Border.all(width: 0.px)),
+          ),
+        ),
+        ButtonStyle(
+          state: ButtonState.hover,
+          textStyle: TextStyle(
+            decoration: $(TextDecoration.none),
+            fontWeight: $(FontWeight.normal),
+          ),
+          decoration: BoxDecoration(
+            color: $(Color.hex('#3f8f41')),
+            border: $(Border.all(width: 0.px)),
+          ),
+        ),
+      ],
     );
   }
 }
