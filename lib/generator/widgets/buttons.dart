@@ -84,7 +84,8 @@ class Button extends Widget with Gestures {
   final $<String> text;
   final $<Unit?>? width;
   final $<Unit?>? height;
-  final $<Script?>? onTap;
+  final $<Action?>? onTap;
+
   //final $<Bool?>? disabled;
   final $<ButtonType?>? type;
   final TextStyle? textStyle;
@@ -108,13 +109,21 @@ class Button extends Widget with Gestures {
 
   @override
   Widget build() {
+    final hrefAttribute = {
+      if (onTap?.name != null)
+        "href": onTap!.toString()
+      else if (onTap?.value is Url)
+        "href": (onTap!.value as Url).url.toString(),
+    };
+
     return WidgetBuilder(
       builder: (context) => Render.element(
         context,
-        tag: 'button',
+        tag: hrefAttribute.containsKey('href') ? 'a' : 'button',
         oneLine: true,
-        events: [Event(type: EventType.click, script: onTap)],
+        events: events,
         classes: classes,
+        attributes: {...hrefAttribute},
         //attributes: {"disabled": "{disabled == true ? 'disabled' : ''}"},
         child: Render.text(context.copy, text.toString()),
       ),

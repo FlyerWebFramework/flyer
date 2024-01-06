@@ -31,11 +31,11 @@ class NavigationBar extends Component {
             Row(
               spacing: $(2.rem),
               children: [
-                NavigationButton('Home'),
-                NavigationButton('Service'),
-                NavigationButton('Feature'),
-                NavigationButton('Testimonial'),
-                NavigationButton('FAQ'),
+                NavigationButton('Home', url: Url(Uri.parse("/"))),
+                NavigationButton('Service', url: Url(Uri.parse("/service"))),
+                NavigationButton('Feature', url: Url(Uri.parse("/feature"))),
+                NavigationButton('About', url: Url(Uri.parse("/about"))),
+                NavigationButton('FAQ', url: Url(Uri.parse("/faq"))),
               ],
             ),
             Row(
@@ -51,17 +51,19 @@ class NavigationBar extends Component {
 }
 
 class NavigationButton extends Component {
-  const NavigationButton(this.text, {super.child});
+  const NavigationButton(this.text, {this.url, super.child});
 
   final String text;
+  final Url? url;
 
   @override
-  Arguments get args => Arguments({'text': text});
+  Arguments get args => Arguments({'text': text, 'url': url});
 
   @override
   Widget build() {
     return Button.link(
       $argByName('text'),
+      onTap: $argByName('url'),
       styles: [
         ButtonStyle(
           textStyle: TextStyle(

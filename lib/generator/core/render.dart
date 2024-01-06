@@ -73,8 +73,8 @@ class Render {
     if (events != null && events.isNotEmpty) {
       buffer.write(" ");
       for (Event event in events) {
-        if (event.script == null) continue;
-        buffer.write("on:${event.type.name}={${event.script?.name ?? event.script?.value?.name}}");
+        if (event.action == null) continue;
+        buffer.write("on:${event.type.name}={${event.action?.name ?? (event.action?.value as Script?)?.name}}");
       }
     }
     if (classes != null && classes.isNotEmpty) {

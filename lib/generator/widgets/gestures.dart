@@ -2,11 +2,11 @@ import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
 
 mixin Gestures on Widget {
-  $<Script?>? onTap;
+  $<Action?>? onTap;
 
   List<Event> get events {
     return [
-      if (onTap != null) Event(type: EventType.click, script: onTap),
+      if (onTap != null && onTap is Script) Event(type: EventType.click, action: onTap),
     ];
   }
 }

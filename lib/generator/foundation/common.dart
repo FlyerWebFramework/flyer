@@ -6,7 +6,7 @@ enum EventType { click }
 class BuildContext {}
 
 class RenderContext {
-  RenderContext({this.indentation = -1, this.slot = false, String? internalId}){
+  RenderContext({this.indentation = -1, this.slot = false, String? internalId}) {
     _internalId = internalId ?? Utils.getRandomString(16);
   }
 
@@ -42,10 +42,10 @@ class RenderContext {
 }
 
 class Event {
-  Event({required this.type, this.script});
+  const Event({required this.type, this.action});
 
-  EventType type;
-  final $<Script?>? script;
+  final EventType type;
+  final $<Action?>? action;
 }
 
 class Size {
@@ -94,7 +94,7 @@ class Scripts {
   }
 }
 
-class Script {
+class Script extends Action {
   final String name;
   final dynamic function;
 
@@ -107,6 +107,25 @@ class Script {
   @override
   String toString() {
     return '{$name}';
+  }
+}
+
+sealed class Action {
+  const Action();
+
+  factory Action.openUrl(Uri url) = Url;
+}
+
+class Url extends Action {
+  final Uri url;
+
+  const Url(this.url);
+
+  Url.open(this.url);
+
+  @override
+  String toString() {
+    return url.toString();
   }
 }
 
