@@ -106,7 +106,7 @@ class Script {
 
   @override
   String toString() {
-    return function;
+    return '{$name}';
   }
 }
 
@@ -127,7 +127,14 @@ class Arguments {
 
   final Map<String, dynamic> _args = {};
 
-  Map<String, String> get list => _args.map((key, value) => MapEntry(key, value.toString()));
+  Map<String, dynamic> get list => _args.map((key, value) => MapEntry(key, value.toString()));
+
+  Map<String, String> get filteredList {
+    return {
+      for (var arg in _args.entries)
+        if (arg.value != null) ...{arg.key: arg.value.toString()}
+    };
+  }
 
   Arguments add(String name, dynamic value) {
     _args[name] = value;

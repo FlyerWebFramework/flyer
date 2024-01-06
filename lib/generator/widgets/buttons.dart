@@ -26,8 +26,7 @@ enum ButtonState {
   active,
   disabled,
   focus,
-  hover
-  ;
+  hover;
 
   String get cssValue {
     if (this == ButtonState.normal) return '';
@@ -53,31 +52,39 @@ class ButtonStyle {
   }
 }
 
-class Button extends Component with Gestures {
-  Button(this.text, {
-    $<Script?>? onTap,
+class Button extends Widget with Gestures {
+  Button(
+    this.text, {
+    this.onTap,
     this.width,
     this.height,
     this.type = const $(ButtonType.primary),
-    this.disabled,
+    //this.disabled,
     this.textStyle,
     this.decoration,
     this.styles,
-  }) {
-    this.onTap = onTap;
-  }
+  });
 
+  Button.link(
+    this.text, {
+    this.onTap,
+    this.width,
+    this.height,
+    //this.disabled,
+    this.textStyle,
+    this.decoration,
+    this.styles,
+  }) : type = const $(ButtonType.link);
+
+  final $<String> text;
   final $<Unit?>? width;
   final $<Unit?>? height;
-  final $<String> text;
-  final $<Bool?>? disabled;
+  final $<Script?>? onTap;
+  //final $<Bool?>? disabled;
   final $<ButtonType?>? type;
   final TextStyle? textStyle;
   final Decoration? decoration;
   final List<ButtonStyle>? styles;
-
-  @override
-  Arguments get args => Arguments({'disabled': disabled});
 
   @override
   List<String> get classes {
@@ -85,7 +92,7 @@ class Button extends Component with Gestures {
     builder.add("w-{}", width);
     builder.add("h-{}", height);
     builder.addDaisyClass('btn');
-    builder.addDaisyClass('$type');
+    builder.addDaisyClass('type');
     builder.addClassAll(textStyle?.getClasses());
     builder.addClassAll(decoration?.getClasses());
     styles?.map((e) => e.classes).forEach(builder.addClassAll);
@@ -93,14 +100,17 @@ class Button extends Component with Gestures {
   }
 
   @override
-  StringBuffer render(RenderContext context) {
-    return Render.element(
-      context,
-      tag: 'button',
-      events: events,
-      classes: classes,
-      attributes: {"disabled": "{disabled == true ? 'disabled' : ''}"},
-      child: Render.text(context.copy, text.value!),
+  Widget build() {
+    return WidgetBuilder(
+      builder: (context) => Render.element(
+        context,
+        tag: 'button',
+        oneLine: true,
+        events: [Event(type: EventType.click, script: onTap)],
+        classes: classes,
+        //attributes: {"disabled": "{disabled == true ? 'disabled' : ''}"},
+        child: Render.text(context.copy, text.value!),
+      ),
     );
   }
 }

@@ -2,26 +2,34 @@ import 'dart:io';
 
 import 'package:dcli/dcli.dart';
 import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/core/annotations.dart';
 import 'package:path/path.dart' as path;
 import 'package:flyer/generator/foundation.dart';
 
 abstract class Widget {
   const Widget();
 
-  StringBuffer render(RenderContext context) {
-    return build().render(context.copy);
-  }
+  List<String> get classes => [];
 
   Widget build() {
     return this;
   }
 
-  List<String> get classes => [];
+  StringBuffer render(RenderContext context) {
+    return build().render(context.copy);
+  }
 
   generate({bool debug = false, required String outputPath}) async {
     throw UnimplementedError();
   }
+}
+
+class WidgetBuilder extends Widget {
+  final StringBuffer Function(RenderContext) builder;
+
+  WidgetBuilder({required this.builder});
+
+  @override
+  StringBuffer render(RenderContext context) => builder(context);
 }
 
 class Slot extends Widget {
@@ -83,14 +91,14 @@ abstract class Component extends Widget {
       return Render.element(
         context,
         tag: runtimeType.toString(),
-        attributes: {...args.list},
+        attributes: {...args.filteredList},
         child: Render.list([
           if (defaultFragment != null) defaultFragment.renderFragment(context.copy),
           ...fragments.map((e) => e.renderFragment(context.copy)),
         ]),
       );
     } else {
-      final template = build().render(context);
+      final template = build().render(context.copyWith(indentation: 0, slot: true));
       final scripts = renderScript(context);
       return Render.list([scripts, Render.emptySpace(), template]);
     }
@@ -112,7 +120,7 @@ abstract class Component extends Widget {
   StringBuffer renderScript(RenderContext context, {List<String> imports = const []}) {
     final properties = args.list.isNotEmpty ? "let { ${args.list.keys.join(', ')} } = \$props();" : null;
     final variables = obs.entries.map((e) => "let ${e.key} = \$state(${e.value});").join("");
-    final functions = scripts.list.entries.map((e) => "function ${e.key}${e.value}").join("");
+    final functions = scripts.list.entries.map((e) => "function ${e.key}${e.value.function}").join("");
     imports = [...imports, context.componentsImport ?? '']..remove('');
 
     return Render.script([

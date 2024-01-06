@@ -40,7 +40,7 @@ class SimpleButton extends Component {
   Widget build() {
     return Button(
       $("Clicked {${N.count.name}}x"),
-      disabled: $argByName('disabled'),
+      //disabled: $argByName('disabled'),
       width: $arg(size.width),
       height: $arg(size.height),
       type: $(ButtonType.secondary),
