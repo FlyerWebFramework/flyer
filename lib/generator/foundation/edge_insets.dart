@@ -57,10 +57,10 @@ class EdgeInsets {
   /// ```
   /// {@end-tool}
   const EdgeInsets.only({
-    this.left = const Unit.empty(),
-    this.top = const Unit.empty(),
-    this.right = const Unit.empty(),
-    this.bottom = const Unit.empty(),
+    this.left,
+    this.top,
+    this.right,
+    this.bottom,
   })  : all = null,
         horizontal = null,
         vertical = null;
@@ -76,8 +76,8 @@ class EdgeInsets {
   /// ```
   /// {@end-tool}
   const EdgeInsets.symmetric({
-    this.vertical = const Unit.empty(),
-    this.horizontal = const Unit.empty(),
+    this.vertical,
+    this.horizontal,
   })  : all = null,
         left = null,
         top = null,

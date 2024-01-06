@@ -116,7 +116,7 @@ class Button extends Widget with Gestures {
         events: [Event(type: EventType.click, script: onTap)],
         classes: classes,
         //attributes: {"disabled": "{disabled == true ? 'disabled' : ''}"},
-        child: Render.text(context.copy, text.value!),
+        child: Render.text(context.copy, text.toString()),
       ),
     );
   }
