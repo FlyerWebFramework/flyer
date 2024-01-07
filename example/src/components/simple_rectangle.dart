@@ -1,14 +1,14 @@
 import 'package:flyer/widgets.dart';
 
 class SimpleRectangle extends Component {
-  const SimpleRectangle({super.child, required this.size, this.color = Color.green, this.align});
+  const SimpleRectangle({super.child, required this.size, this.color = Color.green, this.alignment});
 
   final Unit size;
   final Color color;
-  final Align? align;
+  final Alignment? alignment;
 
   @override
-  Arguments get args => Arguments({'size': size, 'align': align, 'color': color});
+  Arguments get args => Arguments({'size': size, 'align': alignment, 'color': color});
 
   @override
   Map<String, dynamic> get obs => {};
@@ -19,6 +19,7 @@ class SimpleRectangle extends Component {
       color: $argByName('color'),
       width: $arg(size),
       height: $arg(size),
+      alignment: $arg(alignment),
       child: child,
     );
   }

@@ -1,7 +1,5 @@
 import 'package:flyer/widgets.dart';
 
-import '../components/simple_article.dart';
-import '../components/simple_button.dart';
 import '../components/simple_rectangle.dart';
 
 class IndexPage extends WebPage {
@@ -45,44 +43,6 @@ class IndexPage extends WebPage {
                 Uri.parse("https://www.creativefabrica.com/wp-content/uploads/2022/12/06/"
                     "Rudolph-Reindeer-Christmas-PNG-Clipart-Graphics-50726285-1-1-580x387.png"),
                 size: Size(50.per, 50.per),
-              ),
-              Wrap(
-                children: [
-                  Text(
-                    $("Text123"),
-                    style: TextStyle(
-                      color: $(Color.black),
-                      decoration: $(TextDecoration.underline),
-                    ),
-                  ),
-                  Text(
-                    $("Text123"),
-                    style: TextStyle(
-                      color: $(Color.black),
-                      fontSize: $(20.pt),
-                      fontWeight: $(FontWeight.bold),
-                    ),
-                  ),
-                  Text(
-                    $("Text123"),
-                    style: TextStyle(
-                      color: $(Color.blue),
-                      fontSize: $(16.pt),
-                    ),
-                  ),
-                ],
-              ),
-              Text("Some text".v),
-              SimpleButton(size: SimpleSize(300.px, 70.px), disabled: Bool(true)),
-              SimpleButton(size: SimpleSize(500.px, 100.px)),
-              SimpleRectangle(size: 50.px),
-              SimpleRectangle(size: 100.px, child: Text("Test123".v)),
-              SimpleRectangle(size: 150.px, child: Text("Test123".v)),
-              SimpleRectangle(size: 200.px),
-              SimpleArticle(
-                header: Fragment(name: "header", child: Text("This is title".v)),
-                content: Fragment(name: "content", child: Text("Here is some text".v)),
-                footer: Fragment(name: "footer", child: Text("This is end of article".v)),
               ),
             ],
           ),

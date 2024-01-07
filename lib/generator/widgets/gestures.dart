@@ -6,7 +6,7 @@ mixin Gestures on Widget {
 
   List<Event> get events {
     return [
-      if (onTap != null && onTap is Script) Event(type: EventType.click, action: onTap),
+      if (onTap != null && onTap!.value is Script) Event(type: EventType.click, action: onTap),
     ];
   }
 }
