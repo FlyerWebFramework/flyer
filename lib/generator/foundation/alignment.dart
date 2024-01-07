@@ -21,13 +21,13 @@ enum Align {
  */
 
 enum Alignment {
-  start("justify-items-start"),
-  end("justify-items-end"),
-  center("justify-items-center"),
-  spaceBetween("justify-items-between"),
-  spaceAround("justify-items-around"),
-  spaceEvenly("justify-items-evenly"),
-  stretch("justify-items-stretch"),
+  start("grid grid-col justify-items-start"),
+  end("grid grid-col justify-items-end"),
+  center("grid grid-col justify-items-center"),
+  spaceBetween("grid grid-col justify-items-between"),
+  spaceAround("grid grid-col justify-items-around"),
+  spaceEvenly("grid grid-col justify-items-evenly"),
+  stretch("grid grid-col justify-items-stretch"),
   ;
 
   const Alignment(this.cssValue);

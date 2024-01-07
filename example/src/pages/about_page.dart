@@ -13,8 +13,9 @@ class AboutPage extends WebPage {
         ),
       ),
       content: [
-        Paragraph(children: [Text($("* Paragraph 1"))]),
-        Paragraph(children: [Text($("* Paragraph 2"))]),
+        Text($("* Paragraph 1")),
+        Text.newLine(),
+        Text($("* Paragraph 2")),
       ],
     );
   }

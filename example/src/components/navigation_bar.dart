@@ -41,7 +41,7 @@ class NavigationBar extends Component {
             Row(
               spacing: $(1.rem),
               crossRowAlignment: $(CrossRowAlignment.center),
-              children: [LoginButton(), SignUpButton()],
+              children: [LoginButton(), DefaultButton('Sign up')],
             ),
           ],
         ),
@@ -104,15 +104,27 @@ class LoginButton extends Component {
   }
 }
 
-class SignUpButton extends Component {
-  const SignUpButton({super.child});
+class DefaultButton extends Component {
+  const DefaultButton(
+    this.text, {
+    super.child,
+    this.width,
+    this.height,
+  });
+
+  final String text;
+  final Unit? width;
+  final Unit? height;
+
+  @override
+  Arguments get args => Arguments({'text': text, 'width': width ?? 6.rem, 'height': height ?? 2.5.rem});
 
   @override
   Widget build() {
     return Button(
-      $('Sign up'),
-      width: $(6.rem),
-      height: $(2.5.rem),
+      $argByName('text'),
+      width: $argByName('width'),
+      height: $argByName('height'),
       styles: [
         ButtonStyle(
           textStyle: TextStyle(

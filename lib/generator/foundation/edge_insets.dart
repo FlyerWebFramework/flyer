@@ -27,6 +27,8 @@ class EdgeInsets {
     this.vertical,
   });
 
+  static get zero => EdgeInsets.all(0.rem);
+
   /// Creates insets where all the offsets are `value`.
   ///
   /// {@tool snippet}

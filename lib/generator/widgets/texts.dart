@@ -1,23 +1,29 @@
 import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
 
+enum HeadlineSize { h1, h2, h3, h4, h5, h6 }
+
 sealed class TextWidget extends Widget {
-  const TextWidget({this.style});
+  const TextWidget({this.style, this.decoration});
 
   final TextStyle? style;
+  final Decoration? decoration;
 }
 
 class Text extends TextWidget {
-  const Text(this.text, {super.style});
+  const Text(this.text, {super.style, super.decoration});
 
   final $<String> text;
+
+  factory Text.newLine() => TextNewLine($(''));
 
   StringBuffer renderTextTag(RenderContext context, String tag) {
     return Render.element(
       context,
       tag: tag,
       oneLine: true,
-      classes: style?.getClasses(),
+      styles: style?.getStyles(),
+      classes: [...decoration?.getClasses() ?? [], ...style?.getClasses() ?? []],
       child: Render.text(context, text.value!),
     );
   }
@@ -27,37 +33,28 @@ class Text extends TextWidget {
     if (style == null) {
       return Render.text(context, text.value!, indent: 0);
     } else {
-      return renderTextTag(context, 'span');
+      return renderTextTag(context, 'p');
     }
   }
 }
 
-enum HeadlineSize { h1, h2, h3, h4, h5, h6 }
+class TextNewLine extends Text {
+  TextNewLine(super.text);
+
+  @override
+  StringBuffer render(RenderContext context) {
+    return Render.element(context, tag: 'br');
+  }
+}
 
 class Title extends Text {
-  const Title(super.text, {super.style, this.size = HeadlineSize.h1});
+  const Title(super.text, {super.style, super.decoration, this.size = HeadlineSize.h1});
 
   final HeadlineSize size;
 
   @override
   StringBuffer render(RenderContext context) {
     return renderTextTag(context, size.name);
-  }
-}
-
-class Paragraph extends TextWidget {
-  const Paragraph({required this.children, super.style});
-
-  final List<TextWidget> children;
-
-  @override
-  StringBuffer render(RenderContext context) {
-    return Render.element(
-      context,
-      tag: 'p',
-      classes: style?.getClasses(),
-      child: Render.list(children.map((e) => e.render(context.copy)).toList()),
-    );
   }
 }
 

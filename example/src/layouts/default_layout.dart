@@ -12,7 +12,11 @@ class DefaultLayout extends Layout {
       spacing: $(7.rem),
       children: [
         NavigationBar(width: 1440.px, height: 50.px),
-        content,
+        Container(
+          width: $(80.per),
+          alignment: $(Alignment.center),
+          child: content,
+        ),
         Text($("Footer")),
       ],
     );

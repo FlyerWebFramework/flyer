@@ -88,21 +88,21 @@ class Container extends SizedBox {
     this.margin,
     this.border,
     this.padding,
-    //this.align,
+    this.alignment,
     required super.child,
   });
 
   final $<Color?>? color;
   final $<EdgeInsets?>? margin;
   final $<EdgeInsets?>? padding;
-  //final $<Align?>? align;
+  final $<Alignment?>? alignment;
   final $<Border?>? border;
 
   @override
   List<String> get classes {
     final builder = ClassBuilder(super.classes);
     builder.add("bg-{}", color);
-    //builder.add("{}", align);
+    builder.add("{}", alignment);
     builder.addClassAll(margin?.value?.getMarginClasses());
     builder.addClassAll(padding?.value?.getPaddingClasses());
     builder.addClassAll(border?.value?.getClasses());
@@ -136,10 +136,12 @@ class Column extends Widget {
     required this.children,
     this.alignment,
     this.spacing,
+    this.width,
   });
 
   final $<Alignment?>? alignment;
   final $<Unit?>? spacing;
+  final $<Unit?>? width;
 
   final List<Widget> children;
 
@@ -149,6 +151,7 @@ class Column extends Widget {
     builder.add("grid grid-col", $(1));
     builder.add("{}", alignment);
     builder.add("gap-{}", spacing);
+    builder.add("w-{}", width);
     return builder.classes;
   }
 

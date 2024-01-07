@@ -57,12 +57,16 @@ class Size {
 
 class Decoration {
   const Decoration({
+    this.width,
+    this.height,
     this.color,
     this.border,
     this.margin,
     this.padding,
   });
 
+  final $<Unit?>? width;
+  final $<Unit?>? height;
   final $<Color?>? color;
   final $<Border?>? border;
   final $<EdgeInsets?>? margin;
@@ -70,6 +74,8 @@ class Decoration {
 
   List<String> getClasses([ClassState state = ClassState.none]) {
     final builder = ClassBuilder();
+    builder.add("${state}w-{}", width);
+    builder.add("${state}h-{}", height);
     builder.add("${state}bg-{}", color);
     builder.addClassAll(border?.value?.getClasses(state));
     builder.addClassAll(margin?.value?.getMarginClasses(state));

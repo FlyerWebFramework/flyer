@@ -1,8 +1,14 @@
 import 'package:flyer/generator/core.dart';
 
 enum FontWeight {
+  thin,
+  extralight,
+  light,
   normal,
+  medium,
+  semibold,
   bold,
+  extrabold,
   italic,
   ;
 
@@ -41,6 +47,7 @@ class TextStyle {
   TextStyle({
     this.color,
     this.fontSize,
+    this.fontFamily,
     this.lineHeight,
     this.fontWeight,
     this.decoration,
@@ -48,9 +55,16 @@ class TextStyle {
 
   final $<Color?>? color;
   final $<Unit?>? fontSize;
+  final $<String?>? fontFamily;
   final $<Unit?>? lineHeight;
   final $<FontWeight?>? fontWeight;
   final $<TextDecoration?>? decoration;
+
+  Map<String, String> getStyles() {
+    return {
+      if (fontFamily?.value != null) 'font-family': '$fontFamily;',
+    };
+  }
 
   List<String> getClasses([ClassState state = ClassState.none]) {
     final builder = ClassBuilder();

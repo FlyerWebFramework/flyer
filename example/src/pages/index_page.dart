@@ -46,30 +46,32 @@ class IndexPage extends WebPage {
                     "Rudolph-Reindeer-Christmas-PNG-Clipart-Graphics-50726285-1-1-580x387.png"),
                 size: Size(50.per, 50.per),
               ),
-              Paragraph(children: [
-                Text(
-                  $("Text123"),
-                  style: TextStyle(
-                    color: $(Color.black),
-                    decoration: $(TextDecoration.underline),
+              Wrap(
+                children: [
+                  Text(
+                    $("Text123"),
+                    style: TextStyle(
+                      color: $(Color.black),
+                      decoration: $(TextDecoration.underline),
+                    ),
                   ),
-                ),
-                Text(
-                  $("Text123"),
-                  style: TextStyle(
-                    color: $(Color.black),
-                    fontSize: $(20.pt),
-                    fontWeight: $(FontWeight.bold),
+                  Text(
+                    $("Text123"),
+                    style: TextStyle(
+                      color: $(Color.black),
+                      fontSize: $(20.pt),
+                      fontWeight: $(FontWeight.bold),
+                    ),
                   ),
-                ),
-                Text(
-                  $("Text123"),
-                  style: TextStyle(
-                    color: $(Color.blue),
-                    fontSize: $(16.pt),
+                  Text(
+                    $("Text123"),
+                    style: TextStyle(
+                      color: $(Color.blue),
+                      fontSize: $(16.pt),
+                    ),
                   ),
-                ),
-              ]),
+                ],
+              ),
               Text("Some text".v),
               SimpleButton(size: SimpleSize(300.px, 70.px), disabled: Bool(true)),
               SimpleButton(size: SimpleSize(500.px, 100.px)),

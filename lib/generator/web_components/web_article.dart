@@ -5,8 +5,8 @@ import 'package:flyer/generator/widgets/texts.dart';
 class Header extends Widget {
   const Header({required this.title, this.description = const []});
 
-  final Title title;
-  final List<Paragraph> description;
+  final Widget title;
+  final List<Text> description;
 
   @override
   StringBuffer render(RenderContext context) {
@@ -24,7 +24,7 @@ class Header extends Widget {
 class Footer extends Widget {
   const Footer({required this.content});
 
-  final List<Paragraph> content;
+  final List<Text> content;
 
   @override
   StringBuffer render(RenderContext context) {
@@ -40,7 +40,7 @@ class Article extends Widget {
   const Article({required this.header, required this.content, this.footer});
 
   final Header header;
-  final List<Paragraph> content;
+  final List<Text> content;
   final Footer? footer;
 
   @override
