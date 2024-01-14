@@ -29,6 +29,11 @@ class Favicon extends Widget {
   }
 }
 
+class Asset {
+  Asset(this.path);
+  final String path;
+}
+
 class Svg extends Widget {
   final String sourcePath;
   final Size size;

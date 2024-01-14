@@ -57,6 +57,17 @@ class ButtonStyle {
   }
 }
 
+enum ButtonShape {
+  circle,
+  square,
+  rectangle;
+
+  String get cssValue => this != ButtonShape.rectangle ? "btn-$name" : "";
+
+  @override
+  toString() => cssValue;
+}
+
 class Button extends Widget with Gestures {
   Button(
     this.text, {
@@ -68,6 +79,8 @@ class Button extends Widget with Gestures {
     this.textStyle,
     this.decoration,
     this.styles,
+    this.shape = ButtonShape.rectangle,
+    this.child,
   });
 
   Button.link(
@@ -79,6 +92,8 @@ class Button extends Widget with Gestures {
     this.textStyle,
     this.decoration,
     this.styles,
+    this.shape = ButtonShape.rectangle,
+    this.child,
   }) : type = const $(ButtonType.link);
 
   final $<String> text;
@@ -91,6 +106,8 @@ class Button extends Widget with Gestures {
   final TextStyle? textStyle;
   final Decoration? decoration;
   final List<ButtonStyle>? styles;
+  final ButtonShape? shape;
+  final Widget? child;
 
   @override
   List<String> get classes {
@@ -98,7 +115,8 @@ class Button extends Widget with Gestures {
     builder.add("w-{}", width);
     builder.add("h-{}", height);
     builder.addDaisyClass('btn');
-    builder.addDaisyClass('btn-sm');
+    builder.addDaisyClass('btn-xs');
+    builder.addDaisyClass('$shape');
     builder.addDaisyClass('$type');
     builder.addClassAll(textStyle?.getClasses());
     builder.addClassAll(decoration?.getClasses());
@@ -125,7 +143,58 @@ class Button extends Widget with Gestures {
         classes: classes,
         attributes: {...hrefAttribute},
         //attributes: {"disabled": "{disabled == true ? 'disabled' : ''}"},
-        child: Render.text(context.copy, text.toString()),
+        child: Render.list([
+          if (child != null) child!.render(context.copy),
+          if (child == null) Render.text(context.copy, text.toString()),
+        ]),
+      ),
+    );
+  }
+}
+
+class IconButton extends Widget {
+  IconButton({
+    required this.asset,
+    required this.shape,
+    this.width,
+    this.height,
+    this.onTap,
+  });
+
+  Asset asset;
+  ButtonShape? shape;
+  final $<Unit?>? width;
+  final $<Unit?>? height;
+  final $<Action?>? onTap;
+
+  @override
+  Widget build() {
+    return Button(
+      $(""),
+      shape: shape,
+      width: width,
+      height: height,
+      styles: [
+        ButtonStyle(
+          decoration: Decoration(
+            margin: $(EdgeInsets.zero),
+            padding: $(EdgeInsets.zero),
+            border: $(Border.all(width: 0.rem))
+          ),
+        )
+      ],
+      child: Wrap(
+        children: [
+          Container(
+            child: Svg.asset(
+              asset.path,
+              size: Size(
+                width?.value ?? 2.rem,
+                height?.value ?? 2.rem,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
