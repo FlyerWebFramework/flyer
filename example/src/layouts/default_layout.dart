@@ -1,5 +1,6 @@
 import 'package:flyer/widgets.dart';
 
+import '../components/footer_section.dart';
 import '../components/navigation_bar.dart';
 
 class DefaultLayout extends Layout {
@@ -7,18 +8,18 @@ class DefaultLayout extends Layout {
 
   @override
   Widget build() {
-    return Column(
+    return Align(
       alignment: $(Alignment.center),
-      spacing: $(7.rem),
-      children: [
-        NavigationBar(width: 1440.px, height: 50.px),
-        Container(
-          width: $(80.per),
-          alignment: $(Alignment.center),
-          child: content,
-        ),
-        Text($("Footer")),
-      ],
+      child: Column(
+        spacing: $(2.rem),
+        width: $(75.per),
+        children: [
+          NavigationBar(height: 50.px),
+          content,
+          //FooterSection(color: Color.hex("#263238")),
+          FooterSection(color: Color.yellow),
+        ],
+      ),
     );
   }
 }

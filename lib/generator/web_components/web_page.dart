@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:dcli/dcli.dart';
+import 'package:dcli/dcli.dart' as dcli;
 import 'package:flyer/generator/widgets/layouts.dart';
 import 'package:path/path.dart' as path;
 import 'package:flyer/generator/foundation.dart';
@@ -15,7 +15,7 @@ abstract class WebPage extends Component {
 
   @override
   generate({bool debug = false, required String outputPath}) {
-    if (!exists(outputPath)) createDir(outputPath);
+    if (!dcli.exists(outputPath)) dcli.createDir(outputPath);
     final page = render(RenderContext(slot: true)).toString();
     File(path.join(outputPath, '+page.svelte')).writeAsStringSync(page);
   }
@@ -34,7 +34,7 @@ class Page extends Widget {
 
   @override
   Widget build() {
-    return Wrap(children: [
+    return Column(children: [
       if (header != null) header!,
       content,
       if (header != null) footer!,

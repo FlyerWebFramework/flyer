@@ -64,7 +64,7 @@ class SizedBox extends Widget {
   @override
   List<String> get classes {
     final builder = ClassBuilder();
-    builder.add("w-{}", width);
+    builder.add("w-{}", width ?? $(Unit(value: 'full', unit: UnitType.custom)));
     builder.add("h-{}", height);
     return builder.classes;
   }
@@ -147,11 +147,8 @@ class Column extends Widget {
 
   @override
   List<String> get classes {
-    final builder = ClassBuilder();
-    builder.add("grid grid-col", $(1));
-    builder.add("{}", alignment);
-    builder.add("gap-{}", spacing);
-    builder.add("w-{}", width);
+    final builder = ClassBuilder(['grid', 'grid-col']).add("gap-{}", spacing).add("{}", alignment);
+    builder.add("w-{}", width ?? $(Unit(value: 'full', unit: UnitType.custom)));
     return builder.classes;
   }
 
@@ -174,19 +171,30 @@ class Row extends Widget {
     this.mainRowAlignment,
     this.crossRowAlignment,
     this.spacing,
-  }) : wrap = true;
+  })  : wrap = true,
+        full = false;
 
   const Row.nowrap({
     required this.children,
     this.mainRowAlignment,
     this.crossRowAlignment,
     this.spacing,
-  }) : wrap = false;
+  })  : wrap = false,
+        full = false;
+
+  const Row.full({
+    required this.children,
+    this.mainRowAlignment,
+    this.crossRowAlignment,
+    this.spacing,
+  })  : wrap = true,
+        full = true;
 
   final $<MainRowAlignment?>? mainRowAlignment;
   final $<CrossRowAlignment?>? crossRowAlignment;
   final $<Unit?>? spacing;
   final bool? wrap;
+  final bool? full;
 
   final List<Widget> children;
 
@@ -194,6 +202,7 @@ class Row extends Widget {
   List<String> get classes {
     final builder = ClassBuilder();
     builder.addClass("flex ${wrap == true ? 'flex-wrap' : 'flex-nowrap'}");
+    if (full == true) builder.addClass("w-full");
     builder.add("{}", mainRowAlignment);
     builder.add("{}", crossRowAlignment);
     builder.add("gap-{}", spacing);
@@ -209,6 +218,17 @@ class Row extends Widget {
       child: Render.list([
         ...children.map((e) => e.render(context.copy)),
       ]),
+    );
+  }
+}
+
+class Spacer extends Widget {
+  @override
+  StringBuffer render(RenderContext context) {
+    return Render.element(
+      context,
+      tag: 'div',
+      classes: ['flex', 'flex-wrap', 'grow'],
     );
   }
 }

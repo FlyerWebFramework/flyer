@@ -24,22 +24,26 @@ class Bool {
 }
 
 class Unit {
-  const Unit({required this.value, required this.unit});
+  const Unit({required this.value, required this.unit, this.onlyValue = false});
 
   final String value;
 
   final UnitType unit;
 
+  final bool onlyValue;
+
   const Unit.empty()
       : value = "",
-        unit = UnitType.custom;
+        unit = UnitType.custom,
+        onlyValue = false;
 
   const Unit.bool(bool value)
       : value = "{$value}",
-        unit = UnitType.custom;
+        unit = UnitType.custom,
+        onlyValue = false;
 
   @override
-  String toString({bool onlyValue = false}) {
+  String toString({bool? onlyValue}) {
     String result = '<unknown>';
     switch (unit) {
       case UnitType.px:
@@ -52,7 +56,7 @@ class Unit {
       case UnitType.custom:
         result = value;
     }
-    return onlyValue ? result : '[$result]';
+    return onlyValue ?? this.onlyValue ? result : '[$result]';
   }
 }
 

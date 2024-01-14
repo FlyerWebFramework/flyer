@@ -49,10 +49,11 @@ class ClassBuilder {
     _classes.addAll(classes);
   }
 
-  void add(String template, Variable? variable, {String prefix = ''}) {
+  ClassBuilder add(String template, Variable? variable, {String prefix = ''}) {
     if (variable != null) {
       _saveClass(template.replaceAll("{}", variable.value.toString()));
       _classes.add(prefix+_buildClass(template, variable));
     }
+    return this;
   }
 }

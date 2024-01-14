@@ -15,36 +15,35 @@ class NavigationBar extends Component {
 
   @override
   Widget build() {
-    return Align(
+    return Container(
+      width: $argByName('width'),
+      height: $argByName('height'),
       alignment: $(Alignment.center),
-      child: Container(
-        width: $argByName('width'),
-        height: $argByName('height'),
-        child: Row(
-          mainRowAlignment: $(MainRowAlignment.spaceAround),
-          crossRowAlignment: $(CrossRowAlignment.center),
-          children: [
-            Padding(
-              padding: $(EdgeInsets.symmetric(vertical: 8.px)),
-              child: Svg.asset('logo.svg', size: Size(9.rem, 4.rem)),
-            ),
-            Row(
-              spacing: $(2.rem),
-              children: [
-                NavigationButton('Home', url: Url(Uri.parse("/"))),
-                NavigationButton('Service', url: Url(Uri.parse("/service"))),
-                NavigationButton('Feature', url: Url(Uri.parse("/feature"))),
-                NavigationButton('About', url: Url(Uri.parse("/about"))),
-                NavigationButton('FAQ', url: Url(Uri.parse("/faq"))),
-              ],
-            ),
-            Row(
-              spacing: $(1.rem),
-              crossRowAlignment: $(CrossRowAlignment.center),
-              children: [LoginButton(), DefaultButton('Sign up')],
-            ),
-          ],
-        ),
+      padding: $(EdgeInsets.only(bottom: 6.rem)),
+      child: Row.full(
+        crossRowAlignment: $(CrossRowAlignment.center),
+        mainRowAlignment: $(MainRowAlignment.spaceBetween),
+        children: [
+          Padding(
+            padding: $(EdgeInsets.symmetric(vertical: 8.px)),
+            child: Svg.asset('logo.svg', size: Size(9.rem, 4.rem)),
+          ),
+          Row(
+            spacing: $(2.rem),
+            children: [
+              NavigationButton('Home', url: Url(Uri.parse("/"))),
+              NavigationButton('Service', url: Url(Uri.parse("/service"))),
+              NavigationButton('Feature', url: Url(Uri.parse("/feature"))),
+              NavigationButton('About', url: Url(Uri.parse("/about"))),
+              NavigationButton('FAQ', url: Url(Uri.parse("/faq"))),
+            ],
+          ),
+          Row(
+            spacing: $(1.rem),
+            crossRowAlignment: $(CrossRowAlignment.center),
+            children: [LoginButton(), DefaultButton('Sign up')],
+          ),
+        ],
       ),
     );
   }
