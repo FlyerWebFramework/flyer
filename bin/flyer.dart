@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flyer/generator/core/constants.dart';
 import 'package:path/path.dart' as path;
 import 'package:dcli/dcli.dart';
 
