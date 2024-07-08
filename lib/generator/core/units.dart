@@ -12,18 +12,18 @@ extension UnitsExtension on num {
 
 enum UnitType { px, pt, em, rem, percent, custom }
 
-class Bool {
-  const Bool(this.value);
+// class Bool {
+//   const Bool(this.value);
+//
+//   final bool value;
+//
+//   @override
+//   String toString() {
+//     return "{$value}";
+//   }
+// }
 
-  final bool value;
-
-  @override
-  String toString() {
-    return "{$value}";
-  }
-}
-
-class Unit {
+class Unit extends Object {
   const Unit({required this.value, required this.unit, this.onlyValue = false});
 
   final String value;
@@ -60,26 +60,26 @@ class Unit {
   }
 }
 
-class Variable<T> {
-  final String? name;
-  final T? value;
-
-  const Variable(this.value, {this.name});
-
-  factory Variable.create({required T? value, required String name}) {
-    return Variable<T>(value, name: name);
-  }
-
-  @override
-  String toString() {
-    return name != null ? "{$name}" : "$value";
-  }
-}
-
-class $<T> extends Variable<T> {
-  const $(super.value, {super.name});
-}
-
-extension Var<T> on T {
-  $<T> get v => $(this);
-}
+// class Variable<T> {
+//   final String? name;
+//   final T? value;
+//
+//   const Variable(this.value, {this.name});
+//
+//   factory Variable.create({required T? value, required String name}) {
+//     return Variable<T>(value, name: name);
+//   }
+//
+//   @override
+//   String toString() {
+//     return name != null ? "{$name}" : "$value";
+//   }
+// }
+//
+// class $<T> extends Variable<T> {
+//   const $(super.value, {super.name});
+// }
+//
+// extension Var<T> on T {
+//   $<T> get v => $(this);
+// }

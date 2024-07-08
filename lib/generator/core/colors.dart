@@ -1,6 +1,6 @@
 import 'package:color/color.dart' as color;
 
-class Color {
+class Color extends Object {
   static const transparent = NamedColor("transparent");
 
   static const red = NamedColor("red");

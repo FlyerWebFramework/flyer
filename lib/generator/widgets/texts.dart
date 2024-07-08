@@ -13,9 +13,9 @@ sealed class TextWidget extends Widget {
 class Text extends TextWidget {
   const Text(this.text, {super.style, super.decoration});
 
-  final $<String> text;
+  final String text;
 
-  factory Text.newLine() => TextNewLine($(''));
+  factory Text.newLine() => TextNewLine('');
 
   StringBuffer renderTextTag(RenderContext context, String tag) {
     return Render.element(
@@ -24,14 +24,14 @@ class Text extends TextWidget {
       oneLine: true,
       styles: style?.getStyles(),
       classes: [...decoration?.getClasses() ?? [], ...style?.getClasses() ?? []],
-      child: Render.text(context, text.value!),
+      child: Render.text(context, text),
     );
   }
 
   @override
   StringBuffer render(RenderContext context) {
     if (style == null) {
-      return Render.text(context, text.value!, indent: 0);
+      return Render.text(context, text, indent: 0);
     } else {
       return renderTextTag(context, 'p');
     }

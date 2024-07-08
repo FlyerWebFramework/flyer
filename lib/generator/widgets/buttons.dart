@@ -74,7 +74,7 @@ class Button extends Widget with Gestures {
     this.onTap,
     this.width,
     this.height,
-    this.type = const $(ButtonType.primary),
+    this.type = ButtonType.primary,
     //this.disabled,
     this.textStyle,
     this.decoration,
@@ -94,15 +94,15 @@ class Button extends Widget with Gestures {
     this.styles,
     this.shape = ButtonShape.rectangle,
     this.child,
-  }) : type = const $(ButtonType.link);
+  }) : type = ButtonType.link;
 
-  final $<String> text;
-  final $<Unit?>? width;
-  final $<Unit?>? height;
-  final $<Action?>? onTap;
+  final String text;
+  final Unit? width;
+  final Unit? height;
+  final Action? onTap;
 
-  //final $<Bool?>? disabled;
-  final $<ButtonType?>? type;
+  //final bool? disabled;
+  final ButtonType? type;
   final TextStyle? textStyle;
   final Decoration? decoration;
   final List<ButtonStyle>? styles;
@@ -128,10 +128,10 @@ class Button extends Widget with Gestures {
   @override
   Widget build() {
     final hrefAttribute = {
-      if (onTap?.name != null)
+      if (onTap != null)
         "href": onTap!.toString()
-      else if (onTap?.value is Url)
-        "href": (onTap!.value as Url).url.toString(),
+      else if (onTap is Url)
+        "href": (onTap as Url).url.toString(),
     };
 
     return WidgetBuilder(
@@ -147,54 +147,6 @@ class Button extends Widget with Gestures {
           if (child != null) child!.render(context.copy),
           if (child == null) Render.text(context.copy, text.toString()),
         ]),
-      ),
-    );
-  }
-}
-
-class IconButton extends Widget {
-  IconButton({
-    required this.asset,
-    required this.shape,
-    this.width,
-    this.height,
-    this.onTap,
-  });
-
-  Asset asset;
-  ButtonShape? shape;
-  final $<Unit?>? width;
-  final $<Unit?>? height;
-  final $<Action?>? onTap;
-
-  @override
-  Widget build() {
-    return Button(
-      $(""),
-      shape: shape,
-      width: width,
-      height: height,
-      styles: [
-        ButtonStyle(
-          decoration: Decoration(
-            margin: $(EdgeInsets.zero),
-            padding: $(EdgeInsets.zero),
-            border: $(Border.all(width: 0.rem))
-          ),
-        )
-      ],
-      child: Wrap(
-        children: [
-          Container(
-            child: Svg.asset(
-              asset.path,
-              size: Size(
-                width?.value ?? 2.rem,
-                height?.value ?? 2.rem,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

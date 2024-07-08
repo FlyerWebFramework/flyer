@@ -45,7 +45,7 @@ class Event {
   const Event({required this.type, this.action});
 
   final EventType type;
-  final $<Action?>? action;
+  final Action? action;
 }
 
 class Size {
@@ -65,21 +65,21 @@ class Decoration {
     this.padding,
   });
 
-  final $<Unit?>? width;
-  final $<Unit?>? height;
-  final $<Color?>? color;
-  final $<Border?>? border;
-  final $<EdgeInsets?>? margin;
-  final $<EdgeInsets?>? padding;
+  final Unit? width;
+  final Unit? height;
+  final Color? color;
+  final Border? border;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
 
   List<String> getClasses([ClassState state = ClassState.none]) {
     final builder = ClassBuilder();
     builder.add("${state}w-{}", width);
     builder.add("${state}h-{}", height);
     builder.add("${state}bg-{}", color);
-    builder.addClassAll(border?.value?.getClasses(state));
-    builder.addClassAll(margin?.value?.getMarginClasses(state));
-    builder.addClassAll(padding?.value?.getPaddingClasses(state));
+    builder.addClassAll(border?.getClasses(state));
+    builder.addClassAll(margin?.getMarginClasses(state));
+    builder.addClassAll(padding?.getPaddingClasses(state));
     return builder.classes;
   }
 }
@@ -135,11 +135,11 @@ class Url extends Action {
   }
 }
 
-abstract class ArgsObject {
-  List get args => [];
-
-  Map<String, dynamic> toArgs();
-}
+// abstract class ArgsObject {
+//   List get args => [];
+//
+//   Map<String, dynamic> toArgs();
+// }
 
 class Arguments {
   Arguments([Map<String, dynamic>? args]) {
@@ -166,18 +166,14 @@ class Arguments {
     return this;
   }
 
-  Arguments addObject(ArgsObject object) {
-    for (var arg in object.toArgs().entries) {
-      _args[arg.key] = arg.value;
-    }
-    return this;
-  }
+  // Arguments addObject(ArgsObject object) {
+  //   for (var arg in object.toArgs().entries) {
+  //     _args[arg.key] = arg.value;
+  //   }
+  //   return this;
+  // }
 
-  $<T> get<T>(String key) {
-    if (_args.containsKey(key)) {
-      return $<T>(_args[key] as T?, name: key);
-    } else {
-      return $<T>(null, name: key);
-    }
+  String get(String key) {
+    return '{$key}';
   }
 }

@@ -53,16 +53,16 @@ class TextStyle {
     this.decoration,
   });
 
-  final $<Color?>? color;
-  final $<Unit?>? fontSize;
-  final $<String?>? fontFamily;
-  final $<Unit?>? lineHeight;
-  final $<FontWeight?>? fontWeight;
-  final $<TextDecoration?>? decoration;
+  final Color? color;
+  final Unit? fontSize;
+  final String? fontFamily;
+  final Unit? lineHeight;
+  final FontWeight? fontWeight;
+  final TextDecoration? decoration;
 
   Map<String, String> getStyles() {
     return {
-      if (fontFamily?.value != null) 'font-family': '$fontFamily;',
+      if (fontFamily != null) 'font-family': '$fontFamily;',
     };
   }
 

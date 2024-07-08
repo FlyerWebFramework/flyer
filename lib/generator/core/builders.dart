@@ -23,13 +23,13 @@ class ClassBuilder {
     }
   }
 
-  String _buildClass(String template, Variable variable) {
-    switch (variable.value) {
+  String _buildClass(String template, Object variable) {
+    switch (variable) {
       case const (Unit):
       case const (Enum):
       case const (Color):
       default:
-        _saveClass(template.replaceAll("{}", variable.value.toString()));
+        _saveClass(template.replaceAll("{}", variable.toString()));
         return template.replaceAll("{}", variable.toString());
     }
   }
@@ -49,9 +49,9 @@ class ClassBuilder {
     _classes.addAll(classes);
   }
 
-  ClassBuilder add(String template, Variable? variable, {String prefix = ''}) {
+  ClassBuilder add(String template, Object? variable, {String prefix = ''}) {
     if (variable != null) {
-      _saveClass(template.replaceAll("{}", variable.value.toString()));
+      _saveClass(template.replaceAll("{}", variable.toString()));
       _classes.add(prefix+_buildClass(template, variable));
     }
     return this;

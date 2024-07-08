@@ -7,8 +7,8 @@ class IndexPage extends WebPage {
   Widget build() {
     return Column(
       children: [
-        Text("Header".v),
-        Title("Nadpis".v),
+        Text("Header"),
+        Title("Nadpis"),
       ],
     );
   }

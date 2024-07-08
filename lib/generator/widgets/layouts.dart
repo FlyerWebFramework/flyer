@@ -4,7 +4,7 @@ import 'package:flyer/generator/foundation.dart';
 class Align extends Widget {
   const Align({required this.alignment, required this.child});
 
-  final $<Alignment> alignment;
+  final Alignment alignment;
   final Widget child;
 
   @override
@@ -29,13 +29,13 @@ class Align extends Widget {
 class Padding extends Widget {
   const Padding({required this.padding, required this.child});
 
-  final $<EdgeInsets> padding;
+  final EdgeInsets padding;
   final Widget child;
 
   @override
   List<String> get classes {
     final builder = ClassBuilder();
-    builder.addClassAll(padding.value?.getPaddingClasses());
+    builder.addClassAll(padding.getPaddingClasses());
     return builder.classes;
   }
 
@@ -57,14 +57,14 @@ class SizedBox extends Widget {
     this.child,
   });
 
-  final $<Unit>? width;
-  final $<Unit>? height;
+  final Unit? width;
+  final Unit? height;
   final Widget? child;
 
   @override
   List<String> get classes {
     final builder = ClassBuilder();
-    builder.add("w-{}", width ?? $(Unit(value: 'full', unit: UnitType.custom)));
+    builder.add("w-{}", width ?? Unit(value: 'full', unit: UnitType.custom));
     builder.add("h-{}", height);
     return builder.classes;
   }
@@ -92,20 +92,20 @@ class Container extends SizedBox {
     required super.child,
   });
 
-  final $<Color?>? color;
-  final $<EdgeInsets?>? margin;
-  final $<EdgeInsets?>? padding;
-  final $<Alignment?>? alignment;
-  final $<Border?>? border;
+  final Color? color;
+  final EdgeInsets? margin;
+  final EdgeInsets? padding;
+  final Alignment? alignment;
+  final Border? border;
 
   @override
   List<String> get classes {
     final builder = ClassBuilder(super.classes);
     builder.add("bg-{}", color);
     builder.add("{}", alignment);
-    builder.addClassAll(margin?.value?.getMarginClasses());
-    builder.addClassAll(padding?.value?.getPaddingClasses());
-    builder.addClassAll(border?.value?.getClasses());
+    builder.addClassAll(margin?.getMarginClasses());
+    builder.addClassAll(padding?.getPaddingClasses());
+    builder.addClassAll(border?.getClasses());
     return builder.classes;
   }
 
@@ -139,16 +139,16 @@ class Column extends Widget {
     this.width,
   });
 
-  final $<Alignment?>? alignment;
-  final $<Unit?>? spacing;
-  final $<Unit?>? width;
+  final Alignment? alignment;
+  final Unit? spacing;
+  final Unit? width;
 
   final List<Widget> children;
 
   @override
   List<String> get classes {
     final builder = ClassBuilder(['grid', 'grid-col']).add("gap-{}", spacing).add("{}", alignment);
-    builder.add("w-{}", width ?? $(Unit(value: 'full', unit: UnitType.custom)));
+    builder.add("w-{}", width ?? Unit(value: 'full', unit: UnitType.custom));
     return builder.classes;
   }
 
@@ -190,9 +190,9 @@ class Row extends Widget {
   })  : wrap = true,
         full = true;
 
-  final $<MainRowAlignment?>? mainRowAlignment;
-  final $<CrossRowAlignment?>? crossRowAlignment;
-  final $<Unit?>? spacing;
+  final MainRowAlignment? mainRowAlignment;
+  final CrossRowAlignment? crossRowAlignment;
+  final Unit? spacing;
   final bool? wrap;
   final bool? full;
 
@@ -238,14 +238,14 @@ class Grid extends Widget {
     required this.children,
     this.alignment,
     this.spacing,
-    this.rows = const $(1),
-    this.columns = const $(1),
+    this.rows = 1,
+    this.columns = 1,
   });
 
-  final $<Alignment?>? alignment;
-  final $<Unit?>? spacing;
-  final $<int>? rows;
-  final $<int>? columns;
+  final Alignment? alignment;
+  final Unit? spacing;
+  final int rows;
+  final int columns;
 
   final List<Widget> children;
 
