@@ -6,6 +6,7 @@ class IndexPage extends WebPage {
   @override
   Widget build() {
     return Column(
+      alignment: Alignment.center,
       children: [
         Text("Header"),
         Title("Nadpis"),
