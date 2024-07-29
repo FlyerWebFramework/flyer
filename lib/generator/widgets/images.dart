@@ -58,8 +58,8 @@ class Svg extends Widget {
   @override
   StringBuffer render(RenderContext context) {
     final Map<String, String> size = {
-      'width': this.size.width.toString(onlyValue: true),
-      'height': this.size.height.toString(onlyValue: true),
+      'width': this.size.width.toString(),
+      'height': this.size.height.toString(),
     };
     return Render.element(
       context,
@@ -119,8 +119,8 @@ class Image extends Widget {
       attributes: {
         'src': sourcePath,
         'alt': description,
-        'width': size.width.toString(onlyValue: true),
-        'height': size.height.toString(onlyValue: true),
+        'width': size.width.toString(),
+        'height': size.height.toString(),
       },
     );
   }

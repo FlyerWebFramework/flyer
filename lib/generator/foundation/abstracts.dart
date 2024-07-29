@@ -73,14 +73,10 @@ abstract class Component extends Widget {
     throw UnimplementedError();
   }
 
-  // $<T> $argByName<T>(String name) => args.get(name);
-
-  // $<T> $arg<T>(T value) {
-  //   hasSameValue(e) => e.value.toString() == value.toString();
-  //   return $(value, name: args.list.entries.where(hasSameValue).first.key);
-  // }
-
-  // $<T> $var<T>(T value) => $(value);
+  String $arg<T>(T value) {
+    hasSameValue(e) => e.value.hashCode == value.hashCode;
+    return '{${args.list.entries.where(hasSameValue).first.key}}';
+  }
 
   @override
   StringBuffer render(RenderContext context) {

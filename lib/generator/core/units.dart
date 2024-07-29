@@ -12,38 +12,15 @@ extension UnitsExtension on num {
 
 enum UnitType { px, pt, em, rem, percent, custom }
 
-// class Bool {
-//   const Bool(this.value);
-//
-//   final bool value;
-//
-//   @override
-//   String toString() {
-//     return "{$value}";
-//   }
-// }
-
-class Unit extends Object {
-  const Unit({required this.value, required this.unit, this.onlyValue = false});
-
-  final String value;
+class Unit extends Var {
+  const Unit({required super.value, required this.unit});
 
   final UnitType unit;
 
-  final bool onlyValue;
-
-  const Unit.empty()
-      : value = "",
-        unit = UnitType.custom,
-        onlyValue = false;
-
-  const Unit.bool(bool value)
-      : value = "{$value}",
-        unit = UnitType.custom,
-        onlyValue = false;
+  const factory Unit.empty() = EmptyUnit;
 
   @override
-  String toString({bool? onlyValue}) {
+  String toString() {
     String result = '<unknown>';
     switch (unit) {
       case UnitType.px:
@@ -56,30 +33,60 @@ class Unit extends Object {
       case UnitType.custom:
         result = value;
     }
-    return onlyValue ?? this.onlyValue ? result : '[$result]';
+    return '[$result]';
   }
 }
 
-// class Variable<T> {
-//   final String? name;
-//   final T? value;
-//
-//   const Variable(this.value, {this.name});
-//
-//   factory Variable.create({required T? value, required String name}) {
-//     return Variable<T>(value, name: name);
-//   }
-//
-//   @override
-//   String toString() {
-//     return name != null ? "{$name}" : "$value";
-//   }
-// }
-//
-// class $<T> extends Variable<T> {
-//   const $(super.value, {super.name});
-// }
-//
-// extension Var<T> on T {
-//   $<T> get v => $(this);
-// }
+class EmptyUnit implements Unit {
+  const EmptyUnit();
+
+  @override
+  final UnitType unit = UnitType.custom;
+
+  @override
+  String get value => "";
+
+  @override
+  String toString() => "";
+}
+
+class Var<T> extends Object {
+  const Var({required this.value});
+
+  final T value;
+
+  @override
+  String toString() => value.toString();
+}
+
+class Num extends Var<num> {
+  const Num({required super.value});
+}
+
+class Int extends Var<int> {
+  const Int({required super.value});
+}
+
+class Double extends Var<double> {
+  const Double({required super.value});
+}
+
+class Bool extends Var<bool> {
+  const Bool({required super.value});
+}
+
+class Str extends Var<String> {
+  const Str({required super.value});
+}
+
+class Obj extends Var<Object> {
+  const Obj({required super.value});
+}
+
+class Enum extends Var {
+  const Enum({required super.value});
+}
+
+class Const extends Var {
+  const Const({required super.value});
+}

@@ -48,11 +48,11 @@ class Event {
   final Action? action;
 }
 
-class Size {
+class Size<T> {
   const Size(this.width, this.height);
 
-  final Unit width;
-  final Unit height;
+  final T width;
+  final T height;
 }
 
 class Decoration {
@@ -135,11 +135,11 @@ class Url extends Action {
   }
 }
 
-// abstract class ArgsObject {
-//   List get args => [];
-//
-//   Map<String, dynamic> toArgs();
-// }
+abstract class ArgsObject {
+  List get args => [];
+
+  Map<String, dynamic> toArgs();
+}
 
 class Arguments {
   Arguments([Map<String, dynamic>? args]) {
@@ -166,12 +166,12 @@ class Arguments {
     return this;
   }
 
-  // Arguments addObject(ArgsObject object) {
-  //   for (var arg in object.toArgs().entries) {
-  //     _args[arg.key] = arg.value;
-  //   }
-  //   return this;
-  // }
+  Arguments addObject(ArgsObject object) {
+    for (var arg in object.toArgs().entries) {
+      _args[arg.key] = arg.value;
+    }
+    return this;
+  }
 
   String get(String key) {
     return '{$key}';

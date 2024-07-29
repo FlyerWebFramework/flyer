@@ -1,6 +1,7 @@
 import 'package:color/color.dart' as color;
+import 'package:flyer/generator/core/units.dart';
 
-class Color extends Object {
+class Color extends Var {
   static const transparent = NamedColor("transparent");
 
   static const red = NamedColor("red");
@@ -17,7 +18,7 @@ class Color extends Object {
 
   static const white = NamedColor("white");
 
-  String get value => "<unknown>";
+  //String get value => "<unknown>";
 
   @override
   String toString() => value;
