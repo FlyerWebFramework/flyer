@@ -7,7 +7,7 @@ export 'web_components/web_article.dart';
 export 'web_components/web_page.dart';
 export 'web_components/web_site.dart';
 export 'core/builders.dart';
-export 'core/colors.dart';
 export 'core/special.dart';
 export 'core/units.dart';
 export 'foundation/abstracts.dart';
+export 'foundation/colors.dart';
