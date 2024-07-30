@@ -64,7 +64,7 @@ class SizedBox extends Widget {
   @override
   List<String> get classes {
     final builder = ClassBuilder();
-    builder.add("w-{}", width ?? Unit(value: 'full', unit: UnitType.custom));
+    builder.add("w-{}", width ?? Str('full'));
     builder.add("h-{}", height);
     return builder.classes;
   }
@@ -148,7 +148,7 @@ class Column extends Widget {
   @override
   List<String> get classes {
     final builder = ClassBuilder(['grid', 'grid-col']).add("gap-{}", spacing).add("{}", alignment);
-    builder.add("w-{}", width ?? Unit(value: 'full', unit: UnitType.custom));
+    builder.add("w-{}", width ?? Str('full'));
     return builder.classes;
   }
 

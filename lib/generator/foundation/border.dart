@@ -25,7 +25,7 @@ class BorderSide {
   /// By default, the border is 1.0 logical pixels wide and solid black.
   const BorderSide({
     this.color = Color.black,
-    this.width = const Unit(value: "1", unit: UnitType.px),
+    this.width = const Unit(1, unit: UnitType.px),
     this.style = BorderStyle.solid,
   });
 
@@ -96,7 +96,7 @@ class Border {
   /// The sides default to black solid borders, one logical pixel wide.
   factory Border.all({
     Color? color = Color.black,
-    Unit? width = const Unit(value: "1", unit: UnitType.px),
+    Unit? width = const Unit(1, unit: UnitType.px),
     BorderStyle? style,
   }) {
     return Border._init(all: BorderSide(color: color, width: width, style: style));

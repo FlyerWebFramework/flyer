@@ -1,23 +1,42 @@
 extension UnitsExtension on num {
-  Unit get px => Unit(value: toString(), unit: UnitType.px);
+  Unit get px => Unit(toString(), unit: UnitType.px);
 
-  Unit get pt => Unit(value: toString(), unit: UnitType.pt);
+  Unit get pt => Unit(toString(), unit: UnitType.pt);
 
-  Unit get em => Unit(value: toString(), unit: UnitType.em);
+  Unit get em => Unit(toString(), unit: UnitType.em);
 
-  Unit get rem => Unit(value: toString(), unit: UnitType.rem);
+  Unit get rem => Unit(toString(), unit: UnitType.rem);
 
-  Unit get per => Unit(value: toString(), unit: UnitType.percent);
+  Unit get per => Unit(toString(), unit: UnitType.percent);
 }
 
 enum UnitType { px, pt, em, rem, percent, custom }
 
+class Var<T> extends Object {
+  const Var(this.value);
+
+  final T value;
+
+  @override
+  String toString() => value.toString();
+}
+
 class Unit extends Var {
-  const Unit({required super.value, required this.unit});
+  const Unit(super.value, {this.unit = UnitType.custom});
 
   final UnitType unit;
 
   const factory Unit.empty() = EmptyUnit;
+
+  const factory Unit.num(num value) = Num;
+
+  const factory Unit.int(int value) = Int;
+
+  const factory Unit.double(double value) = Double;
+
+  const factory Unit.bool(bool value) = Bool;
+
+  const factory Unit.str(String value) = Str;
 
   @override
   String toString() {
@@ -50,43 +69,79 @@ class EmptyUnit implements Unit {
   String toString() => "";
 }
 
-class Var<T> extends Object {
-  const Var({required this.value});
+class Num implements Unit {
+  const Num(this.value);
 
-  final T value;
+  @override
+  final UnitType unit = UnitType.custom;
+
+  @override
+  final num value;
 
   @override
   String toString() => value.toString();
 }
 
-class Num extends Var<num> {
-  const Num({required super.value});
+class Int implements Unit {
+  const Int(this.value);
+
+  @override
+  final UnitType unit = UnitType.custom;
+
+  @override
+  final int value;
+
+  @override
+  String toString() => value.toString();
 }
 
-class Int extends Var<int> {
-  const Int({required super.value});
+class Double implements Unit {
+  const Double(this.value);
+
+  @override
+  final UnitType unit = UnitType.custom;
+
+  @override
+  final double value;
+
+  @override
+  String toString() => value.toString();
 }
 
-class Double extends Var<double> {
-  const Double({required super.value});
+class Bool implements Unit {
+  const Bool(this.value);
+
+  @override
+  final UnitType unit = UnitType.custom;
+
+  @override
+  final bool value;
+
+  @override
+  String toString() => value.toString();
 }
 
-class Bool extends Var<bool> {
-  const Bool({required super.value});
-}
+class Str implements Unit {
+  const Str(this.value);
 
-class Str extends Var<String> {
-  const Str({required super.value});
+  @override
+  final UnitType unit = UnitType.custom;
+
+  @override
+  final String value;
+
+  @override
+  String toString() => value.toString();
 }
 
 class Obj extends Var<Object> {
-  const Obj({required super.value});
+  const Obj(super.value);
 }
 
 class Enum extends Var {
-  const Enum({required super.value});
+  const Enum(super.value);
 }
 
 class Const extends Var {
-  const Const({required super.value});
+  const Const(super.value);
 }
