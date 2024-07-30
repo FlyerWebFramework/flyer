@@ -173,7 +173,7 @@ class Arguments {
     return this;
   }
 
-  String get(String key) {
-    return '{$key}';
+  T get<T>(String key) {
+    return _args[key];
   }
 }

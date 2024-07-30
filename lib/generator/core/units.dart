@@ -10,6 +10,10 @@ extension UnitsExtension on num {
   Unit get per => Unit(toString(), unit: UnitType.percent);
 }
 
+extension StringExtension on String {
+  Str get str => Str(this);
+}
+
 enum UnitType { px, pt, em, rem, percent, custom }
 
 class Var<T> extends Object {
