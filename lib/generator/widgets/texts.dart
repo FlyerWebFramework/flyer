@@ -33,7 +33,7 @@ class Text extends TextWidget {
     if (style == null) {
       return Render.text(context, text, indent: 0);
     } else {
-      return renderTextTag(context, 'p');
+      return renderTextTag(context, 'span');
     }
   }
 }
