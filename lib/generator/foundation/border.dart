@@ -54,20 +54,21 @@ class BorderSide {
 
   List<String> getClasses([ClassState state = ClassState.none]) {
     return [
-      if (color != null) "${state}border-${color!.value}",
+      if (color != null) "${state}border-${color!.variableValue}",
       if (width != null) "${state}border-$width",
       if (style != null) "$state${style!.cssValue}",
     ];
   }
 }
 
-class Border {
+class Border implements Var {
   const Border._init({
     this.all = BorderSide.none,
     this.top = BorderSide.none,
     this.right = BorderSide.none,
     this.bottom = BorderSide.none,
     this.left = BorderSide.none,
+    this.variableName,
   });
 
   final BorderSide? all;
@@ -85,6 +86,7 @@ class Border {
   const Border.symmetric({
     BorderSide vertical = BorderSide.none,
     BorderSide horizontal = BorderSide.none,
+    this.variableName,
   })  : all = null,
         left = vertical,
         top = horizontal,
@@ -105,4 +107,10 @@ class Border {
   List<String> getClasses([ClassState state = ClassState.none]) => [
         if (all != null) ...all!.getClasses(state),
       ];
+
+  @override
+  get variableValue => throw UnimplementedError();
+
+  @override
+  final String? variableName;
 }

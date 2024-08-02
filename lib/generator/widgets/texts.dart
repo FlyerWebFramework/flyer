@@ -24,14 +24,14 @@ class Text extends TextWidget {
       oneLine: true,
       styles: style?.getStyles(),
       classes: [...decoration?.getClasses() ?? [], ...style?.getClasses() ?? []],
-      child: Render.text(context, text.value),
+      child: Render.text(context, text.variableValue),
     );
   }
 
   @override
   StringBuffer render(RenderContext context) {
     if (style == null) {
-      return Render.text(context, text.value, indent: 0);
+      return Render.text(context, text.variableValue, indent: 0);
     } else {
       return renderTextTag(context, 'span');
     }

@@ -21,7 +21,7 @@ class Color extends Var {
   //String get value => "<unknown>";
 
   @override
-  String toString() => value;
+  String toString() => variableValue;
 
   factory Color.name(String value) = NamedColor;
 
@@ -31,48 +31,57 @@ class Color extends Var {
 }
 
 class HexColor implements Color {
-  HexColor(String hexCode) {
+  HexColor(String hexCode, {this.variableName}) {
     _color = color.HexColor(hexCode);
   }
 
   color.HexColor? _color;
 
   @override
-  String get value => "[${_color!.toCssString()}]";
+  String get variableValue => "[${_color!.toCssString()}]";
 
   @override
-  String toString() => value;
+  final String? variableName;
+
+  @override
+  String toString() => variableValue;
 }
 
 class RgbaColor implements Color {
-  RgbaColor(num r, num g, num b, num a) {
+  RgbaColor(num r, num g, num b, num a, {this.variableName}) {
     _color = color.RgbaColor(r, g, b, a);
   }
 
   color.RgbaColor? _color;
 
   @override
-  String get value => "[${_color!.toCssString()}]";
+  String get variableValue => "[${_color!.toCssString()}]";
 
   @override
-  String toString() => value;
+  final String? variableName;
+
+  @override
+  String toString() => variableValue;
 }
 
 class NamedColor implements Color {
-  const NamedColor(this.name, {this.shade = 500, this.opacity = 1});
+  const NamedColor(this.name, {this.shade = 500, this.opacity = 1, this.variableName});
 
   final String name;
   final int? shade;
   final double? opacity;
 
   @override
-  String get value {
+  String get variableValue {
     if (name == 'black' || name == 'white' || name == 'transparent') return name;
     return "$name-$shade";
   }
 
   @override
-  String toString() => value;
+  final String? variableName;
+
+  @override
+  String toString() => variableValue;
 
   NamedColor get shade50 => NamedColor(name, shade: 50);
 

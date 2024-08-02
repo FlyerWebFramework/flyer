@@ -17,12 +17,13 @@ extension StringExtension on String {
 enum UnitType { px, pt, em, rem, percent, custom }
 
 class Var<T> extends Object {
-  const Var(this.value);
+  const Var(this.variableValue, {this.variableName});
 
-  final T value;
+  final String? variableName;
+  final T variableValue;
 
   @override
-  String toString() => value.toString();
+  String toString() => variableValue.toString();
 }
 
 class Unit extends Var {
@@ -50,92 +51,110 @@ class Unit extends Var {
       case UnitType.pt:
       case UnitType.em:
       case UnitType.rem:
-        result = "$value${unit.name}";
+        result = "$variableValue${unit.name}";
       case UnitType.percent:
-        result = "$value%";
+        result = "$variableValue%";
       case UnitType.custom:
-        result = value;
+        result = variableValue;
     }
     return '[$result]';
   }
 }
 
 class EmptyUnit implements Unit {
-  const EmptyUnit();
+  const EmptyUnit({this.variableName});
 
   @override
   final UnitType unit = UnitType.custom;
 
   @override
-  String get value => "";
+  String get variableValue => "";
+
+  @override
+  final String? variableName;
 
   @override
   String toString() => "";
 }
 
 class Num implements Unit {
-  const Num(this.value);
+  const Num(this.variableValue, {this.variableName});
 
   @override
   final UnitType unit = UnitType.custom;
 
   @override
-  final num value;
+  final num variableValue;
 
   @override
-  String toString() => value.toString();
+  final String? variableName;
+
+  @override
+  String toString() => variableValue.toString();
 }
 
 class Int implements Unit {
-  const Int(this.value);
+  const Int(this.variableValue, {this.variableName});
 
   @override
   final UnitType unit = UnitType.custom;
 
   @override
-  final int value;
+  final int variableValue;
 
   @override
-  String toString() => value.toString();
+  final String? variableName;
+
+  @override
+  String toString() => variableValue.toString();
 }
 
 class Double implements Unit {
-  const Double(this.value);
+  const Double(this.variableValue, {this.variableName});
 
   @override
   final UnitType unit = UnitType.custom;
 
   @override
-  final double value;
+  final double variableValue;
 
   @override
-  String toString() => value.toString();
+  final String? variableName;
+
+  @override
+  String toString() => variableValue.toString();
 }
 
 class Bool implements Unit {
-  const Bool(this.value);
+  const Bool(this.variableValue, {this.variableName});
 
   @override
   final UnitType unit = UnitType.custom;
 
   @override
-  final bool value;
+  final bool variableValue;
 
   @override
-  String toString() => value.toString();
+  final String? variableName;
+
+  @override
+  String toString() => variableValue.toString();
 }
 
 class Str implements Unit {
-  const Str(this.value);
+  const Str(this.variableValue, {this.variableName});
 
   @override
   final UnitType unit = UnitType.custom;
 
   @override
-  final String value;
+  final String variableValue;
 
   @override
-  String toString() => value.toString();
+  final String? variableName;
+
+  @override
+  String toString() => variableValue.toString();
 }
 
 class Obj extends Var<Object> {
