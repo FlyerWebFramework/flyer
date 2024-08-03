@@ -37,7 +37,7 @@ class Text extends TextWidget {
 
     if (tag != null && tag!.isNotEmpty) {
       return Render.element(
-        context,
+        context.indent(),
         tag: tag!,
         oneLine: true,
         classes: style?.classes,
@@ -57,10 +57,10 @@ class TextSpan extends Widget {
   @override
   StringBuffer render(RenderContext context) {
     return Render.element(
-      context,
+      context.indent(),
       tag: 'span',
       classes: style?.classes,
-      child: Render.list(text.map((e) => e.render(context)).toList()),
+      child: Render.list(text.map((e) => e.render(context.indent())).toList()),
     );
   }
 }
@@ -74,10 +74,10 @@ class TextParagraph extends Widget {
   @override
   StringBuffer render(RenderContext context) {
     return Render.element(
-      context,
+      context.indent(),
       tag: 'p',
       classes: style?.classes,
-      child: Render.list(text.map((e) => e.render(context)).toList()),
+      child: Render.list(text.map((e) => e.render(context.indent())).toList()),
     );
   }
 }

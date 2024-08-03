@@ -16,10 +16,10 @@ class Box extends Widget {
   @override
   StringBuffer render(RenderContext context) {
     return Render.element(
-      context,
+      context.indent(),
       tag: 'div',
       classes: classes,
-      child: child.render(context.copy),
+      child: child.render(context.indent(2)),
     );
   }
 }
