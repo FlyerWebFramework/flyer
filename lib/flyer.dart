@@ -16,6 +16,7 @@ export 'generator/foundation/svelte_builder/fragment.dart';
 export 'generator/foundation/svelte_builder/layout.dart';
 
 export 'generator/widgets/html/box.dart';
+export 'generator/widgets/html/text.dart';
 export 'generator/widgets/web/web_article.dart';
 export 'generator/widgets/web/web_page.dart';
 export 'generator/widgets/web/web_site.dart';
@@ -24,9 +25,9 @@ export 'generator/deprecated/widgets/buttons.dart';
 export 'generator/deprecated/widgets/layouts.dart';
 export 'generator/deprecated/widgets/images.dart';
 export 'generator/deprecated/widgets/gestures.dart';
-export 'generator/deprecated/widgets/texts.dart';
+//export 'generator/deprecated/widgets/texts.dart';
 export 'generator/deprecated/edge_insets.dart';
-export 'generator/deprecated/text_style.dart';
+//export 'generator/deprecated/text_style.dart';
 export 'generator/deprecated/alignment.dart';
 export 'generator/deprecated/builders.dart';
 

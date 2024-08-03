@@ -1,5 +1,6 @@
 import 'package:flyer/flyer.dart';
 
+/*
 class SimpleButton extends Component {
   const SimpleButton({
     this.color = Color.blue,
@@ -37,3 +38,5 @@ class SimpleButton extends Component {
     );
   }
 }
+
+*/

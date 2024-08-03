@@ -1,4 +1,5 @@
-import 'package:flyer/flyer.dart';
+import 'package:flyer/flyer.dart' hide TextStyle;
+import 'package:flyer/generator/deprecated/text_style.dart';
 
 enum ButtonType {
   neutral,
@@ -49,7 +50,7 @@ class ButtonStyle {
 
   List<String> get classes {
     final builder = ClassBuilder();
-    builder.addClassAll(textStyle?.getClasses(state.classState));
+    //builder.addClassAll(textStyle?.getClasses(state.classState));
     builder.addClassAll(decoration?.getClasses(state.classState));
     return builder.classes;
   }
@@ -116,7 +117,7 @@ class Button extends Widget with Gestures {
     builder.addDaisyClass('btn-xs');
     builder.addDaisyClass('$shape');
     builder.addDaisyClass('$type');
-    builder.addClassAll(textStyle?.getClasses());
+    //builder.addClassAll(textStyle?.getClasses());
     builder.addClassAll(decoration?.getClasses());
     styles?.map((e) => e.classes).forEach(builder.addClassAll);
     builder.addClass('underline-offset-[1.5px]');

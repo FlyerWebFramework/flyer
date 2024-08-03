@@ -21,8 +21,8 @@ class Text extends TextWidget {
       context,
       tag: tag,
       oneLine: true,
-      styles: style?.getStyles(),
-      classes: [...decoration?.getClasses() ?? [], ...style?.getClasses() ?? []],
+      //styles: style?.getStyles(),
+      //classes: [...decoration?.getClasses() ?? [], ...style?.getClasses() ?? []],
       child: Render.text(context, text.variableValue),
     );
   }
