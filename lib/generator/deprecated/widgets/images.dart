@@ -1,5 +1,4 @@
-import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/foundation.dart';
+import 'package:flyer/flyer.dart';
 import 'package:path/path.dart' as path;
 import 'package:dcli/dcli.dart';
 

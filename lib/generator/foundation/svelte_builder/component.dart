@@ -1,10 +1,8 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
-import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/foundation/html_builder/context.dart';
+import 'package:flyer/flyer.dart';
 import 'package:path/path.dart' as path;
-import 'package:flyer/generator/foundation.dart';
 
 import 'fragment.dart';
 

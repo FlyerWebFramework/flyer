@@ -1,5 +1,4 @@
-import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/foundation.dart';
+import 'package:flyer/flyer.dart';
 
 enum HeadlineSize { h1, h2, h3, h4, h5, h6 }
 

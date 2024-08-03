@@ -1,5 +1,4 @@
-import 'package:flyer/generator/foundation/styles/box_style.dart';
-import 'package:flyer/widgets.dart';
+import 'package:flyer/flyer.dart';
 
 import '../components/simple_button.dart';
 

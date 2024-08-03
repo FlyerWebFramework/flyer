@@ -1,4 +1,4 @@
-import 'package:flyer/generator/foundation.dart';
+import 'package:flyer/generator/foundation/html_builder/context.dart';
 
 abstract class Widget {
   const Widget();

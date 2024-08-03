@@ -1,4 +1,4 @@
-import 'package:flyer/widgets.dart';
+import 'package:flyer/flyer.dart';
 
 import 'pages/index_page.dart';
 

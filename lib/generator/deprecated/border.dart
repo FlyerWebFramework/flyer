@@ -1,6 +1,6 @@
 import 'package:flyer/generator/core/colors.dart';
 import 'package:flyer/generator/core/units.dart';
-import 'package:flyer/generator/foundation.dart';
+import 'package:flyer/generator/deprecated/text_style.dart';
 
 enum BorderStyle {
   none("border-"),

@@ -1,4 +1,4 @@
-import 'package:flyer/generator/core.dart';
+import 'package:flyer/flyer.dart';
 
 enum FontWeight {
   thin,

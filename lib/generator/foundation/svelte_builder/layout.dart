@@ -1,12 +1,8 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
-import 'package:flyer/generator/core.dart';
+import 'package:flyer/flyer.dart';
 import 'package:path/path.dart' as path;
-import 'package:flyer/generator/foundation.dart';
-
-import 'component.dart';
-import 'fragment.dart';
 
 class Layout extends Component {
   const Layout({this.content = const Slot.empty()});

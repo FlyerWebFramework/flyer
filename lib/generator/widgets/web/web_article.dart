@@ -1,6 +1,4 @@
-import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/foundation.dart';
-import 'package:flyer/generator/widgets/texts.dart';
+import 'package:flyer/flyer.dart';
 
 class Header extends Widget {
   const Header({required this.title, this.description = const []});

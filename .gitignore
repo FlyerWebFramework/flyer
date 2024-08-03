@@ -10,7 +10,7 @@ example_old/
 sandbox/
 output/
 build/
-web/
+example/web/
 
 .logs
 

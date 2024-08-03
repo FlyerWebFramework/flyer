@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:dcli/dcli.dart';
-import 'package:flyer/generator/core.dart';
+import 'package:flyer/generator/core/colors.dart';
+import 'package:flyer/generator/core/constants.dart';
+import 'package:flyer/generator/core/units.dart';
 import 'package:path/path.dart' as path;
 
 import 'border.dart';

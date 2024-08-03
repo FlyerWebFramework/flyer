@@ -1,5 +1,4 @@
-import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/foundation.dart';
+import 'package:flyer/flyer.dart';
 
 class Align extends Widget {
   const Align({required this.alignment, required this.child});

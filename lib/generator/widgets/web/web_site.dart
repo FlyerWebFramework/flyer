@@ -1,12 +1,7 @@
 import 'dart:io';
 
-import 'package:flyer/generator/foundation/svelte_builder/fragment.dart';
-import 'package:flyer/generator/foundation/svelte_builder/layout.dart';
-import 'package:flyer/generator/web_components/web_page.dart';
-import 'package:flyer/generator/widgets/images.dart';
+import 'package:flyer/flyer.dart';
 import 'package:path/path.dart' as path;
-import 'package:flyer/generator/core.dart';
-import 'package:flyer/generator/foundation.dart';
 
 class WebSite extends Widget {
   const WebSite({
