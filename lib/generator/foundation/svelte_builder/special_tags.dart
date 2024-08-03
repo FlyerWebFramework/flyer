@@ -1,6 +1,6 @@
-import 'package:flyer/generator/core/render.dart';
-import 'package:flyer/generator/foundation/abstracts.dart';
-import 'package:flyer/generator/foundation/common.dart';
+import 'package:flyer/generator/foundation/html_builder/context.dart';
+import 'package:flyer/generator/foundation/html_builder/render.dart';
+import 'package:flyer/generator/foundation/html_builder/widget.dart';
 
 class $for<T, S> extends Widget {
   final int iterations;

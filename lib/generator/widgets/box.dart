@@ -1,6 +1,6 @@
 import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
-import 'package:flyer/generator/foundation/styles/box_style.dart';
+import 'package:flyer/generator/foundation/style_builder/box_style.dart';
 
 class Box extends Widget {
   const Box({

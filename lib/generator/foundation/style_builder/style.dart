@@ -1,5 +1,5 @@
 import 'package:flyer/generator/core/units.dart';
-import 'package:flyer/generator/foundation/colors.dart';
+import 'package:flyer/generator/core/colors.dart';
 
 import 'tailwind_style.dart';
 

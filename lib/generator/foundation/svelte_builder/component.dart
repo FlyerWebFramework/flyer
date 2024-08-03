@@ -2,56 +2,52 @@ import 'dart:io';
 
 import 'package:dcli/dcli.dart';
 import 'package:flyer/generator/core.dart';
+import 'package:flyer/generator/foundation/html_builder/context.dart';
 import 'package:path/path.dart' as path;
 import 'package:flyer/generator/foundation.dart';
 
-abstract class Widget {
-  const Widget();
+import 'fragment.dart';
 
-  List<String> get classes => [];
+abstract class ArgsObject {
+  List get args => [];
 
-  Widget build() {
+  Map<String, dynamic> toArgs();
+}
+
+class Arguments {
+  Arguments([Map<String, dynamic>? args]) {
+    if (args != null) {
+      for (var arg in args.entries) {
+        _args[arg.key] = arg.value;
+      }
+    }
+  }
+
+  final Map<String, dynamic> _args = {};
+
+  Map<String, dynamic> get list => _args.map((key, value) => MapEntry(key, value.toString()));
+
+  Map<String, String> get filteredList {
+    return {
+      for (var arg in _args.entries)
+        if (arg.value != null) ...{arg.key: arg.value.toString()}
+    };
+  }
+
+  Arguments add(String name, dynamic value) {
+    _args[name] = value;
     return this;
   }
 
-  StringBuffer render(RenderContext context) {
-    return build().render(context.copy);
+  Arguments addObject(ArgsObject object) {
+    for (var arg in object.toArgs().entries) {
+      _args[arg.key] = arg.value;
+    }
+    return this;
   }
 
-  generate({bool debug = false, required String outputPath}) async {
-    throw UnimplementedError();
-  }
-}
-
-class WidgetBuilder extends Widget {
-  final StringBuffer Function(RenderContext) builder;
-
-  WidgetBuilder({required this.builder});
-
-  @override
-  StringBuffer render(RenderContext context) => builder(context);
-}
-
-class Slot extends Widget {
-  const Slot({this.name = Constants.defaultFragmentName});
-
-  const Slot.empty([this.name]);
-
-  final String? name;
-
-  @override
-  StringBuffer render(RenderContext context) {
-    return Render.slot(context, name: name);
-  }
-}
-
-class Fragment extends Slot {
-  const Fragment({required super.name, required this.child});
-
-  final Widget child;
-
-  StringBuffer renderFragment(RenderContext context) {
-    return Render.fragment(context, name: name!, child: child.render(context.copy));
+  T get<T>(String key) {
+    return _args[key];
   }
 }
 
@@ -140,31 +136,21 @@ abstract class Component extends Widget {
   }
 }
 
-class Layout extends Component {
-  const Layout({this.content = const Slot.empty()});
+class ComponentImporter {
+  ComponentImporter._init();
 
-  final Widget content;
+  final Map<String, Set<String>> _importComponents = {};
 
-  @override
-  Widget build() {
-    return content;
+  static final ComponentImporter instance = ComponentImporter._init();
+
+  void add(String id, String component) {
+    if (!_importComponents.keys.contains(id)) _importComponents[id] = {};
+    _importComponents[id]!.add(component);
   }
 
-  @override
-  List<String> get classes => ['prose'];
-
-  @override
-  StringBuffer render(RenderContext context) {
-    final content = build().render(context.indent(2));
-    final template = Render.element(context, tag: 'span', classes: classes, child: content);
-    final scripts = renderScript(context, imports: ["import '/src/app.css'"]);
-    return Render.list([scripts, Render.emptySpace(), template]);
-  }
-
-  @override
-  generate({bool debug = false, required String outputPath}) {
-    if (!exists(outputPath)) createDir(outputPath);
-    final layoutPage = render(RenderContext(slot: true)).toString();
-    File(path.join(outputPath, '+layout.svelte')).writeAsStringSync(layoutPage);
+  String? getImport(String id) {
+    final components = _importComponents[id];
+    if (components == null || components.isEmpty) return null;
+    return 'import {${components.join(', ')}} from "\$lib/components/index.js"';
   }
 }

@@ -1,6 +1,6 @@
 import 'tailwind_style.dart';
 export 'tailwind_style.dart';
-export 'style_builder.dart';
+export 'style.dart';
 
 class BoxStyle {
   const BoxStyle(List<TailwindStyle> styles) : _styles = styles;

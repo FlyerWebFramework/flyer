@@ -1,5 +1,5 @@
 import 'package:flyer/generator/core/units.dart';
-import 'package:flyer/generator/foundation/common.dart';
+import 'package:flyer/generator/deprecated/builders.dart';
 
 class Constants {
   static const String indent = "  ";
