@@ -1,7 +1,7 @@
 name: flyer
 description: Framework for creating web pages in Dart language
 repository: https://github.com/FlyerWebFramework/flyer
-version: 0.1.0
+version: 0.2.0
 
 environment:
   sdk: ^3.4.0
