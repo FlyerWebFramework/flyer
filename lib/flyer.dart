@@ -29,7 +29,6 @@ export 'generator/deprecated/edge_insets.dart';
 export 'generator/deprecated/text_style.dart';
 export 'generator/deprecated/alignment.dart';
 export 'generator/deprecated/builders.dart';
-export 'generator/deprecated/border.dart';
 
 /*
 T $prop<T>(T value) => value;

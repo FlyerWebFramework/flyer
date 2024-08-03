@@ -11,11 +11,33 @@ class Style {
   static EventStyle get on => EventStyle();
 
   static BackgroundStyle get background => BackgroundStyle();
+
+  static BorderStyle get border => BorderStyle();
 }
 
 class Breakpoint {
   static List<TailwindStyle> small(List<TailwindStyle> styles) =>
       styles.map((e) => e.copyWith(breakpoint: 'sm')).toList();
+}
+
+class BorderStyle {
+  BorderSideStyle get all => BorderSideStyle('');
+
+  BorderSideStyle get left => BorderSideStyle('l');
+
+  BorderSideStyle get top => BorderSideStyle('t');
+
+  BorderSideStyle get right => BorderSideStyle('r');
+
+  BorderSideStyle get bottom => BorderSideStyle('b');
+
+  BorderCornerStyle get topLeft => BorderCornerStyle('tl');
+
+  BorderCornerStyle get topRight => BorderCornerStyle('tr');
+
+  BorderCornerStyle get bottomLeft => BorderCornerStyle('bl');
+
+  BorderCornerStyle get bottomRight => BorderCornerStyle('br');
 }
 
 class SizeStyle {
@@ -32,4 +54,24 @@ class EventStyle {
 
 class BackgroundStyle {
   TailwindStyle color(Color value) => TailwindStyle(type: 'bg', value: value.toString());
+}
+
+class BorderSideStyle {
+  BorderSideStyle(this.subType);
+
+  final String subType;
+
+  TailwindStyle width(Unit value) => TailwindStyle(type: 'border', subType: subType, value: value.toString());
+
+  TailwindStyle color(Color value) => TailwindStyle(type: 'border', subType: subType, value: value.toString());
+
+  TailwindStyle radius(Unit value) => TailwindStyle(type: 'rounded', subType: subType, value: value.toString());
+}
+
+class BorderCornerStyle {
+  BorderCornerStyle(this.subType);
+
+  final String subType;
+
+  TailwindStyle radius(Unit value) => TailwindStyle(type: 'rounded', subType: subType, value: value.toString());
 }

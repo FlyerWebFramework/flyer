@@ -85,7 +85,7 @@ class Container extends SizedBox {
     super.height,
     this.color,
     this.margin,
-    this.border,
+    //this.border,
     this.padding,
     this.alignment,
     required super.child,
@@ -95,7 +95,7 @@ class Container extends SizedBox {
   final EdgeInsets? margin;
   final EdgeInsets? padding;
   final Alignment? alignment;
-  final Border? border;
+  //final Border? border;
 
   @override
   List<String> get classes {
@@ -104,7 +104,7 @@ class Container extends SizedBox {
     builder.add("{}", alignment);
     builder.addClassAll(margin?.getMarginClasses());
     builder.addClassAll(padding?.getPaddingClasses());
-    builder.addClassAll(border?.getClasses());
+    //builder.addClassAll(border?.getClasses());
     return builder.classes;
   }
 

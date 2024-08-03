@@ -38,10 +38,10 @@ class TailwindStyle {
     writePart(buffer: result, part: breakpoint, delimiter: ':');
     writePart(buffer: result, part: action, delimiter: ':');
     writePart(buffer: result, part: type, delimiter: '-');
-    writePart(buffer: result, part: subType, delimiter: value != null ? '-' : '');
-    writePart(buffer: result, part: value, delimiter: subValue != null ? '-' : '');
+    writePart(buffer: result, part: subType, delimiter: value != null && value!.isNotEmpty ? '-' : '');
+    writePart(buffer: result, part: value, delimiter: subValue != null && subValue!.isNotEmpty ? '-' : '');
     writePart(buffer: result, part: subValue, delimiter: '');
-    return result.toString();
+    return result.toString().replaceAll('--', '-');
   }
 
   TailwindStyle copyWith({
