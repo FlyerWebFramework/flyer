@@ -1,4 +1,5 @@
 import 'package:flyer/flyer.dart';
+import 'package:flyer/generator/widgets/html/flex_box.dart';
 
 class Box extends Widget {
   const Box({
@@ -25,27 +26,56 @@ class Box extends Widget {
 
 class VBox extends Widget {
   const VBox({
-    this.alignment,
+    this.mainAlignment,
+    this.crossAlignment,
     this.spacing,
     this.style,
     required this.children,
   });
 
-  final Alignment? alignment;
+  final MainAlignment? mainAlignment;
+  final CrossAlignment? crossAlignment;
   final Unit? spacing;
   final BoxStyle? style;
   final List<Widget> children;
 
   @override
-  List<String> get classes => style?.classes ?? [];
+  Widget build() {
+    return FlexBox(
+      direction: Direction.vertical,
+      style: style,
+      spacing: spacing,
+      mainAlignment: mainAlignment,
+      crossAlignment: crossAlignment,
+      children: children,
+    );
+  }
+}
+
+class HBox extends Widget {
+  const HBox({
+    this.mainAlignment,
+    this.crossAlignment,
+    this.spacing,
+    this.style,
+    required this.children,
+  });
+
+  final MainAlignment? mainAlignment;
+  final CrossAlignment? crossAlignment;
+  final Unit? spacing;
+  final BoxStyle? style;
+  final List<Widget> children;
 
   @override
-  StringBuffer render(RenderContext context) {
-    return Render.element(
-      context,
-      tag: 'div',
-      classes: [...classes, 'flex-col', if (alignment != null) '$alignment', if (spacing != null) 'gep-$spacing'],
-      child: Render.list(children.map((e) => e.render(context)).toList()),
+  Widget build() {
+    return FlexBox(
+      direction: Direction.horizontal,
+      style: style,
+      spacing: spacing,
+      mainAlignment: mainAlignment,
+      crossAlignment: crossAlignment,
+      children: children,
     );
   }
 }

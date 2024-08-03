@@ -1,6 +1,5 @@
 import 'package:flyer/flyer.dart';
-
-import '../components/simple_button.dart';
+import 'package:flyer/generator/widgets/html/flex_box.dart';
 
 class IndexPage extends WebPage {
   const IndexPage();
@@ -8,6 +7,12 @@ class IndexPage extends WebPage {
   @override
   Widget build() {
     return VBox(
+      mainAlignment: MainAlignment.center,
+      crossAlignment: CrossAlignment.center,
+      style: BoxStyle([
+        Style.size.width(300.px),
+        Style.size.height(500.px),
+      ]),
       children: [
         Box(
           style: BoxStyle([
@@ -23,41 +28,27 @@ class IndexPage extends WebPage {
           ]),
           child: child,
         ),
-        TextParagraph(text: [
-          Text.newLine(),
-          Text.writeln('Hello world'.str),
-          Text.underline(
-            'Hello world'.str,
-            style: TextStyle([
-              Style.background.color(Color.yellow.shade400),
+        VBox(
+          crossAlignment: CrossAlignment.start,
+          style: BoxStyle([Style.size.width(130.px)]),
+          children: [
+            TextParagraph(text: [
+              Text.newLine(),
+              Text.writeln('Hello world'.str),
+              Text.underline(
+                'Hello world'.str,
+                style: TextStyle([
+                  Style.background.color(Color.yellow.shade400),
+                ]),
+              ),
+              Text.newLine(),
+              Text.strike('Hello world'.str),
+              Text.newLine(),
+              Text.bold('Hello world'.str),
             ]),
-          ),
-          Text.newLine(),
-          Text.strike('Hello world'.str),
-          Text.newLine(),
-          Text.bold('Hello world'.str),
-        ]),
+          ],
+        ),
       ],
     );
   }
 }
-
-/*
-class IndexPage extends WebPage {
-  const IndexPage();
-
-  @override
-  Widget build() {
-    return Column(
-      alignment: Alignment.center,
-      children: [
-        Text("Header".str),
-        Title("Nadpis".str),
-        SimpleButton(text: Str("Button1")),
-        SimpleButton(text: Str("Button2"), color: Color.yellow),
-        SimpleButton(text: Str("Button3"), color: Color.yellow, textColor: Color.green),
-      ],
-    );
-  }
-}
-*/
