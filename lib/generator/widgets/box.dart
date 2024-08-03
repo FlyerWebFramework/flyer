@@ -1,37 +1,18 @@
 import 'package:flyer/generator/core.dart';
 import 'package:flyer/generator/foundation.dart';
+import 'package:flyer/generator/foundation/styles/box_style.dart';
 
 class Box extends Widget {
   const Box({
-    this.width,
-    this.height,
-    this.color,
-    this.margin,
-    this.border,
-    this.padding,
-    this.alignment,
+    this.style,
     required this.child,
   });
 
-  final Int? width;
-  final Int? height;
-  final Color? color;
-  final EdgeInsets? margin;
-  final EdgeInsets? padding;
-  final Alignment? alignment;
-  final Border? border;
+  final BoxStyle? style;
   final Widget child;
 
   @override
-  List<String> get classes {
-    final builder = ClassBuilder(super.classes);
-    builder.add("bg-{}", color);
-    builder.add("{}", alignment);
-    builder.addClassAll(margin?.getMarginClasses());
-    builder.addClassAll(padding?.getPaddingClasses());
-    builder.addClassAll(border?.getClasses());
-    return builder.classes;
-  }
+  List<String> get classes => style?.classes ?? [];
 
   @override
   StringBuffer render(RenderContext context) {
