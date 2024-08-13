@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flyer/flyer.dart';
+import 'package:flyer/generator/core/global.dart';
 import 'package:path/path.dart' as path;
 
 class WebSite extends Widget {
@@ -102,5 +103,8 @@ class WebSite extends Widget {
       final pagePath = path.join(routesPath, path.joinAll(route.key.split('/')));
       route.value.generate(outputPath: pagePath);
     }
+
+    final styles = "/* Generated Tailwind styles: \n${GlobalState.generatedTailwindStyles}\n*/";
+    File(path.join(outputPath, 'src', 'lib', 'index.js')).writeAsStringSync(styles);
   }
 }
