@@ -60,7 +60,7 @@ class BorderSide {
     ];
   }
 }
-
+/*
 class Border implements Var {
   const Border._init({
     this.all = BorderSide.none,
@@ -113,4 +113,13 @@ class Border implements Var {
 
   @override
   final String? variableName;
+
+
+  @override
+  Border setName(String? name) {
+    return Border.all(variableName: name ?? variableName);
+  }
 }
+
+
+ */

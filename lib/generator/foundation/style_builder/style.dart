@@ -53,7 +53,9 @@ class EventStyle {
 }
 
 class BackgroundStyle {
-  TailwindStyle color(Color value) => TailwindStyle(type: 'bg', value: value.toString());
+  TailwindStyle color(Color value) => value.variableName == null
+      ? TailwindStyle(type: 'bg', value: value.toString())
+      : TailwindStyle(type: 'bg', value: Var.format(value.variableName));
 }
 
 class BorderSideStyle {

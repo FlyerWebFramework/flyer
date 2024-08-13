@@ -23,6 +23,11 @@ class Direction implements Var {
   @override
   String toString() => variableValue.toString();
 
+  @override
+  Direction setName(String? name) {
+    return Direction(type, variableName: name ?? variableName);
+  }
+
   Direction copyWith({
     DirectionType? type,
     String? variableName,
@@ -77,6 +82,11 @@ class Alignment implements Var {
 
   @override
   String toString() => variableValue.toString();
+
+  @override
+  Alignment setName(String? name) {
+    return Alignment(type, variableName: name ?? variableName);
+  }
 }
 
 enum MainAlignmentType {
@@ -132,6 +142,11 @@ class MainAlignment implements Var {
 
   @override
   String get variableValue => type.name;
+
+  @override
+  MainAlignment setName(String? name) {
+    return MainAlignment(type, variableName: name ?? variableName);
+  }
 }
 
 enum CrossAlignmentType {
@@ -172,6 +187,11 @@ class CrossAlignment implements Var {
 
   @override
   String get variableValue => type.name;
+
+  @override
+  CrossAlignment setName(String? name) {
+    return CrossAlignment(type, variableName: name ?? variableName);
+  }
 }
 
 class FlexBox extends Widget {

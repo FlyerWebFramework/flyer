@@ -4,8 +4,6 @@ import 'package:dcli/dcli.dart';
 import 'package:flyer/flyer.dart';
 import 'package:path/path.dart' as path;
 
-import 'fragment.dart';
-
 abstract class ArgsObject {
   List get args => [];
 
@@ -13,22 +11,22 @@ abstract class ArgsObject {
 }
 
 class Arguments {
-  Arguments([Map<String, dynamic>? args]) {
+  Arguments([Map<String, Var>? args]) {
     if (args != null) {
       for (var arg in args.entries) {
-        _args[arg.key] = arg.value;
+        _args[arg.key] = arg.value.setName(arg.key);
       }
     }
   }
 
-  final Map<String, dynamic> _args = {};
+  final Map<String, Var> _args = {};
 
   Map<String, dynamic> get list => _args.map((key, value) => MapEntry(key, value.toString()));
 
   Map<String, String> get filteredList {
     return {
-      for (var arg in _args.entries)
-        if (arg.value != null) ...{arg.key: arg.value.toString()}
+      for (MapEntry<String, Var?> arg in _args.entries)
+        if (arg.value != null) ...{arg.key: arg.value!.variableValue.toString()}
     };
   }
 
@@ -44,7 +42,7 @@ class Arguments {
     return this;
   }
 
-  T get<T>(String key) {
+  get(String key) {
     return _args[key];
   }
 }

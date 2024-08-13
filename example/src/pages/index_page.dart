@@ -1,6 +1,8 @@
 import 'package:flyer/flyer.dart';
 import 'package:flyer/generator/widgets/html/flex_box.dart';
 
+import '../components/simple_component.dart';
+
 class IndexPage extends WebPage {
   const IndexPage();
 
@@ -14,20 +16,8 @@ class IndexPage extends WebPage {
         Style.size.height(500.px),
       ]),
       children: [
-        Box(
-          style: BoxStyle([
-            Style.size.width(200.px),
-            Style.size.height(200.px),
-            Style.border.all.width(0.5.rem),
-            Style.border.all.color(Color.red.shade400),
-            Style.border.top.color(Color.green.shade400),
-            Style.border.right.color(Color.green.shade400),
-            Style.border.bottomRight.radius(4.rem),
-            Style.background.color(Color.blue.shade400),
-            ...Style.size.set(width: 8.rem, height: 8.rem),
-          ]),
-          child: child,
-        ),
+        SimpleComponent(color: Color.green),
+        SimpleComponent(),
         VBox(
           crossAlignment: CrossAlignment.start,
           style: BoxStyle([Style.size.width(130.px)]),

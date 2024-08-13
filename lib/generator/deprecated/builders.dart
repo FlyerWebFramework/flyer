@@ -6,7 +6,6 @@ import 'package:flyer/generator/core/constants.dart';
 import 'package:flyer/generator/core/units.dart';
 import 'package:path/path.dart' as path;
 
-import 'border.dart';
 import 'edge_insets.dart';
 import 'text_style.dart';
 
@@ -76,7 +75,7 @@ class Decoration {
     this.width,
     this.height,
     this.color,
-    this.border,
+    //this.border,
     this.margin,
     this.padding,
   });
@@ -84,7 +83,7 @@ class Decoration {
   final Unit? width;
   final Unit? height;
   final Color? color;
-  final Border? border;
+  //final Border? border;
   final EdgeInsets? margin;
   final EdgeInsets? padding;
 
@@ -93,7 +92,7 @@ class Decoration {
     builder.add("${state}w-{}", width);
     builder.add("${state}h-{}", height);
     builder.add("${state}bg-{}", color);
-    builder.addClassAll(border?.getClasses(state));
+    //builder.addClassAll(border?.getClasses(state));
     builder.addClassAll(margin?.getMarginClasses(state));
     builder.addClassAll(padding?.getPaddingClasses(state));
     return builder.classes;
@@ -101,5 +100,5 @@ class Decoration {
 }
 
 class BoxDecoration extends Decoration {
-  BoxDecoration({super.color, super.border});
+  BoxDecoration({super.color});
 }

@@ -22,12 +22,18 @@ class Var<T> extends Object {
   final String? variableName;
   final T variableValue;
 
+  setName(String? name) {
+    return Var(variableValue, variableName: name ?? variableName);
+  }
+  
+  static String format(variableName) => '{$variableName}';
+
   @override
-  String toString() => variableValue.toString();
+  String toString() => variableName ?? variableValue.toString();
 }
 
 class Unit extends Var {
-  const Unit(super.value, {this.unit = UnitType.custom});
+  const Unit(super.value, {this.unit = UnitType.custom, super.variableName});
 
   final UnitType unit;
 
@@ -45,19 +51,28 @@ class Unit extends Var {
 
   @override
   String toString() {
-    String result = '<unknown>';
-    switch (unit) {
-      case UnitType.px:
-      case UnitType.pt:
-      case UnitType.em:
-      case UnitType.rem:
-        result = "$variableValue${unit.name}";
-      case UnitType.percent:
-        result = "$variableValue%";
-      case UnitType.custom:
-        result = variableValue;
+    if (variableName != null) {
+      return variableName!;
+    } else {
+      String result = '<unknown>';
+      switch (unit) {
+        case UnitType.px:
+        case UnitType.pt:
+        case UnitType.em:
+        case UnitType.rem:
+          result = "$variableValue${unit.name}";
+        case UnitType.percent:
+          result = "$variableValue%";
+        case UnitType.custom:
+          result = variableValue.toString();
+      }
+      return '[$result]';
     }
-    return '[$result]';
+  }
+
+  @override
+  Unit setName(String? name) {
+    return Unit(variableValue, variableName: name ?? variableName);
   }
 }
 
@@ -74,7 +89,12 @@ class EmptyUnit implements Unit {
   final String? variableName;
 
   @override
-  String toString() => "";
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  EmptyUnit setName(String? name) {
+    return EmptyUnit(variableName: name ?? variableName);
+  }
 }
 
 class Num implements Unit {
@@ -90,7 +110,12 @@ class Num implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableValue.toString();
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  Num setName(String? name) {
+    return Num(variableValue, variableName: name ?? variableName);
+  }
 }
 
 class Int implements Unit {
@@ -106,7 +131,12 @@ class Int implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableValue.toString();
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  Int setName(name) {
+    return Int(variableValue, variableName: name ?? variableName);
+  }
 }
 
 class Double implements Unit {
@@ -122,7 +152,12 @@ class Double implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableValue.toString();
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  Double setName(String? name) {
+    return Double(variableValue, variableName: name ?? variableName);
+  }
 }
 
 class Bool implements Unit {
@@ -138,7 +173,12 @@ class Bool implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableValue.toString();
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  Bool setName(String? name) {
+    return Bool(variableValue, variableName: name ?? variableName);
+  }
 }
 
 class Str implements Unit {
@@ -154,7 +194,12 @@ class Str implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableValue.toString();
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  Str setName(String? name) {
+    return Str(variableValue, variableName: name ?? variableName);
+  }
 }
 
 class Obj extends Var<Object> {

@@ -21,7 +21,7 @@ class Color extends Var {
   //String get value => "<unknown>";
 
   @override
-  String toString() => variableValue;
+  String toString() => variableName ?? variableValue.toString();
 
   factory Color.name(String value) = NamedColor;
 
@@ -44,7 +44,12 @@ class HexColor implements Color {
   final String? variableName;
 
   @override
-  String toString() => variableValue;
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  HexColor setName(String? name) {
+    return HexColor(variableValue, variableName: name ?? variableName);
+  }
 }
 
 class RgbaColor implements Color {
@@ -52,16 +57,21 @@ class RgbaColor implements Color {
     _color = color.RgbaColor(r, g, b, a);
   }
 
-  color.RgbaColor? _color;
+  late final color.RgbaColor _color;
 
   @override
-  String get variableValue => "[${_color!.toCssString()}]";
+  String get variableValue => "[${_color.toCssString()}]";
 
   @override
   final String? variableName;
 
   @override
-  String toString() => variableValue;
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  RgbaColor setName(String? name) {
+    return RgbaColor(_color.r, _color.g,_color.b, _color.a, variableName: name ?? variableName);
+  }
 }
 
 class NamedColor implements Color {
@@ -81,7 +91,12 @@ class NamedColor implements Color {
   final String? variableName;
 
   @override
-  String toString() => variableValue;
+  String toString() => variableName ?? variableValue.toString();
+
+  @override
+  NamedColor setName(String? name) {
+    return NamedColor(this.name, variableName: name ?? variableName);
+  }
 
   NamedColor get shade50 => NamedColor(name, shade: 50);
 
