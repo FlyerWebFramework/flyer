@@ -95,7 +95,7 @@ class NamedColor implements Color {
 
   @override
   NamedColor setName(String? name) {
-    return NamedColor(this.name, variableName: name ?? variableName);
+    return NamedColor(this.name, shade: shade, opacity: opacity, variableName: name ?? variableName);
   }
 
   NamedColor get shade50 => NamedColor(name, shade: 50);

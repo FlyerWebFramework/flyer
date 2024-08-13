@@ -11,13 +11,15 @@ class IndexPage extends WebPage {
     return VBox(
       mainAlignment: MainAlignment.center,
       crossAlignment: CrossAlignment.center,
+      spacing: 2.rem,
       style: BoxStyle([
-        Style.size.width(300.px),
-        Style.size.height(500.px),
+        Style.size.width(500.px),
+        Style.size.height(800.px),
+        Style.border.all.width(1.px),
       ]),
       children: [
-        SimpleComponent(color: Color.yellow),
-        SimpleComponent(color: Color.blue.shade300),
+        SimpleComponent(color: Color.yellow.shade300),
+        SimpleComponent(color: Color.green.shade600),
         VBox(
           crossAlignment: CrossAlignment.start,
           style: BoxStyle([Style.size.width(130.px)]),

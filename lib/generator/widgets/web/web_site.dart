@@ -104,7 +104,7 @@ class WebSite extends Widget {
       route.value.generate(outputPath: pagePath);
     }
 
-    final styles = "/* Generated Tailwind styles: \n${GlobalState.generatedTailwindStyles}\n*/";
+    final styles = "/* Generated Tailwind styles: \n${GlobalState.generatedTailwindStyles.map((e) => '$e ')}\n*/";
     File(path.join(outputPath, 'src', 'lib', 'index.js')).writeAsStringSync(styles);
   }
 }
