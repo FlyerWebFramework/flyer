@@ -4,8 +4,6 @@ import 'package:flyer/generator/widgets/html/flex_box.dart';
 import '../components/simple_component.dart';
 
 class IndexPage extends WebPage {
-  const IndexPage();
-
   @override
   Widget build() {
     return VBox(
@@ -18,6 +16,8 @@ class IndexPage extends WebPage {
         Style.border.all.width(1.px),
       ]),
       children: [
+        Text.heading1('Main title'.str),
+        Text.heading2('Main subtitle'.str),
         SimpleComponent(color: Color.blue.shade600),
         SimpleComponent(color: Color.gray.shade400, text: Str("Test")),
         VBox(

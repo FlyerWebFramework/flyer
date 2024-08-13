@@ -27,6 +27,18 @@ class Text extends TextWidget {
 
   factory Text.link(Str text, {TextStyle? style}) => Text(text: text, style: style, tag: 'a');
 
+  factory Text.heading1(Str text, {TextStyle? style}) => Text(text: text, style: style, tag: 'h1');
+
+  factory Text.heading2(Str text, {TextStyle? style}) => Text(text: text, style: style, tag: 'h2');
+
+  factory Text.heading3(Str text, {TextStyle? style}) => Text(text: text, style: style, tag: 'h3');
+
+  factory Text.heading4(Str text, {TextStyle? style}) => Text(text: text, style: style, tag: 'h4');
+
+  factory Text.heading5(Str text, {TextStyle? style}) => Text(text: text, style: style, tag: 'h5');
+
+  factory Text.heading6(Str text, {TextStyle? style}) => Text(text: text, style: style, tag: 'h6');
+
   final Str text;
   final TextStyle? style;
   final String? tag;
