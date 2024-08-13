@@ -26,10 +26,8 @@ class Var<T> extends Object {
     return Var(variableValue, variableName: name ?? variableName);
   }
   
-  static String format(variableName) => '{$variableName}';
-
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 }
 
 class Unit extends Var {
@@ -52,7 +50,7 @@ class Unit extends Var {
   @override
   String toString() {
     if (variableName != null) {
-      return variableName!;
+      return '{$variableName}';
     } else {
       String result = '<unknown>';
       switch (unit) {
@@ -89,7 +87,7 @@ class EmptyUnit implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   EmptyUnit setName(String? name) {
@@ -110,7 +108,7 @@ class Num implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   Num setName(String? name) {
@@ -131,7 +129,7 @@ class Int implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   Int setName(name) {
@@ -152,7 +150,7 @@ class Double implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   Double setName(String? name) {
@@ -173,7 +171,7 @@ class Bool implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   Bool setName(String? name) {
@@ -194,7 +192,7 @@ class Str implements Unit {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   Str setName(String? name) {

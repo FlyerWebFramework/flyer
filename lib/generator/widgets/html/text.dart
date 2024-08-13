@@ -33,7 +33,7 @@ class Text extends TextWidget {
 
   @override
   StringBuffer render(RenderContext context) {
-    final child = Render.text(context, text.variableValue.replaceAll('\n', '<br/>'));
+    final child = Render.text(context, text.toString().replaceAll('\n', '<br/>'));
 
     if (tag != null && tag!.isNotEmpty) {
       return Render.element(

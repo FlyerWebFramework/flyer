@@ -29,7 +29,7 @@ class SimpleComponent extends Component {
         Style.background.color(args.get("color")),
         ...Style.size.set(width: 8.rem, height: 8.rem),
       ]),
-      child: Text.bold(text),
+      child: Text.bold(args.get("text")),
     );
   }
 }

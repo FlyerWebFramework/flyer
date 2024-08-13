@@ -21,7 +21,7 @@ class Color extends Var {
   //String get value => "<unknown>";
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   factory Color.name(String value) = NamedColor;
 
@@ -44,7 +44,7 @@ class HexColor implements Color {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   HexColor setName(String? name) {
@@ -66,7 +66,7 @@ class RgbaColor implements Color {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   RgbaColor setName(String? name) {
@@ -91,7 +91,7 @@ class NamedColor implements Color {
   final String? variableName;
 
   @override
-  String toString() => variableName ?? variableValue.toString();
+  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
 
   @override
   NamedColor setName(String? name) {

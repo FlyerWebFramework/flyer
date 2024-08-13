@@ -58,7 +58,7 @@ class BackgroundStyle {
     final tailwindStyleValue = TailwindStyle(type: 'bg', value: value.variableValue);
     if (value.variableName != null) {
       GlobalState.generatedTailwindStyles.add(tailwindStyleValue.toString());
-      return TailwindStyle(type: 'bg', value: Var.format(value.variableName));
+      return TailwindStyle(type: 'bg', value: value.toString());
     }
     return tailwindStyleValue;
   }
