@@ -6,7 +6,7 @@ enum DirectionType {
 }
 
 class Direction implements Var {
-  const Direction(this.type, {this.variableName});
+  const Direction(this.type, {this.currentName, this.parentName});
 
   final DirectionType type;
 
@@ -15,7 +15,10 @@ class Direction implements Var {
   static Direction get vertical => Direction(DirectionType.vertical);
 
   @override
-  final String? variableName;
+  final String? currentName;
+
+  @override
+  final String? parentName;
 
   @override
   String get variableValue => type.name;
@@ -24,8 +27,8 @@ class Direction implements Var {
   String toString() => variableValue.toString();
 
   @override
-  Direction setName(String? name) {
-    return Direction(type, variableName: name ?? variableName);
+  Direction setName(String name) {
+    return Direction(type, currentName: name, parentName: currentName);
   }
 
   Direction copyWith({
@@ -34,7 +37,8 @@ class Direction implements Var {
   }) {
     return Direction(
       type ?? this.type,
-      variableName: variableName ?? this.variableName,
+      currentName: variableName ?? currentName,
+      parentName: parentName,
     );
   }
 }
@@ -52,7 +56,7 @@ enum AlignmentType {
 }
 
 class Alignment implements Var {
-  const Alignment(this.type, {this.variableName});
+  const Alignment(this.type, {this.currentName, this.parentName});
 
   final AlignmentType type;
 
@@ -75,7 +79,10 @@ class Alignment implements Var {
   static Alignment get bottomRight => Alignment(AlignmentType.bottomRight);
 
   @override
-  final String? variableName;
+  final String? currentName;
+
+  @override
+  final String? parentName;
 
   @override
   String get variableValue => type.name;
@@ -84,8 +91,8 @@ class Alignment implements Var {
   String toString() => variableValue.toString();
 
   @override
-  Alignment setName(String? name) {
-    return Alignment(type, variableName: name ?? variableName);
+  Alignment setName(String name) {
+    return Alignment(type, currentName: name, parentName: currentName);
   }
 }
 
@@ -100,7 +107,7 @@ enum MainAlignmentType {
 }
 
 class MainAlignment implements Var {
-  const MainAlignment(this.type, {this.variableName});
+  const MainAlignment(this.type, {this.currentName, this.parentName});
 
   final MainAlignmentType type;
 
@@ -138,14 +145,17 @@ class MainAlignment implements Var {
   }
 
   @override
-  final String? variableName;
+  final String? currentName;
+
+  @override
+  final String? parentName;
 
   @override
   String get variableValue => type.name;
 
   @override
-  MainAlignment setName(String? name) {
-    return MainAlignment(type, variableName: name ?? variableName);
+  MainAlignment setName(String name) {
+    return MainAlignment(type, currentName: name, parentName: currentName);
   }
 }
 
@@ -157,7 +167,7 @@ enum CrossAlignmentType {
 }
 
 class CrossAlignment implements Var {
-  const CrossAlignment(this.type, {this.variableName});
+  const CrossAlignment(this.type, {this.currentName, this.parentName});
 
   final CrossAlignmentType type;
 
@@ -183,14 +193,17 @@ class CrossAlignment implements Var {
   }
 
   @override
-  final String? variableName;
+  final String? currentName;
+
+  @override
+  final String? parentName;
 
   @override
   String get variableValue => type.name;
 
   @override
-  CrossAlignment setName(String? name) {
-    return CrossAlignment(type, variableName: name ?? variableName);
+  CrossAlignment setName(String name) {
+    return CrossAlignment(type, currentName: name, parentName: currentName);
   }
 }
 

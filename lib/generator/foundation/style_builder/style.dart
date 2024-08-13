@@ -56,7 +56,7 @@ class EventStyle {
 class BackgroundStyle {
   TailwindStyle color(Color value) {
     final tailwindStyleValue = TailwindStyle(type: 'bg', value: value.variableValue);
-    if (value.variableName != null) {
+    if (value.currentName != null) {
       GlobalState.generatedTailwindStyles.add(tailwindStyleValue.toString());
       return TailwindStyle(type: 'bg', value: value.toString());
     }

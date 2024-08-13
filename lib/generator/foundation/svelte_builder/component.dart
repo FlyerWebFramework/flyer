@@ -26,7 +26,7 @@ class Arguments {
   Map<String, String> get filteredList {
     return {
       for (MapEntry<String, Var?> arg in _args.entries)
-        if (arg.value != null) ...{arg.key: arg.value!.variableValue.toString()}
+        if (arg.value != null) ...{arg.key: arg.value!.parentName == null ? arg.value!.variableValue.toString() : '{${arg.value!.parentName}}'}
     };
   }
 
@@ -65,10 +65,10 @@ abstract class Component extends Widget {
     throw UnimplementedError();
   }
 
-  String $arg<T>(T value) {
-    hasSameValue(e) => e.value.hashCode == value.hashCode;
-    return '{${args.list.entries.where(hasSameValue).first.key}}';
-  }
+  // String $arg<T>(T value) {
+  //   hasSameValue(e) => e.value.hashCode == value.hashCode;
+  //   return '{${args.list.entries.where(hasSameValue).first.key}}';
+  // }
 
   @override
   StringBuffer render(RenderContext context) {

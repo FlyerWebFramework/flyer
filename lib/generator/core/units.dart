@@ -17,21 +17,22 @@ extension StringExtension on String {
 enum UnitType { px, pt, em, rem, percent, custom }
 
 class Var<T> extends Object {
-  const Var(this.variableValue, {this.variableName});
+  const Var(this.variableValue, {this.parentName, this.currentName});
 
-  final String? variableName;
+  final String? parentName;
+  final String? currentName;
   final T variableValue;
 
-  setName(String? name) {
-    return Var(variableValue, variableName: name ?? variableName);
+  setName(String name) {
+    return Var(variableValue, currentName: name, parentName: currentName);
   }
-  
+
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
 }
 
 class Unit extends Var {
-  const Unit(super.value, {this.unit = UnitType.custom, super.variableName});
+  const Unit(super.value, {this.unit = UnitType.custom, super.parentName, super.currentName});
 
   final UnitType unit;
 
@@ -49,8 +50,8 @@ class Unit extends Var {
 
   @override
   String toString() {
-    if (variableName != null) {
-      return '{$variableName}';
+    if (currentName != null) {
+      return '{$currentName}';
     } else {
       String result = '<unknown>';
       switch (unit) {
@@ -69,13 +70,13 @@ class Unit extends Var {
   }
 
   @override
-  Unit setName(String? name) {
-    return Unit(variableValue, variableName: name ?? variableName);
+  Unit setName(String name) {
+    return Unit(variableValue, currentName: name, parentName: currentName);
   }
 }
 
 class EmptyUnit implements Unit {
-  const EmptyUnit({this.variableName});
+  const EmptyUnit({this.currentName, this.parentName});
 
   @override
   final UnitType unit = UnitType.custom;
@@ -84,19 +85,22 @@ class EmptyUnit implements Unit {
   String get variableValue => "";
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
 
   @override
-  EmptyUnit setName(String? name) {
-    return EmptyUnit(variableName: name ?? variableName);
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
+
+  @override
+  EmptyUnit setName(String name) {
+    return EmptyUnit(currentName: name, parentName: currentName);
   }
 }
 
 class Num implements Unit {
-  const Num(this.variableValue, {this.variableName});
+  const Num(this.variableValue, {this.currentName, this.parentName});
 
   @override
   final UnitType unit = UnitType.custom;
@@ -105,19 +109,22 @@ class Num implements Unit {
   final num variableValue;
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
 
   @override
-  Num setName(String? name) {
-    return Num(variableValue, variableName: name ?? variableName);
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
+
+  @override
+  Num setName(String name) {
+    return Num(variableValue, currentName: name, parentName: currentName);
   }
 }
 
 class Int implements Unit {
-  const Int(this.variableValue, {this.variableName});
+  const Int(this.variableValue, {this.currentName, this.parentName});
 
   @override
   final UnitType unit = UnitType.custom;
@@ -126,19 +133,22 @@ class Int implements Unit {
   final int variableValue;
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
+
+  @override
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
 
   @override
   Int setName(name) {
-    return Int(variableValue, variableName: name ?? variableName);
+    return Int(variableValue, currentName: name, parentName: currentName);
   }
 }
 
 class Double implements Unit {
-  const Double(this.variableValue, {this.variableName});
+  const Double(this.variableValue, {this.currentName, this.parentName});
 
   @override
   final UnitType unit = UnitType.custom;
@@ -147,19 +157,22 @@ class Double implements Unit {
   final double variableValue;
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
 
   @override
-  Double setName(String? name) {
-    return Double(variableValue, variableName: name ?? variableName);
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
+
+  @override
+  Double setName(String name) {
+    return Double(variableValue, currentName: name, parentName: currentName);
   }
 }
 
 class Bool implements Unit {
-  const Bool(this.variableValue, {this.variableName});
+  const Bool(this.variableValue, {this.currentName, this.parentName});
 
   @override
   final UnitType unit = UnitType.custom;
@@ -168,19 +181,22 @@ class Bool implements Unit {
   final bool variableValue;
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
 
   @override
-  Bool setName(String? name) {
-    return Bool(variableValue, variableName: name ?? variableName);
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
+
+  @override
+  Bool setName(String name) {
+    return Bool(variableValue, currentName: name, parentName: currentName);
   }
 }
 
 class Str implements Unit {
-  const Str(this.variableValue, {this.variableName});
+  const Str(this.variableValue, {this.currentName, this.parentName});
 
   @override
   final UnitType unit = UnitType.custom;
@@ -189,14 +205,17 @@ class Str implements Unit {
   final String variableValue;
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
 
   @override
-  Str setName(String? name) {
-    return Str(variableValue, variableName: name ?? variableName);
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
+
+  @override
+  Str setName(String name) {
+    return Str(variableValue, currentName: name, parentName: currentName);
   }
 }
 

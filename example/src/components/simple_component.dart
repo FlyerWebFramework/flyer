@@ -1,5 +1,7 @@
 import 'package:flyer/flyer.dart';
 
+import 'another_component.dart';
+
 class SimpleComponent extends Component {
   const SimpleComponent({
     this.color = Color.blue,
@@ -29,7 +31,10 @@ class SimpleComponent extends Component {
         Style.background.color(args.get("color")),
         ...Style.size.set(width: 8.rem, height: 8.rem),
       ]),
-      child: Text.bold(args.get("text")),
+      child: VBox(children: [
+        AnotherComponent(text: args.get("text"), color: Color.red),
+        Text.write(args.get("text")),
+      ]),
     );
   }
 }

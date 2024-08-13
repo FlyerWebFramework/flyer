@@ -19,7 +19,7 @@ class IndexPage extends WebPage {
       ]),
       children: [
         SimpleComponent(color: Color.blue.shade600),
-        SimpleComponent(color: Color.gray.shade400, text: Str("Test1234")),
+        SimpleComponent(color: Color.gray.shade400, text: Str("Test")),
         VBox(
           crossAlignment: CrossAlignment.start,
           style: BoxStyle([Style.size.width(130.px)]),

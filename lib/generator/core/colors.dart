@@ -21,7 +21,7 @@ class Color extends Var {
   //String get value => "<unknown>";
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
 
   factory Color.name(String value) = NamedColor;
 
@@ -31,7 +31,7 @@ class Color extends Var {
 }
 
 class HexColor implements Color {
-  HexColor(String hexCode, {this.variableName}) {
+  HexColor(String hexCode, {this.currentName, this.parentName}) {
     _color = color.HexColor(hexCode);
   }
 
@@ -41,19 +41,22 @@ class HexColor implements Color {
   String get variableValue => "[${_color!.toCssString()}]";
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
 
   @override
-  HexColor setName(String? name) {
-    return HexColor(variableValue, variableName: name ?? variableName);
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
+
+  @override
+  HexColor setName(String name) {
+    return HexColor(variableValue, currentName: name, parentName: currentName);
   }
 }
 
 class RgbaColor implements Color {
-  RgbaColor(num r, num g, num b, num a, {this.variableName}) {
+  RgbaColor(num r, num g, num b, num a, {this.currentName, this.parentName}) {
     _color = color.RgbaColor(r, g, b, a);
   }
 
@@ -63,19 +66,22 @@ class RgbaColor implements Color {
   String get variableValue => "[${_color.toCssString()}]";
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
 
   @override
-  RgbaColor setName(String? name) {
-    return RgbaColor(_color.r, _color.g,_color.b, _color.a, variableName: name ?? variableName);
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
+
+  @override
+  RgbaColor setName(String name) {
+    return RgbaColor(_color.r, _color.g,_color.b, _color.a, currentName: name, parentName: currentName);
   }
 }
 
 class NamedColor implements Color {
-  const NamedColor(this.name, {this.shade = 500, this.opacity = 1, this.variableName});
+  const NamedColor(this.name, {this.shade = 500, this.opacity = 1, this.currentName, this.parentName});
 
   final String name;
   final int? shade;
@@ -88,14 +94,17 @@ class NamedColor implements Color {
   }
 
   @override
-  final String? variableName;
+  final String? currentName;
 
   @override
-  String toString() => variableName != null ? '{$variableName}' : variableValue.toString();
+  final String? parentName;
 
   @override
-  NamedColor setName(String? name) {
-    return NamedColor(this.name, shade: shade, opacity: opacity, variableName: name ?? variableName);
+  String toString() => currentName != null ? '{$currentName}' : variableValue.toString();
+
+  @override
+  NamedColor setName(String name) {
+    return NamedColor(this.name, shade: shade, opacity: opacity, currentName: name, parentName: currentName);
   }
 
   NamedColor get shade50 => NamedColor(name, shade: 50);
