@@ -77,7 +77,7 @@ abstract class Component extends Widget {
       final defaultFragment = child is Slot ? null : Fragment(name: Constants.defaultFragmentName, child: child);
       context.importComponent(this);
       return Render.element(
-        context,
+        context.indent(),
         tag: runtimeType.toString(),
         attributes: {...args.filteredList},
         child: Render.list([
@@ -86,7 +86,7 @@ abstract class Component extends Widget {
         ]),
       );
     } else {
-      final template = build().render(context.copyWith(indentation: 0, slot: true));
+      final template = build().render(context.copyWith(indentation: -1, slot: true));
       final scripts = renderScript(context);
       return Render.list([scripts, Render.emptySpace(), template]);
     }

@@ -19,7 +19,7 @@ class Box extends Widget {
       context.indent(),
       tag: 'div',
       classes: classes,
-      child: child.render(context.indent(2)),
+      child: child.render(context.indent()),
     );
   }
 }

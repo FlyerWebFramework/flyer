@@ -39,6 +39,8 @@ class SimpleComponent extends Component {
             Text.write(Str('${args.get("text")}123')),
           ],
         ),
+        Text.newLine(),
+        Text.writeln(Str('Hello world')),
       ]),
     );
   }

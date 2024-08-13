@@ -32,11 +32,12 @@ class $if extends Widget {
 
   @override
   StringBuffer render(RenderContext context) {
+    context = context.indent();
     return Render.list([
       Render.text(context, "{#if $condition}", indent: 0),
-      ...block.map((e) => e.render(context.indent())),
+      ...block.map((e) => e.render(context)),
       if (elseBlock != null) Render.text(context, "{:else}", indent: 0),
-      if (elseBlock != null) ...elseBlock!.map((e) => e.render(context.indent())),
+      if (elseBlock != null) ...elseBlock!.map((e) => e.render(context)),
       Render.text(context, "{/if}", indent: 0),
     ]);
   }
