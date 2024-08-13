@@ -33,7 +33,12 @@ class SimpleComponent extends Component {
       ]),
       child: VBox(children: [
         AnotherComponent(text: args.get("text"), color: Color.red),
-        Text.write(args.get("text")),
+        $if(
+          condition: Condition.isNotEmpty(args.get("text")),
+          block: [
+            Text.write(Str('${args.get("text")}123')),
+          ],
+        ),
       ]),
     );
   }
